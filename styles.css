@@ -11,7 +11,7 @@
 html, body {
     width: 100%;
     height: 100vh;
-    overflow: hidden;  /* ¡ESTO ELIMINA EL SCROLL! */
+    overflow: hidden;
     background-color: #111;
 }
 
@@ -32,27 +32,28 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    padding: 20px 0;  /* ¡MARGEN DE 20PX ARRIBA Y ABAJO! */
 }
 
 #content-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;  /* Alinea los elementos por la parte superior */
+    align-items: flex-start;
     transform-origin: center center;
     will-change: transform;
+    max-width: 100%;
 }
 
 /* ============================================ */
-/* BOTONES - Mantienen su tamaño y posición     */
+/* BOTONES - Posición original restaurada       */
 /* ============================================ */
 
 #buttons {
     display: flex;
     flex-direction: column;
-    margin-right: -5px;
-    flex-shrink: 0;  /* Evita que se encojan */
-    padding-top: 65.7px;  /* ¡ESTA ES LA CLAVE! Se alinea con head */
-    align-self: flex-start;  /* Se mantiene arriba */
+    margin-right: -5px;  /* Mantenemos el margen original */
+    flex-shrink: 0;
+    /* IMPORTANTE: Sin padding-top, posición original */
 }
 
 #buttons button {
@@ -138,11 +139,11 @@ body {
     display: block;
     height: 707.8px;
     width: auto;
-    margin-right: -5px;
+    margin-right: -5px;  /* Margen original restaurado */
 }
 
 /* ============================================ */
-/* MAIN - Columna central                        */
+/* MAIN - Columna central (CON MÁRGENES ORIGINALES) */
 /* ============================================ */
 
 #main {
@@ -155,14 +156,14 @@ body {
 #img-top {
     height: auto;
     width: 578px;
-    margin-bottom: -10px;
+    margin-bottom: -10px;  /* ¡MARGEN ORIGINAL RESTAURADO! */
     display: block;
 }
 
 #img-bot {
     height: auto;
     width: 578px;
-    margin-bottom: -10px;
+    margin-bottom: -10px;  /* ¡MARGEN ORIGINAL RESTAURADO! */
     display: block;
 }
 
