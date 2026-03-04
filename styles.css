@@ -24,12 +24,12 @@ body {
     border: none;
     background: none;
     cursor: pointer;
-    margin-bottom: 1.9px;        
+    margin-bottom: 0px;        
 }
 
 #buttons img {
     display: block;
-    height: 65.7px;           
+    height: 67px;           
     width: auto;
 }
 
