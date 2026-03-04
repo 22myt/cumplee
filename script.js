@@ -20,14 +20,26 @@ function updateButtonImages(currentMode) {
         const parentBtn = btn.closest('.mode-btn');
         
         if (parentBtn.classList.contains('light-mode-btn')) {
-            btn.src = currentMode === 'light' ? 
-                btn.dataset.lightHover : btn.dataset.light;
+            // Para el botón de light mode
+            if (currentMode === 'light') {
+                btn.src = btn.dataset.lightHover;
+            } else {
+                btn.src = btn.dataset.light;
+            }
         } else if (parentBtn.classList.contains('dark-mode-1-btn')) {
-            btn.src = currentMode === 'dark1' ? 
-                btn.dataset.dark1Hover : btn.dataset.dark1;
+            // Para el botón de dark mode 1
+            if (currentMode === 'dark1') {
+                btn.src = btn.dataset.dark1Hover;
+            } else {
+                btn.src = btn.dataset.dark1;
+            }
         } else if (parentBtn.classList.contains('dark-mode-2-btn')) {
-            btn.src = currentMode === 'dark2' ? 
-                btn.dataset.dark2Hover : btn.dataset.dark2;
+            // Para el botón de dark mode 2
+            if (currentMode === 'dark2') {
+                btn.src = btn.dataset.dark2Hover;
+            } else {
+                btn.src = btn.dataset.dark2;
+            }
         }
     });
 }
@@ -35,14 +47,16 @@ function updateButtonImages(currentMode) {
 // Efecto hover para los botones
 document.querySelectorAll('.mode-btn').forEach(btn => {
     const img = btn.querySelector('img');
-    const btnClass = btn.classList[1]; // light-mode-btn, dark-mode-1-btn, etc.
     
     btn.addEventListener('mouseenter', () => {
-        if (btnClass === 'light-mode-btn' && img.dataset.lightHover) {
+        const currentMode = document.body.classList.contains('light-mode') ? 'light' :
+                           document.body.classList.contains('dark-mode-2') ? 'dark2' : 'dark1';
+        
+        if (btn.classList.contains('light-mode-btn')) {
             img.src = img.dataset.lightHover;
-        } else if (btnClass === 'dark-mode-1-btn' && img.dataset.dark1Hover) {
+        } else if (btn.classList.contains('dark-mode-1-btn')) {
             img.src = img.dataset.dark1Hover;
-        } else if (btnClass === 'dark-mode-2-btn' && img.dataset.dark2Hover) {
+        } else if (btn.classList.contains('dark-mode-2-btn')) {
             img.src = img.dataset.dark2Hover;
         }
     });
@@ -51,11 +65,11 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
         const currentMode = document.body.classList.contains('light-mode') ? 'light' :
                            document.body.classList.contains('dark-mode-2') ? 'dark2' : 'dark1';
         
-        if (btnClass === 'light-mode-btn') {
+        if (btn.classList.contains('light-mode-btn')) {
             img.src = currentMode === 'light' ? img.dataset.lightHover : img.dataset.light;
-        } else if (btnClass === 'dark-mode-1-btn') {
+        } else if (btn.classList.contains('dark-mode-1-btn')) {
             img.src = currentMode === 'dark1' ? img.dataset.dark1Hover : img.dataset.dark1;
-        } else if (btnClass === 'dark-mode-2-btn') {
+        } else if (btn.classList.contains('dark-mode-2-btn')) {
             img.src = currentMode === 'dark2' ? img.dataset.dark2Hover : img.dataset.dark2;
         }
     });
