@@ -1,152 +1,79 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: sans-serif;
-    background-color: #1a1a1a;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #111;
 }
 
-/* CONTAINER - Sin medidas fijas, solo display */
-.container {
-    display: inline-block;  /* Se ajusta al contenido */
-    background-color: #333; /* Solo para ver el contenedor */
+#space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* HEAD */
-.head {
-    background-image: url('darkmode/head/FONDO.png');
-    background-size: contain;    /* Mantiene proporciones */
-    background-repeat: no-repeat;
-    background-position: left top;
-    /* SIN width ni height fijos - tú los controlas desde consola */
+/* Head */
+#head img {
+  height: 20%;   /* controla solo height */
+  width: auto;   /* ancho automático */
 }
 
-/* BOTONES dentro del head */
-.head-buttons {
-    display: flex;
-    flex-direction: column;
-    /* Sin medidas fijas */
+/* Content debajo de Head */
+#content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
-.mode-btn {
-    border: none;
-    cursor: pointer;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    transition: transform 0.2s;
-    /* SIN width/height fijos - tú controlas */
+/* Buttons */
+#buttons {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1%;
 }
 
-.mode-btn:hover {
-    transform: scale(1.05);
+#buttons button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
-/* LATERAL */
-.lateral {
-    background-image: url('darkmode/lateral.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+#buttons img {
+  height: 10%;   /* controlas solo height */
+  width: auto;
 }
 
-/* CONTENEDOR FLEX */
-.content-wrapper {
-    display: flex;
+/* Lateral */
+#lateral img {
+  height: 80%;
+  width: auto;
 }
 
-/* MAIN CONTENT */
-.main-content {
-    display: flex;
-    flex-direction: column;
+/* Main */
+#main {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1%;
 }
 
-/* TOP */
-.top {
-    background-image: url('darkmode/top/ZONA_TOP.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+#top img {
+  height: 40%;
+  width: auto;
 }
 
-/* BOT */
-.bot {
-    background-image: url('darkmode/bot/ZONA_BOT.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+#bot img {
+  height: 25%;
+  width: auto;
 }
 
-/* FOOTER */
-.footer {
-    background-image: url('darkmode/FOOTER.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+#footer img {
+  height: 5%;
+  width: auto;
 }
 
-/* INFO */
-.info {
-    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-/* ESTILOS DE BOTONES SEGÚN MODO */
-/* Modo dark 1 (por defecto) */
-#mode-light {
-    background-image: url('darkmode/buttons/lightmode1.png');
-}
-#mode-light:hover {
-    background-image: url('darkmode/buttons/lightmode2.png');
-}
-
-#mode-dark1, #mode-dark2 {
-    background-image: url('darkmode/buttons/darkmode1.png');
-}
-#mode-dark1:hover, #mode-dark2:hover {
-    background-image: url('darkmode/buttons/darkmode2.png');
-}
-
-/* MODO LIGHT */
-body.light-mode .head {
-    background-image: url('lightmode/head/FONDO.png');
-}
-body.light-mode .lateral {
-    background-image: url('lightmode/lateral.png');
-}
-body.light-mode .top {
-    background-image: url('lightmode/top/ZONA_TOP.png');
-}
-body.light-mode .bot {
-    background-image: url('lightmode/bot/ZONA_BOT.png');
-}
-body.light-mode .footer {
-    background-image: url('lightmode/FOOTER.png');
-}
-body.light-mode .info {
-    background-image: url('lightmode/info/RECTANGULO_LARGO.png');
-}
-
-/* MODO DARK 2 (NOCHE) - Por ahora mismo que dark 1 */
-body.dark-mode-2 .head {
-    background-image: url('darkmode/head/FONDO.png');
-}
-body.dark-mode-2 .lateral {
-    background-image: url('darkmode/lateral.png');
-}
-body.dark-mode-2 .top {
-    background-image: url('darkmode/top/ZONA_TOP.png');
-}
-body.dark-mode-2 .bot {
-    background-image: url('darkmode/bot/ZONA_BOT.png');
-}
-body.dark-mode-2 .footer {
-    background-image: url('darkmode/FOOTER.png');
-}
-body.dark-mode-2 .info {
-    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
+/* Info */
+#info img {
+  height: 80%;
+  width: auto;
 }
