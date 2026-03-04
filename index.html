@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cumplee</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode-1">
+    <div class="container">
+        <!-- Sección Head (superior) -->
+        <header class="head">
+            <div class="head-content">
+                <!-- Aquí irá el contenido del head -->
+            </div>
+        </header>
+
+        <!-- Botones de modo (a la izquierda del head) -->
+        <div class="buttons-container">
+            <button class="mode-btn light-mode-btn" onclick="setMode('light')">
+                <img src="darkmode/buttons/lightmode1.png" alt="Light Mode" class="btn-img" data-light="darkmode/buttons/lightmode1.png" data-light-hover="darkmode/buttons/lightmode2.png">
+            </button>
+            <button class="mode-btn dark-mode-1-btn" onclick="setMode('dark1')">
+                <img src="darkmode/buttons/darkmode1.png" alt="Dark Mode 1" class="btn-img" data-dark1="darkmode/buttons/darkmode1.png" data-dark1-hover="darkmode/buttons/darkmode2.png">
+            </button>
+            <button class="mode-btn dark-mode-2-btn" onclick="setMode('dark2')">
+                <img src="darkmode2/buttons/darkmode1.png" alt="Dark Mode 2" class="btn-img" data-dark2="darkmode2/buttons/darkmode1.png" data-dark2-hover="darkmode2/buttons/darkmode2.png">
+            </button>
+        </div>
+
+        <!-- Sección Lateral (izquierda) -->
+        <aside class="lateral">
+            <!-- Contenido lateral -->
+        </aside>
+
+        <!-- Sección Principal (derecha del lateral) -->
+        <main class="main-content">
+            <!-- Sección Top -->
+            <section class="top">
+                <img src="darkmode/top/ZONA_TOP.png" alt="Zona Top" class="top-img">
+            </section>
+
+            <!-- Sección Bot -->
+            <section class="bot">
+                <img src="darkmode/bot/ZONA_BOT.png" alt="Zona Bot" class="bot-img">
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <img src="darkmode/FOOTER.png" alt="Footer" class="footer-img">
+            </footer>
+        </main>
+
+        <!-- Sección Info (derecha) -->
+        <aside class="info">
+            <img src="darkmode/info/RECTANGULO LARGO.png" alt="Info" class="info-img">
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
