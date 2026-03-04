@@ -1,194 +1,99 @@
-/* RESET BÁSICO */
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center; /* Centra el contenedor horizontalmente */
-    align-items: center; /* Centra el contenedor verticalmente */
-    min-height: 100vh;
-    background-color: #1a1a1a; /* Un fondo neutro para ver los límites */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: sans-serif;
 }
 
-/* CONTENEDOR PRINCIPAL */
-.container {
-    display: grid;
-    /* Definimos las columnas:
-       1. "buttons" (ancho automático, pero lo pondremos fijo después)
-       2. "lateral" (49px)
-       3. "main-content" (1186px)
-       4. "info" (353px)
-    */
-    grid-template-columns: auto 49px 1186px 353px;
-    /* Definimos las filas:
-       1. "head" (134px)
-       2. El resto de contenido (se ajustará automáticamente)
-    */
-    grid-template-rows: 134px auto;
-    grid-template-areas: 
-        "buttons head head head"
-        "buttons lateral main info";
-    position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Solo para visualizar el contenedor */
+/* Head */
+#head {
+  width: 1556px;
+  height: 134px;
+  background: url("darkmode/head/FONDO.png") no-repeat center;
+  position: relative;
 }
 
-/* HEAD */
-.head {
-    grid-area: head;
-    background-image: url('darkmode/head/FONDO.png');
-    background-size: cover; /* Ajusta la imagen al área */
-    background-repeat: no-repeat;
-    width: 100%; /* Ocupa todo el ancho de su celda en la grid */
-    height: 134px; /* Altura fija */
+/* Botones */
+#buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-/* BUTTONS - Contenedor de botones */
-.buttons {
-    grid-area: buttons;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Los coloca desde arriba */
-    align-items: center; /* Centra los botones horizontalmente en esta columna */
-    padding-top: 10px; /* Un pequeño espacio desde arriba */
-    gap: 5px; /* Espacio entre botones */
-    width: auto; /* Se ajusta al contenido */
+#buttons button {
+  width: 49px;
+  height: 49px;
+  border: none;
+  background-size: cover;
+  cursor: pointer;
 }
 
-/* Estilo base de los botones */
-.mode-btn {
-    width: 50px;  /* Ajusta el ancho de tus imágenes de botón */
-    height: 50px; /* Ajusta el alto de tus imágenes de botón */
-    border: none;
-    cursor: pointer;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    transition: transform 0.2s ease;
+#light-btn {
+  background-image: url("darkmode/buttons/lightmode1.png");
+}
+#light-btn:hover {
+  background-image: url("darkmode/buttons/lightmode2.png");
 }
 
-.mode-btn:hover {
-    transform: scale(1.1); /* Un pequeño efecto hover adicional */
+#dark-day-btn,
+#dark-night-btn {
+  background-image: url("darkmode/buttons/darkmode1.png");
+}
+#dark-day-btn:hover,
+#dark-night-btn:hover {
+  background-image: url("darkmode/buttons/darkmode2.png");
 }
 
-/* Asignamos las imágenes por defecto (dark mode 1) a los botones */
-#mode-light {
-    background-image: url('darkmode/buttons/lightmode1.png');
-}
-#mode-light:hover {
-    background-image: url('darkmode/buttons/lightmode2.png');
+/* Layout general */
+#layout {
+  display: flex;
+  margin-top: 10px;
 }
 
-#mode-dark1 {
-    background-image: url('darkmode/buttons/darkmode1.png');
-}
-#mode-dark1:hover {
-    background-image: url('darkmode/buttons/darkmode2.png');
-}
-
-#mode-dark2 {
-    background-image: url('darkmode/buttons/darkmode1.png');
-}
-#mode-dark2:hover {
-    background-image: url('darkmode/buttons/darkmode2.png');
+/* Lateral */
+#lateral {
+  width: 49px;
+  height: 1449px;
+  background: url("darkmode/lateral.png") no-repeat center;
 }
 
-/* LATERAL */
-.lateral {
-    grid-area: lateral;
-    background-image: url('darkmode/lateral.png');
-    background-repeat: repeat-y; /* Se repite verticalmente si es necesario, aunque la altura es fija */
-    width: 49px;
-    height: 1449px; /* Altura fija */
+/* Sección principal */
+#main {
+  display: flex;
+  flex-direction: column;
 }
 
-/* SECCIÓN PRINCIPAL (main-content) */
-.main-content {
-    grid-area: main;
-    display: flex;
-    flex-direction: column;
-    width: 1186px; /* Ancho fijo */
+#top {
+  width: 1186px;
+  height: 875px;
+  background: url("darkmode/top/ZONA_TOP.png") no-repeat center;
 }
 
-/* TOP */
-.top {
-    background-image: url('darkmode/top/ZONA_TOP.png');
-    background-size: cover;
-    width: 1186px;
-    height: 875px; /* Altura fija */
+#bot {
+  width: 1186px;
+  height: 514px;
+  background: url("darkmode/bot/ZONA_BOT.png") no-repeat center;
 }
 
-/* BOT */
-.bot {
-    background-image: url('darkmode/bot/ZONA_BOT.png');
-    background-size: cover;
-    width: 1186px;
-    height: 514px; /* Altura fija */
+#footer {
+  width: 1186px;
+  height: 88px;
+  background: url("darkmode/FOOTER.png") no-repeat center;
 }
 
-/* FOOTER */
-.footer {
-    background-image: url('darkmode/FOOTER.png');
-    background-size: cover;
-    width: 1186px;
-    height: 88px; /* Altura fija */
+/* Info */
+#info {
+  width: 353px;
+  height: 1449px;
+  background: url("darkmode/info/RECTANGULO_LARGO.png") no-repeat center;
+  margin-left: 10px;
 }
-
-/* INFO */
-.info {
-    grid-area: info;
-    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
-    background-repeat: repeat-y; /* Se repite verticalmente si es necesario */
-    width: 353px;
-    height: 1449px; /* Altura fija */
-}
-
-/* ----------------------------------------------- */
-/* ESTILOS PARA LOS DIFERENTES MODOS (con JS)      */
-/* ----------------------------------------------- */
-
-/* MODO LIGHT (ejemplo con marcadores de color, reemplazar con imágenes reales) */
-body.light-mode .head {
-    background-image: url('lightmode/head/FONDO.png'); /* Asume que tienes esta carpeta */
-}
-body.light-mode .lateral {
-    background-image: url('lightmode/lateral.png');
-}
-body.light-mode .top {
-    background-image: url('lightmode/top/ZONA_TOP.png');
-}
-body.light-mode .bot {
-    background-image: url('lightmode/bot/ZONA_BOT.png');
-}
-body.light-mode .footer {
-    background-image: url('lightmode/FOOTER.png');
-}
-body.light-mode .info {
-    background-image: url('lightmode/info/RECTANGULO_LARGO.png');
-}
-
-/* MODO DARK 2 (NOCHE) - Por ahora igual que dark 1 */
-body.dark-mode-2 .head {
-    background-image: url('darkmode/head/FONDO.png');
-}
-body.dark-mode-2 .lateral {
-    background-image: url('darkmode/lateral.png');
-}
-body.dark-mode-2 .top {
-    background-image: url('darkmode/top/ZONA_TOP.png');
-}
-body.dark-mode-2 .bot {
-    background-image: url('darkmode/bot/ZONA_BOT.png');
-}
-body.dark-mode-2 .footer {
-    background-image: url('darkmode/FOOTER.png');
-}
-body.dark-mode-2 .info {
-    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
-}
-
-/* También podemos ajustar los botones para que tengan sentido en cada modo.
-   Esto es solo un ejemplo visual. */
