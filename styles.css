@@ -1,83 +1,166 @@
-/* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-family: sans-serif;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2a2a2a;
 }
 
-/* Head */
-#head {
-  width: 1556px;
-  height: 134px;
-  background-color: #333; /* Rectángulo gris oscuro */
-  position: relative;
+/* CONTENEDOR PRINCIPAL - 1920px de ancho */
+.container {
+    width: 1920px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
 
-/* Botones */
-#buttons {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
+/* HEAD - 1920x90px */
+.head {
+    width: 1920px;
+    height: 90px;
+    background-image: url('darkmode/head/FONDO.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-#buttons button {
-  width: 49px;
-  height: 49px;
-  margin-bottom: 5px;
-  border: none;
-  cursor: pointer;
+/* WRAPPER FLEX para el resto */
+.content-wrapper {
+    display: flex;
+    width: 1920px;
 }
 
-/* Layout */
-#layout {
-  display: flex;
-  margin-top: 10px;
+/* COLUMNA IZQUIERDA */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    width: 91px; /* Ancho de los botones */
 }
 
-/* Lateral */
-#lateral {
-  width: 49px;
-  height: 1449px;
-  background-color: #555; /* Rectángulo gris medio */
+/* STACK DE BOTONES VERTICALES */
+.buttons-stack {
+    display: flex;
+    flex-direction: column;
+    width: 91px;
 }
 
-/* Sección principal */
-#main {
-  display: flex;
-  flex-direction: column;
+.mode-btn {
+    width: 91px;
+    height: 90px;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    background-color: transparent;
+    transition: transform 0.2s;
 }
 
-#top {
-  width: 1186px;
-  height: 875px;
-  background-color: #777; /* Rectángulo gris claro */
+.mode-btn:hover {
+    transform: scale(1.05);
 }
 
-#bot {
-  width: 1186px;
-  height: 514px;
-  background-color: #999;
+/* LATERAL - 29x876px (debajo de los botones) */
+.lateral {
+    width: 29px;
+    height: 876px;
+    background-image: url('darkmode/lateral.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-#footer {
-  width: 1186px;
-  height: 88px;
-  background-color: #bbb;
+/* SECCIÓN PRINCIPAL */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    width: 718px;
 }
 
-/* Info */
-#info {
-  width: 353px;
-  height: 1449px;
-  background-color: #222; /* Rectángulo negro */
-  margin-left: 10px;
+/* TOP - 718x531px */
+.top {
+    width: 718px;
+    height: 531px;
+    background-image: url('darkmode/top/ZONA_TOP.png');
+    background-size: cover;
+}
+
+/* BOT - 718x312px */
+.bot {
+    width: 718px;
+    height: 312px;
+    background-image: url('darkmode/bot/ZONA_BOT.png');
+    background-size: cover;
+}
+
+/* FOOTER - 718x55px */
+.footer {
+    width: 718px;
+    height: 55px;
+    background-image: url('darkmode/FOOTER.png');
+    background-size: cover;
+}
+
+/* INFO - 213x866px */
+.info {
+    width: 213px;
+    height: 866px;
+    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
+    background-size: cover;
+}
+
+/* ESTILOS DE BOTONES POR DEFECTO (dark mode 1) */
+#mode-light {
+    background-image: url('darkmode/buttons/lightmode1.png');
+}
+#mode-light:hover {
+    background-image: url('darkmode/buttons/lightmode2.png');
+}
+
+#mode-dark1, #mode-dark2 {
+    background-image: url('darkmode/buttons/darkmode1.png');
+}
+#mode-dark1:hover, #mode-dark2:hover {
+    background-image: url('darkmode/buttons/darkmode2.png');
+}
+
+/* MODO LIGHT */
+body.light-mode .head {
+    background-image: url('lightmode/head/FONDO.png');
+}
+body.light-mode .lateral {
+    background-image: url('lightmode/lateral.png');
+}
+body.light-mode .top {
+    background-image: url('lightmode/top/ZONA_TOP.png');
+}
+body.light-mode .bot {
+    background-image: url('lightmode/bot/ZONA_BOT.png');
+}
+body.light-mode .footer {
+    background-image: url('lightmode/FOOTER.png');
+}
+body.light-mode .info {
+    background-image: url('lightmode/info/RECTANGULO_LARGO.png');
+}
+
+/* MODO DARK 2 (NOCHE) */
+body.dark-mode-2 .head {
+    background-image: url('darkmode-night/head/FONDO.png'); /* Cambia la ruta cuando tengas las imágenes */
+}
+body.dark-mode-2 .lateral {
+    background-image: url('darkmode-night/lateral.png');
+}
+body.dark-mode-2 .top {
+    background-image: url('darkmode-night/top/ZONA_TOP.png');
+}
+body.dark-mode-2 .bot {
+    background-image: url('darkmode-night/bot/ZONA_BOT.png');
+}
+body.dark-mode-2 .footer {
+    background-image: url('darkmode-night/FOOTER.png');
+}
+body.dark-mode-2 .info {
+    background-image: url('darkmode-night/info/RECTANGULO_LARGO.png');
 }
