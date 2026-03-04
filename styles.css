@@ -1,88 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #111;
+    font-family: sans-serif;
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#space {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* CONTAINER - Sin medidas fijas, solo display */
+.container {
+    display: inline-block;  /* Se ajusta al contenido */
+    background-color: #333; /* Solo para ver el contenedor */
 }
 
-/* Head */
-#head {
-  width: 50%;              /* controlas el ancho */
-  min-height: 90px;         /* altura mínima para que se vea */
-  background: url("darkmode/head/FONDO.png") no-repeat center/contain;
-  margin-bottom: 1%;
+/* HEAD */
+.head {
+    background-image: url('darkmode/head/FONDO.png');
+    background-size: contain;    /* Mantiene proporciones */
+    background-repeat: no-repeat;
+    background-position: left top;
+    /* SIN width ni height fijos - tú los controlas desde consola */
 }
 
-/* Content debajo de Head */
-#content {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+/* BOTONES dentro del head */
+.head-buttons {
+    display: flex;
+    flex-direction: column;
+    /* Sin medidas fijas */
 }
 
-/* Buttons */
-#buttons {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1%;
+.mode-btn {
+    border: none;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    transition: transform 0.2s;
+    /* SIN width/height fijos - tú controlas */
 }
 
-#buttons button {
-  width: 91px;
-  height: 90px;
-  margin-bottom: 5px;
-  border: none;
-  cursor: pointer;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+.mode-btn:hover {
+    transform: scale(1.05);
 }
 
-/* Lateral */
-#lateral {
-  width: 5%;               /* controlas el ancho */
-  min-height: 200px;        /* altura mínima */
-  background: url("darkmode/lateral.png") no-repeat center/contain;
-  margin-right: 1%;
+/* LATERAL */
+.lateral {
+    background-image: url('darkmode/lateral.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-/* Main */
-#main {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1%;
+/* CONTENEDOR FLEX */
+.content-wrapper {
+    display: flex;
 }
 
-#top {
-  width: 40%;
-  min-height: 200px;
-  background: url("darkmode/top/ZONA_TOP.png") no-repeat center/contain;
-  margin-bottom: 1%;
+/* MAIN CONTENT */
+.main-content {
+    display: flex;
+    flex-direction: column;
 }
 
-#bot {
-  width: 40%;
-  min-height: 150px;
-  background: url("darkmode/bot/ZONA_BOT.png") no-repeat center/contain;
-  margin-bottom: 1%;
+/* TOP */
+.top {
+    background-image: url('darkmode/top/ZONA_TOP.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-#footer {
-  width: 40%;
-  min-height: 50px;
-  background: url("darkmode/FOOTER.png") no-repeat center/contain;
+/* BOT */
+.bot {
+    background-image: url('darkmode/bot/ZONA_BOT.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-/* Info */
-#info {
-  width: 15%;
-  min-height: 200px;
-  background: url("darkmode/info/RECTANGULO_LARGO.png") no-repeat center/contain;
+/* FOOTER */
+.footer {
+    background-image: url('darkmode/FOOTER.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* INFO */
+.info {
+    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* ESTILOS DE BOTONES SEGÚN MODO */
+/* Modo dark 1 (por defecto) */
+#mode-light {
+    background-image: url('darkmode/buttons/lightmode1.png');
+}
+#mode-light:hover {
+    background-image: url('darkmode/buttons/lightmode2.png');
+}
+
+#mode-dark1, #mode-dark2 {
+    background-image: url('darkmode/buttons/darkmode1.png');
+}
+#mode-dark1:hover, #mode-dark2:hover {
+    background-image: url('darkmode/buttons/darkmode2.png');
+}
+
+/* MODO LIGHT */
+body.light-mode .head {
+    background-image: url('lightmode/head/FONDO.png');
+}
+body.light-mode .lateral {
+    background-image: url('lightmode/lateral.png');
+}
+body.light-mode .top {
+    background-image: url('lightmode/top/ZONA_TOP.png');
+}
+body.light-mode .bot {
+    background-image: url('lightmode/bot/ZONA_BOT.png');
+}
+body.light-mode .footer {
+    background-image: url('lightmode/FOOTER.png');
+}
+body.light-mode .info {
+    background-image: url('lightmode/info/RECTANGULO_LARGO.png');
+}
+
+/* MODO DARK 2 (NOCHE) - Por ahora mismo que dark 1 */
+body.dark-mode-2 .head {
+    background-image: url('darkmode/head/FONDO.png');
+}
+body.dark-mode-2 .lateral {
+    background-image: url('darkmode/lateral.png');
+}
+body.dark-mode-2 .top {
+    background-image: url('darkmode/top/ZONA_TOP.png');
+}
+body.dark-mode-2 .bot {
+    background-image: url('darkmode/bot/ZONA_BOT.png');
+}
+body.dark-mode-2 .footer {
+    background-image: url('darkmode/FOOTER.png');
+}
+body.dark-mode-2 .info {
+    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
 }
