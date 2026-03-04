@@ -33,6 +33,16 @@ body {
     width: auto;
 }
 
+/* HOVER PARA BOTONES - Cambian a lightmode2.png o darkmode2.png según el modo */
+#light-btn:hover #img-light {
+    content: url('darkmode/buttons/lightmode2.png');
+}
+
+#dark-day-btn:hover #img-dark-day,
+#dark-night-btn:hover #img-dark-night {
+    content: url('darkmode/buttons/darkmode2.png');
+}
+
 /* Space */
 #space {
     display: flex;
@@ -96,3 +106,102 @@ body {
     height: 707.8px;              
     width: auto;
 }
+
+/* ============================================ */
+/* MODOS DE COLOR (LIGHT, DARK1, DARK2)        */
+/* ============================================ */
+
+/* MODO LIGHT */
+body.light #img-head {
+    content: url('lightmode/head/FONDO.png');
+}
+
+body.light #img-lateral {
+    content: url('lightmode/lateral.png');
+}
+
+body.light #img-top {
+    content: url('lightmode/top/ZONA_TOP.png');
+}
+
+body.light #img-bot {
+    content: url('lightmode/bot/ZONA_BOT.png');
+}
+
+body.light #img-footer {
+    content: url('lightmode/FOOTER.png');
+}
+
+body.light #img-info {
+    content: url('lightmode/info/RECTANGULO_LARGO.png');
+}
+
+/* Botones en modo light */
+body.light #img-light {
+    content: url('lightmode/buttons/lightmode1.png');
+}
+
+body.light #img-dark-day,
+body.light #img-dark-night {
+    content: url('lightmode/buttons/darkmode1.png');
+}
+
+/* Hovers en modo light */
+body.light #light-btn:hover #img-light {
+    content: url('lightmode/buttons/lightmode2.png');
+}
+
+body.light #dark-day-btn:hover #img-dark-day,
+body.light #dark-night-btn:hover #img-dark-night {
+    content: url('lightmode/buttons/darkmode2.png');
+}
+
+/* ============================================ */
+/* MODO DARK 2 (MYTMODE) - Segundo dark mode    */
+/* ============================================ */
+body.dark-night #img-head {
+    content: url('mytmode/head/FONDO.png');      /* Cambia 'mytmode' por el nombre real de tu carpeta */
+}
+
+body.dark-night #img-lateral {
+    content: url('mytmode/lateral.png');
+}
+
+body.dark-night #img-top {
+    content: url('mytmode/top/ZONA_TOP.png');
+}
+
+body.dark-night #img-bot {
+    content: url('mytmode/bot/ZONA_BOT.png');
+}
+
+body.dark-night #img-footer {
+    content: url('mytmode/FOOTER.png');
+}
+
+body.dark-night #img-info {
+    content: url('mytmode/info/RECTANGULO_LARGO.png');
+}
+
+/* Botones en modo dark-night */
+body.dark-night #img-light {
+    content: url('mytmode/buttons/lightmode1.png');
+}
+
+body.dark-night #img-dark-day,
+body.dark-night #img-dark-night {
+    content: url('mytmode/buttons/darkmode1.png');
+}
+
+/* Hovers en modo dark-night */
+body.dark-night #light-btn:hover #img-light {
+    content: url('mytmode/buttons/lightmode2.png');
+}
+
+body.dark-night #dark-day-btn:hover #img-dark-day,
+body.dark-night #dark-night-btn:hover #img-dark-night {
+    content: url('mytmode/buttons/darkmode2.png');
+}
+
+/* NOTA: El modo dark-day (primer dark mode) ya está por defecto
+   con las rutas 'darkmode/' que tienes en el HTML */
