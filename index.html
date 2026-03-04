@@ -1,43 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil Web - 3 Modos</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Perfil Web</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-mode-1"> <!-- Clase por defecto: primer modo oscuro -->
-
-    <div class="container">
-        <!-- SECCIÓN HEAD -->
-        <header class="head">
-            <!-- Aquí iría el contenido específico de la cabecera, como un título o logo -->
-        </header>
-
-        <!-- SECCIÓN BUTTONS (a la izquierda del head) -->
-        <div class="buttons">
-            <button id="mode-light" class="mode-btn" aria-label="Modo Claro"></button>
-            <button id="mode-dark1" class="mode-btn" aria-label="Modo Oscuro 1 (Día)"></button>
-            <button id="mode-dark2" class="mode-btn" aria-label="Modo Oscuro 2 (Noche)"></button>
-        </div>
-
-        <!-- SECCIÓN LATERAL (izquierda, debajo de head) -->
-        <aside class="lateral"></aside>
-
-        <!-- SECCIÓN PRINCIPAL (derecha de lateral) -->
-        <main class="main-content">
-            <!-- TOP -->
-            <div class="top"></div>
-            <!-- BOT -->
-            <div class="bot"></div>
-            <!-- FOOTER -->
-            <footer class="footer"></footer>
-        </main>
-
-        <!-- SECCIÓN INFO (derecha de la sección principal) -->
-        <aside class="info"></aside>
+<body class="dark-day">
+  <div id="head">
+    <div id="buttons">
+      <button id="light-btn"></button>
+      <button id="dark-day-btn"></button>
+      <button id="dark-night-btn"></button>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div id="layout">
+    <div id="lateral"></div>
+    <div id="main">
+      <div id="top"></div>
+      <div id="bot"></div>
+      <div id="footer"></div>
+    </div>
+    <div id="info"></div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
