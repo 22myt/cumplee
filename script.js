@@ -1,21 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const body = document.body;
-    const lightModeBtn = document.getElementById('mode-light');
-    const darkMode1Btn = document.getElementById('mode-dark1');
-    const darkMode2Btn = document.getElementById('mode-dark2');
+const body = document.body;
+const lightBtn = document.getElementById("light-btn");
+const darkDayBtn = document.getElementById("dark-day-btn");
+const darkNightBtn = document.getElementById("dark-night-btn");
 
-    function setMode(mode) {
-        body.classList.remove('light-mode', 'dark-mode-1', 'dark-mode-2');
-        body.classList.add(mode);
-        console.log('🔵 Modo activado:', mode);
-        
-        // Muestra las clases actuales en consola
-        console.log('Clases del body:', body.className);
-    }
+lightBtn.addEventListener("click", () => {
+  body.className = "light";
+});
 
-    lightModeBtn.addEventListener('click', () => setMode('light-mode'));
-    darkMode1Btn.addEventListener('click', () => setMode('dark-mode-1'));
-    darkMode2Btn.addEventListener('click', () => setMode('dark-mode-2'));
+darkDayBtn.addEventListener("click", () => {
+  body.className = "dark-day";
+});
 
-    console.log('✅ Perfil web cargado. Puedes ajustar tamaños desde la consola.');
+darkNightBtn.addEventListener("click", () => {
+  body.className = "dark-night";
 });
