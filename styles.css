@@ -24,7 +24,7 @@ body {
     border: none;
     background: none;
     cursor: pointer;
-    margin-bottom: 5px;        
+    margin-bottom: 1.9px;        
 }
 
 #buttons img {
@@ -42,7 +42,7 @@ body {
 
 /* Head */
 #head {
-    margin-bottom: 5px;     
+    margin-bottom: 1.9px;     
 }
 
 #img-head {
