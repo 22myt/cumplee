@@ -156,14 +156,14 @@ body {
 #img-top {
     height: auto;
     width: 578px;
-    margin-bottom: -10px;  /* ¡MARGEN ORIGINAL RESTAURADO! */
+    margin-bottom: -6px;  
     display: block;
 }
 
 #img-bot {
     height: auto;
     width: 578px;
-    margin-bottom: -10px;  /* ¡MARGEN ORIGINAL RESTAURADO! */
+    margin-bottom: -6px; 
     display: block;
 }
 
