@@ -39,31 +39,30 @@ let scalingInterval = null;
 
 function checkContainerScaling() {
     const contentWrapper = document.getElementById('content-wrapper');
+    const mainContainer = document.getElementById('main-container');
     
-    if (!contentWrapper) return;
+    if (!contentWrapper || !mainContainer) return;
     
-    // Medir alturas
+    // Medir alturas considerando el padding del mainContainer
     const wrapperHeight = contentWrapper.scrollHeight;
-    const viewportHeight = window.innerHeight;
+    const availableHeight = window.innerHeight - 40; // Restamos 40px (20px arriba + 20px abajo)
     
-    // Verificar si el wrapper es más alto que el viewport
-    const isOverflowing = wrapperHeight > viewportHeight;
+    // Verificar si el wrapper es más alto que el espacio disponible
+    const isOverflowing = wrapperHeight > availableHeight;
     
-    console.log(`Wrapper: ${wrapperHeight}px, Viewport: ${viewportHeight}px, Overflow: ${isOverflowing}`);
+    console.log(`Wrapper: ${wrapperHeight}px, Disponible: ${availableHeight}px, Overflow: ${isOverflowing}`);
     
     if (isOverflowing) {
-        // Calcular factor de escala (como en la referencia)
-        const scaleFactor = viewportHeight / wrapperHeight;
+        // Calcular factor de escala basado en el espacio disponible
+        const scaleFactor = availableHeight / wrapperHeight;
         
         // Aplicar transform scale
         contentWrapper.style.transform = `scale(${scaleFactor})`;
-        contentWrapper.style.zoom = 'unset';
         
         console.log(`Scaling wrapper to: ${scaleFactor}`);
     } else {
         // Restaurar escala normal
         contentWrapper.style.transform = 'none';
-        contentWrapper.style.zoom = '1';
     }
 }
 
