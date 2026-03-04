@@ -1,7 +1,7 @@
 body {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;   /* Centrado horizontal */
+  align-items: center;       /* Centrado vertical */
   height: 100vh;
   background-color: #111;
 }
@@ -13,9 +13,10 @@ body {
 }
 
 /* Head */
-#head img {
-  height: 20%;   /* controla solo height */
-  width: auto;   /* ancho automático */
+#head {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 /* Content debajo de Head */
@@ -29,7 +30,7 @@ body {
 #buttons {
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
+  margin-right: 10px;
 }
 
 #buttons button {
@@ -40,13 +41,15 @@ body {
 }
 
 #buttons img {
-  height: 10%;   /* controlas solo height */
+  display: block;
+  height: 90px; /* valor inicial, lo puedes cambiar en consola */
   width: auto;
 }
 
 /* Lateral */
 #lateral img {
-  height: 80%;
+  display: block;
+  height: 400px; /* valor inicial */
   width: auto;
 }
 
@@ -54,26 +57,19 @@ body {
 #main {
   display: flex;
   flex-direction: column;
-  margin-right: 1%;
+  margin-right: 10px;
 }
 
-#top img {
-  height: 40%;
-  width: auto;
-}
-
-#bot img {
-  height: 25%;
-  width: auto;
-}
-
-#footer img {
-  height: 5%;
-  width: auto;
+#main img {
+  display: block;
+  height: auto; /* se ajusta automáticamente */
+  max-width: 100%;
+  margin-bottom: 10px;
 }
 
 /* Info */
 #info img {
-  height: 80%;
+  display: block;
+  height: 400px; /* valor inicial */
   width: auto;
 }
