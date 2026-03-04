@@ -1,7 +1,7 @@
 body {
   display: flex;
-  justify-content: center;   /* Centrado horizontal */
-  align-items: center;       /* Centrado vertical */
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background-color: #111;
 }
@@ -22,7 +22,6 @@ body {
   align-items: flex-start;
 }
 
-/* Buttons */
 #buttons {
   display: flex;
   flex-direction: column;
@@ -36,36 +35,48 @@ body {
   margin-bottom: 5px;
 }
 
-#buttons img {
-  display: block;
-  height: 90px; /* valor inicial */
+/* Cada imagen independiente */
+#img-head {
+  height: 90px; /* inicial */
   width: auto;
 }
 
-/* Lateral */
-#lateral img {
-  display: block;
-  height: 400px; /* valor inicial */
+#img-light {
+  height: 90px;
   width: auto;
 }
 
-/* Main */
-#main {
-  display: flex;
-  flex-direction: column;
-  margin-right: 10px;
-}
-
-#main img {
-  display: block;
-  height: auto; /* se ajusta automáticamente */
+#img-dark-day {
+  height: 90px;
   width: auto;
-  margin-bottom: 10px;
 }
 
-/* Info */
-#info img {
-  display: block;
-  height: 400px; /* valor inicial */
+#img-dark-night {
+  height: 90px;
+  width: auto;
+}
+
+#img-lateral {
+  height: 400px;
+  width: auto;
+}
+
+#img-top {
+  height: 200px;
+  width: auto;
+}
+
+#img-bot {
+  height: 150px;
+  width: auto;
+}
+
+#img-footer {
+  height: 50px;
+  width: auto;
+}
+
+#img-info {
+  height: 400px;
   width: auto;
 }
