@@ -1,44 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil Web - 3 Modos</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Perfil Web - Space</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-mode-1">
-    <!-- CONTENEDOR PRINCIPAL -->
-    <div class="container">
-        <!-- HEAD (ocupa todo el ancho) -->
-        <header class="head"></header>
-        
-        <!-- CONTENEDOR FLEX para el resto -->
-        <div class="content-wrapper">
-            <!-- COLUMNA IZQUIERDA (botones + lateral) -->
-            <div class="left-column">
-                <!-- Botones apilados verticalmente -->
-                <div class="buttons-stack">
-                    <button id="mode-light" class="mode-btn" aria-label="Modo Claro"></button>
-                    <button id="mode-dark1" class="mode-btn" aria-label="Modo Oscuro Día"></button>
-                    <button id="mode-dark2" class="mode-btn" aria-label="Modo Oscuro Noche"></button>
-                </div>
-                
-                <!-- LATERAL (debajo de los botones) -->
-                <aside class="lateral"></aside>
-            </div>
-            
-            <!-- SECCIÓN PRINCIPAL (Top + Bot + Footer) -->
-            <main class="main-content">
-                <div class="top"></div>
-                <div class="bot"></div>
-                <footer class="footer"></footer>
-            </main>
-            
-            <!-- INFO (derecha) -->
-            <aside class="info"></aside>
-        </div>
+<body>
+  <div id="space">
+    <div id="head"></div>
+    <div id="content">
+      <div id="buttons">
+        <button id="light-btn">L</button>
+        <button id="dark-day-btn">D1</button>
+        <button id="dark-night-btn">D2</button>
+      </div>
+      <div id="lateral"></div>
+      <div id="main">
+        <div id="top"></div>
+        <div id="bot"></div>
+        <div id="footer"></div>
+      </div>
+      <div id="info"></div>
     </div>
-    
-    <script src="script.js"></script>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
