@@ -1,74 +1,75 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* botones y space alineados arriba */
   height: 100vh;
   background-color: #111;
 }
 
-#space {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#head {
-  margin-bottom: 10px;
-}
-
-#content {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
+/* Bloque de botones a la izquierda */
 #buttons {
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 #buttons button {
   border: none;
   background: none;
   cursor: pointer;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-/* Cada imagen independiente */
-#img-head {
+#buttons img {
+  display: block;
   height: 90px; /* inicial */
   width: auto;
 }
 
-#img-light {
-  height: 90px;
-  width: auto;
+/* Contenedor Space */
+#space {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#img-dark-day {
-  height: 90px;
-  width: auto;
+/* Head arriba */
+#head {
+  margin-bottom: 10px;
 }
 
-#img-dark-night {
-  height: 90px;
-  width: auto;
+/* Content debajo de Head */
+#content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
-#img-lateral {
+/* Lateral */
+#lateral img {
+  display: block;
   height: 400px;
   width: auto;
+  margin-right: 10px;
+}
+
+/* Main */
+#main {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
 }
 
 #img-top {
   height: 200px;
   width: auto;
+  margin-bottom: 10px;
 }
 
 #img-bot {
   height: 150px;
   width: auto;
+  margin-bottom: 10px;
 }
 
 #img-footer {
@@ -76,7 +77,9 @@ body {
   width: auto;
 }
 
-#img-info {
+/* Info */
+#info img {
+  display: block;
   height: 400px;
   width: auto;
 }
