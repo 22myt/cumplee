@@ -1,138 +1,75 @@
-/* FUENTES (si las necesitas, como en la referencia) */
-@font-face {
-    font-family: 'RailroadGothicCC';
-    src: url('fonts/RailroadGothicCC.otf') format('opentype');
-}
+/* ============================================ */
+/* RESET Y CONFIGURACIÓN GENERAL                */
+/* ============================================ */
 
-/* RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* cursor: url('MOUSE2.png'), auto; */ /* Comentado si no tienes los archivos */
+}
+
+html, body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;  /* ¡ESTO ELIMINA EL SCROLL! */
+    background-color: #111;
 }
 
 body {
-    background-color: #111;
-    font-family: 'RailroadGothicCC', sans-serif;
-    overflow-x: hidden;
-    overflow-y: hidden; /* IMPORTANTE: ocultar scroll vertical */
-    position: relative;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Contenedor principal - como el .container de la referencia */
+/* ============================================ */
+/* CONTENEDORES PRINCIPALES                      */
+/* ============================================ */
+
 #main-container {
-    width: 950px; /* Ajusta según el ancho total de tu diseño */
-    margin: 0 auto;
-    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#content-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start; /* Alineación superior para que buttons esté a la altura del head */
-    transform-origin: top center;
-    zoom: 0.70; /* Factor de reducción general como en la referencia */
-    flex-shrink: 0;
+    align-items: flex-start;  /* Alinea los elementos por la parte superior */
+    transform-origin: center center;
+    will-change: transform;
 }
 
-/* Left side - buttons (como .left-side-elements en la referencia) */
-#left-side {
-    position: relative;
+/* ============================================ */
+/* BOTONES - Mantienen su tamaño y posición     */
+/* ============================================ */
+
+#buttons {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0px;
-    margin-right: -20px; /* Margen negativo para acercar al space */
-    margin-top: 25px; /* Ajusta para alinear con el head */
-    z-index: 10;
+    margin-right: -5px;
+    flex-shrink: 0;  /* Evita que se encojan */
+    padding-top: 65.7px;  /* ¡ESTA ES LA CLAVE! Se alinea con head */
+    align-self: flex-start;  /* Se mantiene arriba */
 }
 
-#left-side button {
+#buttons button {
     border: none;
     background: none;
     cursor: pointer;
+    margin-bottom: 0px;
     padding: 0;
-    line-height: 0; /* Elimina espacio extra */
+    line-height: 0;
+    display: block;
 }
 
-#left-side button img {
+#buttons img {
     display: block;
     height: 67px;
     width: auto;
-}
-
-/* Space - contenedor principal de imágenes */
-#space {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-/* Head */
-#head {
-    margin-bottom: 1.9px;
-}
-
-#img-head {
-    display: block;
-    height: 65.7px;
-    width: auto;
-}
-
-/* Content */
-#content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-}
-
-/* Lateral */
-#lateral {
-    margin-right: -5px;
-}
-
-#img-lateral {
-    display: block;
-    height: 707.8px;
-    width: auto;
-}
-
-/* Main */
-#main {
-    display: flex;
-    flex-direction: column;
-}
-
-#img-top {
-    height: auto;
-    width: 578px;
-    margin-bottom: -10px;
-}
-
-#img-bot {
-    height: auto;
-    width: 578px;
-    margin-bottom: -10px;
-}
-
-#img-footer {
-    height: auto;
-    width: 578px;
-}
-
-/* Info */
-#info {
-    margin-left: -5px;
-}
-
-#img-info {
-    display: block;
-    height: 707.8px;
-    width: auto;
+    flex-shrink: 0;
 }
 
 /* HOVER PARA BOTONES */
@@ -146,8 +83,114 @@ body {
 }
 
 /* ============================================ */
-/* MODOS DE COLOR (LIGHT, DARK1, DARK2)        */
+/* SPACE - Contenedor principal                  */
 /* ============================================ */
+
+#space {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    transform-origin: top center;
+    transition: transform 0.1s ease;
+}
+
+#space.scaled {
+    transform-origin: top center;
+}
+
+/* ============================================ */
+/* HEAD                                          */
+/* ============================================ */
+
+#head {
+    margin-bottom: 1.9px;
+    line-height: 0;
+    flex-shrink: 0;
+}
+
+#img-head {
+    display: block;
+    height: 65.7px;
+    width: auto;
+}
+
+/* ============================================ */
+/* CONTENT - Estructura principal                */
+/* ============================================ */
+
+#content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    line-height: 0;
+}
+
+/* ============================================ */
+/* LATERAL                                       */
+/* ============================================ */
+
+#lateral {
+    flex-shrink: 0;
+}
+
+#lateral img {
+    display: block;
+    height: 707.8px;
+    width: auto;
+    margin-right: -5px;
+}
+
+/* ============================================ */
+/* MAIN - Columna central                        */
+/* ============================================ */
+
+#main {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0px;
+    flex-shrink: 0;
+}
+
+#img-top {
+    height: auto;
+    width: 578px;
+    margin-bottom: -10px;
+    display: block;
+}
+
+#img-bot {
+    height: auto;
+    width: 578px;
+    margin-bottom: -10px;
+    display: block;
+}
+
+#img-footer {
+    height: auto;
+    width: 578px;
+    display: block;
+}
+
+/* ============================================ */
+/* INFO - Columna derecha                        */
+/* ============================================ */
+
+#info {
+    flex-shrink: 0;
+}
+
+#info img {
+    display: block;
+    height: 707.8px;
+    width: auto;
+}
+
+/* ============================================ */
+/* MODOS DE COLOR                                */
+/* ============================================ */
+
+/* MODO DARK (por defecto) - ya está en HTML */
 
 /* MODO LIGHT */
 body.light #img-head {
@@ -195,8 +238,9 @@ body.light #dark-night-btn:hover #img-dark-night {
 }
 
 /* ============================================ */
-/* MODO DARK 2 (MYTMODE) - Segundo dark mode    */
+/* MODO DARK NIGHT (MYTMODE)                     */
 /* ============================================ */
+
 body.dark-night #img-head {
     content: url('mytmode/head/FONDO.png');
 }
@@ -239,21 +283,4 @@ body.dark-night #light-btn:hover #img-light {
 body.dark-night #dark-day-btn:hover #img-dark-day,
 body.dark-night #dark-night-btn:hover #img-dark-night {
     content: url('mytmode/buttons/darkmode2.png');
-}
-
-/* SAFARI HACK - como en la referencia */
-@media not all and (min-resolution:.001dpcm) { 
-    @supports (-webkit-appearance:none) {
-        #main-container {
-            zoom: 1 !important;
-            transform: scale(0.70);
-            transform-origin: top center;
-        }
-    }
-}
-
-_::-webkit-full-page-media, _:future, :root #main-container {
-    zoom: 1 !important;
-    transform: scale(0.70);
-    transform-origin: top center;
 }
