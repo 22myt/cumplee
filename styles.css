@@ -12,7 +12,8 @@ html, body {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background-color: #111;
+    background-color: #242323;  
+    transition: background-color 0.2s ease;  /* Transición suave al cambiar */
 }
 
 body {
@@ -32,7 +33,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 20px 0;  /* ¡MARGEN DE 20PX ARRIBA Y ABAJO! */
+    padding: 20px 0;
 }
 
 #content-wrapper {
@@ -45,15 +46,14 @@ body {
 }
 
 /* ============================================ */
-/* BOTONES - Posición original restaurada       */
+/* BOTONES                                       */
 /* ============================================ */
 
 #buttons {
     display: flex;
     flex-direction: column;
-    margin-right: -5px;  /* Mantenemos el margen original */
+    margin-right: -5px;
     flex-shrink: 0;
-    /* IMPORTANTE: Sin padding-top, posición original */
 }
 
 #buttons button {
@@ -84,7 +84,7 @@ body {
 }
 
 /* ============================================ */
-/* SPACE - Contenedor principal                  */
+/* SPACE                                         */
 /* ============================================ */
 
 #space {
@@ -117,7 +117,7 @@ body {
 }
 
 /* ============================================ */
-/* CONTENT - Estructura principal                */
+/* CONTENT                                       */
 /* ============================================ */
 
 #content {
@@ -139,11 +139,11 @@ body {
     display: block;
     height: 707.8px;
     width: auto;
-    margin-right: -5px;  /* Margen original restaurado */
+    margin-right: -5px;
 }
 
 /* ============================================ */
-/* MAIN - Columna central (CON MÁRGENES ORIGINALES) */
+/* MAIN                                          */
 /* ============================================ */
 
 #main {
@@ -174,7 +174,7 @@ body {
 }
 
 /* ============================================ */
-/* INFO - Columna derecha                        */
+/* INFO                                          */
 /* ============================================ */
 
 #info {
@@ -191,9 +191,16 @@ body {
 /* MODOS DE COLOR                                */
 /* ============================================ */
 
-/* MODO DARK (por defecto) - ya está en HTML */
+/* MODO DARK-DAY (por defecto) */
+body.dark-day {
+    background-color: #242323;  /* Color para dark-day */
+}
 
 /* MODO LIGHT */
+body.light {
+    background-color: #d1d1d1;  /* Color para light */
+}
+
 body.light #img-head {
     content: url('lightmode/head/FONDO.png');
 }
@@ -239,8 +246,12 @@ body.light #dark-night-btn:hover #img-dark-night {
 }
 
 /* ============================================ */
-/* MODO DARK NIGHT (MYTMODE)                     */
+/* MODO DARK-NIGHT (MYTMODE)                     */
 /* ============================================ */
+
+body.dark-night {
+    background-color: #080707;  /* Color para mytmode */
+}
 
 body.dark-night #img-head {
     content: url('mytmode/head/FONDO.png');
