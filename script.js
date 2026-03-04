@@ -1,82 +1,36 @@
-// script.js
-function setMode(mode) {
-    // Remover clases de modo anteriores
-    document.body.classList.remove('light-mode', 'dark-mode-1', 'dark-mode-2');
-    
-    // Añadir la nueva clase de modo
-    document.body.classList.add(mode + '-mode');
-    
-    // Actualizar imágenes de los botones según el modo actual
-    updateButtonImages(mode);
-    
-    // Guardar preferencia en localStorage
-    localStorage.setItem('preferred-mode', mode);
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    const lightModeBtn = document.getElementById('mode-light');
+    const darkMode1Btn = document.getElementById('mode-dark1');
+    const darkMode2Btn = document.getElementById('mode-dark2');
 
-function updateButtonImages(currentMode) {
-    const buttons = document.querySelectorAll('.mode-btn img');
-    
-    buttons.forEach(btn => {
-        const parentBtn = btn.closest('.mode-btn');
-        
-        if (parentBtn.classList.contains('light-mode-btn')) {
-            // Para el botón de light mode
-            if (currentMode === 'light') {
-                btn.src = btn.dataset.lightHover;
-            } else {
-                btn.src = btn.dataset.light;
-            }
-        } else if (parentBtn.classList.contains('dark-mode-1-btn')) {
-            // Para el botón de dark mode 1
-            if (currentMode === 'dark1') {
-                btn.src = btn.dataset.dark1Hover;
-            } else {
-                btn.src = btn.dataset.dark1;
-            }
-        } else if (parentBtn.classList.contains('dark-mode-2-btn')) {
-            // Para el botón de dark mode 2
-            if (currentMode === 'dark2') {
-                btn.src = btn.dataset.dark2Hover;
-            } else {
-                btn.src = btn.dataset.dark2;
-            }
-        }
-    });
-}
+    // Función para cambiar el modo
+    function setMode(mode) {
+        // Remueve todas las clases de modo existentes
+        body.classList.remove('light-mode', 'dark-mode-1', 'dark-mode-2');
+        // Añade la nueva clase
+        body.classList.add(mode);
 
-// Efecto hover para los botones
-document.querySelectorAll('.mode-btn').forEach(btn => {
-    const img = btn.querySelector('img');
-    
-    btn.addEventListener('mouseenter', () => {
-        const currentMode = document.body.classList.contains('light-mode') ? 'light' :
-                           document.body.classList.contains('dark-mode-2') ? 'dark2' : 'dark1';
-        
-        if (btn.classList.contains('light-mode-btn')) {
-            img.src = img.dataset.lightHover;
-        } else if (btn.classList.contains('dark-mode-1-btn')) {
-            img.src = img.dataset.dark1Hover;
-        } else if (btn.classList.contains('dark-mode-2-btn')) {
-            img.src = img.dataset.dark2Hover;
-        }
-    });
-    
-    btn.addEventListener('mouseleave', () => {
-        const currentMode = document.body.classList.contains('light-mode') ? 'light' :
-                           document.body.classList.contains('dark-mode-2') ? 'dark2' : 'dark1';
-        
-        if (btn.classList.contains('light-mode-btn')) {
-            img.src = currentMode === 'light' ? img.dataset.lightHover : img.dataset.light;
-        } else if (btn.classList.contains('dark-mode-1-btn')) {
-            img.src = currentMode === 'dark1' ? img.dataset.dark1Hover : img.dataset.dark1;
-        } else if (btn.classList.contains('dark-mode-2-btn')) {
-            img.src = currentMode === 'dark2' ? img.dataset.dark2Hover : img.dataset.dark2;
-        }
-    });
-});
+        // Aquí es donde, en el futuro, cambiarías las rutas de las imágenes de los botones
+        // para que coincidan con el modo activo (opcional).
+        // Por ahora, mantenemos las mismas imágenes para los botones en todos los modos.
+        console.log('Modo cambiado a:', mode);
+    }
 
-// Cargar modo preferido al iniciar
-document.addEventListener('DOMContentLoaded', () => {
-    const preferredMode = localStorage.getItem('preferred-mode') || 'dark1';
-    setMode(preferredMode);
+    // Event Listeners para los botones
+    lightModeBtn.addEventListener('click', function() {
+        setMode('light-mode');
+    });
+
+    darkMode1Btn.addEventListener('click', function() {
+        setMode('dark-mode-1');
+    });
+
+    darkMode2Btn.addEventListener('click', function() {
+        setMode('dark-mode-2');
+    });
+
+    // Establecer modo inicial (asegurar que la clase del body es 'dark-mode-1')
+    // Esto ya lo tienes en el HTML, pero por si acaso:
+    // setMode('dark-mode-1');
 });
