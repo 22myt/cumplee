@@ -52,6 +52,7 @@ body {
 #buttons {
     display: flex;
     flex-direction: column;
+    margin-top: 2.2px;
     margin-right: -5px;
     flex-shrink: 0;
 }
@@ -68,7 +69,7 @@ body {
 
 #buttons img {
     display: block;
-    height: 67px;
+    height: 70px;
     width: auto;
     flex-shrink: 0;
 }
@@ -105,14 +106,14 @@ body {
 /* ============================================ */
 
 #head {
-    margin-bottom: 1.9px;
+    margin-bottom: -1px;
     line-height: 0;
     flex-shrink: 0;
 }
 
 #img-head {
     display: block;
-    height: 65.7px;
+    height: 73.4px;
     width: auto;
 }
 
