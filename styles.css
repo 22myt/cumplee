@@ -19,9 +19,8 @@ body {
         "lateral bot bot info"
         "lateral footer footer info";
     grid-template-columns: auto 1fr 1fr auto;
-    grid-template-rows: auto auto auto auto;
     gap: 0;
-    max-width: 1920px;
+    max-width: fit-content;
     margin: 0 auto;
     position: relative;
 }
@@ -29,12 +28,14 @@ body {
 /* Sección Head */
 .head {
     grid-area: head;
-    height: 134px;
-    background-image: url('darkmode/head/FONDO.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     position: relative;
+    line-height: 0; /* Elimina espacio extra debajo de la imagen */
+}
+
+.head-img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 /* Botones Container */
@@ -46,6 +47,7 @@ body {
     padding: 10px;
     background-color: transparent;
     z-index: 10;
+    line-height: 0;
 }
 
 .mode-btn {
@@ -53,14 +55,14 @@ body {
     border: none;
     cursor: pointer;
     padding: 0;
-    width: auto;
-    height: auto;
+    line-height: 0;
 }
 
 .btn-img {
-    width: 100%;
-    height: auto;
     display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
     transition: opacity 0.2s ease;
 }
 
@@ -71,9 +73,14 @@ body {
 /* Sección Lateral */
 .lateral {
     grid-area: lateral;
-    background-color: #2a2a2a;
-    min-height: 100%;
-    width: 200px; /* Ajusta según necesites */
+    line-height: 0;
+}
+
+.lateral-img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 /* Sección Principal */
@@ -81,58 +88,59 @@ body {
     grid-area: top / top / footer / footer;
     display: flex;
     flex-direction: column;
+    line-height: 0;
 }
 
 /* Sección Top */
 .top {
     grid-area: top;
-    width: 1186px;
-    height: 875px;
+    line-height: 0;
 }
 
 .top-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 /* Sección Bot */
 .bot {
     grid-area: bot;
-    width: 1186px;
-    height: 514px;
+    line-height: 0;
 }
 
 .bot-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 /* Footer */
 .footer {
     grid-area: footer;
-    width: 1186px;
-    height: 88px;
+    line-height: 0;
 }
 
 .footer-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 /* Sección Info */
 .info {
     grid-area: info;
-    width: 353px;
-    height: 1449px;
+    line-height: 0;
 }
 
 .info-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
 }
 
 /* Modos de color */
@@ -149,8 +157,12 @@ body.dark-mode-2 {
 }
 
 /* Clases para cambiar imágenes según modo */
-body.light-mode .head {
-    background-image: url('lightmode/head/FONDO.png');
+body.light-mode .head-img {
+    content: url('lightmode/head/FONDO.png');
+}
+
+body.light-mode .lateral-img {
+    content: url('lightmode/lateral/CONTENIDO.png');
 }
 
 body.light-mode .top-img {
@@ -169,8 +181,12 @@ body.light-mode .info-img {
     content: url('lightmode/info/RECTANGULO LARGO.png');
 }
 
-body.dark-mode-2 .head {
-    background-image: url('darkmode2/head/FONDO.png');
+body.dark-mode-2 .head-img {
+    content: url('darkmode2/head/FONDO.png');
+}
+
+body.dark-mode-2 .lateral-img {
+    content: url('darkmode2/lateral/CONTENIDO.png');
 }
 
 body.dark-mode-2 .top-img {
@@ -195,13 +211,8 @@ body.dark-mode-2 .info-img {
         grid-template-columns: auto 1fr auto;
     }
     
-    .top, .bot, .footer {
-        width: 100%;
-        height: auto;
-    }
-    
-    .info {
-        width: 100%;
+    img {
+        max-width: 100%;
         height: auto;
     }
 }
