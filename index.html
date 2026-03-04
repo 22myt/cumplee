@@ -4,49 +4,59 @@
   <meta charset="UTF-8">
   <title>Perfil Web - Space</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .no-scroll {
+      overflow: hidden !important;
+      height: 100vh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  </style>
 </head>
-<body>
-  
-  <!-- Contenedor principal que envolverá todo (como en la referencia) -->
+<body class="no-scroll">
+  <!-- Contenedor principal que ocupa toda la pantalla -->
   <div id="main-container">
-    <!-- Left-side elements (como en la referencia, pero aquí son los buttons) -->
-    <div id="left-side">
-      <button id="light-btn">
-        <img id="img-light" src="darkmode/buttons/lightmode1.png" alt="Light" class="btn-img">
-      </button>
-      <button id="dark-day-btn">
-        <img id="img-dark-day" src="darkmode/buttons/darkmode1.png" alt="Dark Día" class="btn-img">
-      </button>
-      <button id="dark-night-btn">
-        <img id="img-dark-night" src="darkmode/buttons/darkmode1.png" alt="Dark Noche" class="btn-img">
-      </button>
-    </div>
-
-    <!-- Contenedor principal Space (como el container de la referencia) -->
-    <div id="space">
-      <div id="head">
-        <img id="img-head" src="darkmode/head/FONDO.png" alt="Head" class="mode-img">
+    <!-- Contenedor interno que mantendrá las proporciones -->
+    <div id="content-wrapper">
+      <!-- Bloque de botones a la izquierda -->
+      <div id="buttons">
+        <button id="light-btn">
+          <img id="img-light" src="darkmode/buttons/lightmode1.png" alt="Light" class="btn-img">
+        </button>
+        <button id="dark-day-btn">
+          <img id="img-dark-day" src="darkmode/buttons/darkmode1.png" alt="Dark Día" class="btn-img">
+        </button>
+        <button id="dark-night-btn">
+          <img id="img-dark-night" src="darkmode/buttons/darkmode1.png" alt="Dark Noche" class="btn-img">
+        </button>
       </div>
 
-      <div id="content">
-        <div id="lateral">
-          <img id="img-lateral" src="darkmode/lateral.png" alt="Lateral" class="mode-img">
+      <!-- Contenedor principal Space -->
+      <div id="space">
+        <div id="head">
+          <img id="img-head" src="darkmode/head/FONDO.png" alt="Head" class="mode-img">
         </div>
 
-        <div id="main">
-          <div id="top">
-            <img id="img-top" src="darkmode/top/ZONA_TOP.png" alt="Top" class="mode-img">
+        <div id="content">
+          <div id="lateral">
+            <img id="img-lateral" src="darkmode/lateral.png" alt="Lateral" class="mode-img">
           </div>
-          <div id="bot">
-            <img id="img-bot" src="darkmode/bot/ZONA_BOT.png" alt="Bot" class="mode-img">
-          </div>
-          <div id="footer">
-            <img id="img-footer" src="darkmode/FOOTER.png" alt="Footer" class="mode-img">
-          </div>
-        </div>
 
-        <div id="info">
-          <img id="img-info" src="darkmode/info/RECTANGULO_LARGO.png" alt="Info" class="mode-img">
+          <div id="main">
+            <div id="top">
+              <img id="img-top" src="darkmode/top/ZONA_TOP.png" alt="Top" class="mode-img">
+            </div>
+            <div id="bot">
+              <img id="img-bot" src="darkmode/bot/ZONA_BOT.png" alt="Bot" class="mode-img">
+            </div>
+            <div id="footer">
+              <img id="img-footer" src="darkmode/FOOTER.png" alt="Footer" class="mode-img">
+            </div>
+          </div>
+
+          <div id="info">
+            <img id="img-info" src="darkmode/info/RECTANGULO_LARGO.png" alt="Info" class="mode-img">
+          </div>
         </div>
       </div>
     </div>
