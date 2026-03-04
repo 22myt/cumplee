@@ -1,100 +1,98 @@
 body {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* todo alineado arriba */
-  height: 100vh;
-  background-color: #111;
+    display: flex;
+    justify-content: center;      
+    align-items: center;         
+    height: 100vh;                 
+    background-color: #111;
 }
 
 /* Layout padre: buttons + space */
 #layout {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start; /* buttons y space alineados arriba */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;      
 }
 
 /* Buttons */
 #buttons {
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-right: -5px;      
 }
 
 #buttons button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin-bottom: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-bottom: 5px;        
 }
 
 #buttons img {
-  display: block;
-  height: 90px;
-  width: auto;
+    display: block;
+    height: 65.7px;           
+    width: auto;
 }
 
 /* Space */
 #space {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Head arriba */
-#head {
-  margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Head */
-#img-head {
-  display: block;
-  height: 90px;   /* valor inicial */
-  width: auto;    /* ancho proporcional */
+#head {
+    margin-bottom: 5px;     
 }
 
+#img-head {
+    display: block;
+    height: 65.7px;            
+    width: auto;
+}
 
 /* Content debajo de Head */
 #content {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 /* Lateral */
 #lateral img {
-  display: block;
-  height: 400px;
-  width: auto;
-  margin-right: 10px;
+    display: block;
+    height: 707.5px;       
+    width: auto;
+    margin-right: -5px;          
 }
 
 /* Main */
 #main {
-  display: flex;
-  flex-direction: column;
-  margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 0px;         
 }
 
 #img-top {
-  height: 200px;
-  width: auto;
-  margin-bottom: 10px;
+    height: auto;
+    width: 578px;
+    margin-bottom: -10px;         
 }
 
 #img-bot {
-  height: 150px;
-  width: auto;
-  margin-bottom: 10px;
+    height: auto;
+    width: 578px;                 
+    margin-bottom: -10px;          
 }
 
 #img-footer {
-  height: 50px;
-  width: auto;
+    height: auto;
+    width: 578px;                 
 }
 
 /* Info */
 #info img {
-  display: block;
-  height: 400px;
-  width: auto;
+    display: block;
+    height: 707.5px;              
+    width: auto;
 }
