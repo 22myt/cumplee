@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil Web - Modos Flexibles</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Perfil Web - Space</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-mode-1">
-    <!-- CONTENEDOR PRINCIPAL sin restricciones de tamaño -->
-    <div class="container">
-        <!-- HEAD con botones dentro -->
-        <header class="head">
-            <div class="head-buttons">
-                <button id="mode-light" class="mode-btn" aria-label="Modo Claro"></button>
-                <button id="mode-dark1" class="mode-btn" aria-label="Modo Oscuro Día"></button>
-                <button id="mode-dark2" class="mode-btn" aria-label="Modo Oscuro Noche"></button>
-            </div>
-        </header>
-        
-        <!-- CONTENEDOR FLEX para el resto -->
-        <div class="content-wrapper">
-            <!-- LATERAL -->
-            <aside class="lateral"></aside>
-            
-            <!-- SECCIÓN PRINCIPAL (Top, Bot, Footer) -->
-            <main class="main-content">
-                <div class="top"></div>
-                <div class="bot"></div>
-                <footer class="footer"></footer>
-            </main>
-            
-            <!-- INFO -->
-            <aside class="info"></aside>
-        </div>
+<body>
+  <div id="space">
+    <div id="head">
+      <img src="darkmode/head/FONDO.png" alt="Head">
     </div>
-    
-    <script src="script.js"></script>
+    <div id="content">
+      <div id="buttons">
+        <button id="light-btn">
+          <img src="darkmode/buttons/lightmode1.png" alt="Light">
+        </button>
+        <button id="dark-day-btn">
+          <img src="darkmode/buttons/darkmode1.png" alt="Dark Día">
+        </button>
+        <button id="dark-night-btn">
+          <img src="darkmode/buttons/darkmode1.png" alt="Dark Noche">
+        </button>
+      </div>
+      <div id="lateral">
+        <img src="darkmode/lateral.png" alt="Lateral">
+      </div>
+      <div id="main">
+        <div id="top">
+          <img src="darkmode/top/ZONA_TOP.png" alt="Top">
+        </div>
+        <div id="bot">
+          <img src="darkmode/bot/ZONA_BOT.png" alt="Bot">
+        </div>
+        <div id="footer">
+          <img src="darkmode/FOOTER.png" alt="Footer">
+        </div>
+      </div>
+      <div id="info">
+        <img src="darkmode/info/RECTANGULO_LARGO.png" alt="Info">
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
