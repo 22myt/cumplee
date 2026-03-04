@@ -1,12 +1,19 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* botones y space alineados arriba */
+  align-items: flex-start; /* todo alineado arriba */
   height: 100vh;
   background-color: #111;
 }
 
-/* Bloque de botones a la izquierda */
+/* Layout padre: buttons + space */
+#layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* buttons y space alineados arriba */
+}
+
+/* Buttons */
 #buttons {
   display: flex;
   flex-direction: column;
@@ -22,11 +29,11 @@ body {
 
 #buttons img {
   display: block;
-  height: 90px; /* inicial */
+  height: 90px;
   width: auto;
 }
 
-/* Contenedor Space */
+/* Space */
 #space {
   display: flex;
   flex-direction: column;
