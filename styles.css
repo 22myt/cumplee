@@ -1,0 +1,207 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background-color: #1a1a1a;
+}
+
+.container {
+    display: grid;
+    grid-template-areas: 
+        "buttons head head head"
+        "lateral top top info"
+        "lateral bot bot info"
+        "lateral footer footer info";
+    grid-template-columns: auto 1fr 1fr auto;
+    grid-template-rows: auto auto auto auto;
+    gap: 0;
+    max-width: 1920px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Sección Head */
+.head {
+    grid-area: head;
+    height: 134px;
+    background-image: url('darkmode/head/FONDO.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Botones Container */
+.buttons-container {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    background-color: transparent;
+    z-index: 10;
+}
+
+.mode-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: auto;
+    height: auto;
+}
+
+.btn-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.2s ease;
+}
+
+.mode-btn:hover .btn-img {
+    opacity: 0.8;
+}
+
+/* Sección Lateral */
+.lateral {
+    grid-area: lateral;
+    background-color: #2a2a2a;
+    min-height: 100%;
+    width: 200px; /* Ajusta según necesites */
+}
+
+/* Sección Principal */
+.main-content {
+    grid-area: top / top / footer / footer;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sección Top */
+.top {
+    grid-area: top;
+    width: 1186px;
+    height: 875px;
+}
+
+.top-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sección Bot */
+.bot {
+    grid-area: bot;
+    width: 1186px;
+    height: 514px;
+}
+
+.bot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Footer */
+.footer {
+    grid-area: footer;
+    width: 1186px;
+    height: 88px;
+}
+
+.footer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sección Info */
+.info {
+    grid-area: info;
+    width: 353px;
+    height: 1449px;
+}
+
+.info-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Modos de color */
+body.light-mode {
+    background-color: #ffffff;
+}
+
+body.dark-mode-1 {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode-2 {
+    background-color: #000033;
+}
+
+/* Clases para cambiar imágenes según modo */
+body.light-mode .head {
+    background-image: url('lightmode/head/FONDO.png');
+}
+
+body.light-mode .top-img {
+    content: url('lightmode/top/ZONA_TOP.png');
+}
+
+body.light-mode .bot-img {
+    content: url('lightmode/bot/ZONA_BOT.png');
+}
+
+body.light-mode .footer-img {
+    content: url('lightmode/FOOTER.png');
+}
+
+body.light-mode .info-img {
+    content: url('lightmode/info/RECTANGULO LARGO.png');
+}
+
+body.dark-mode-2 .head {
+    background-image: url('darkmode2/head/FONDO.png');
+}
+
+body.dark-mode-2 .top-img {
+    content: url('darkmode2/top/ZONA_TOP.png');
+}
+
+body.dark-mode-2 .bot-img {
+    content: url('darkmode2/bot/ZONA_BOT.png');
+}
+
+body.dark-mode-2 .footer-img {
+    content: url('darkmode2/FOOTER.png');
+}
+
+body.dark-mode-2 .info-img {
+    content: url('darkmode2/info/RECTANGULO LARGO.png');
+}
+
+/* Responsive */
+@media (max-width: 1600px) {
+    .container {
+        grid-template-columns: auto 1fr auto;
+    }
+    
+    .top, .bot, .footer {
+        width: 100%;
+        height: auto;
+    }
+    
+    .info {
+        width: 100%;
+        height: auto;
+    }
+}
