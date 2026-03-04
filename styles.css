@@ -1,14 +1,7 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   display: flex;
-  justify-content: center;   /* Centrado horizontal */
-  align-items: center;       /* Centrado vertical */
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background-color: #111;
 }
@@ -21,8 +14,8 @@ body {
 
 /* Head */
 #head {
-  width: 50%;   /* Controlable por porcentaje */
-  height: 10%;  /* Controlable por porcentaje */
+  width: 50%;              /* controlas el ancho */
+  min-height: 90px;         /* altura mínima para que se vea */
   background: url("darkmode/head/FONDO.png") no-repeat center/contain;
   margin-bottom: 1%;
 }
@@ -42,23 +35,25 @@ body {
 }
 
 #buttons button {
-  width: 5vw;   /* relativo al ancho de la ventana */
-  height: 5vh;  /* relativo al alto de la ventana */
-  margin-bottom: 0.5vh;
+  width: 91px;
+  height: 90px;
+  margin-bottom: 5px;
   border: none;
-  background: url("darkmode/buttons/lightmode1.png") no-repeat center/contain;
   cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Lateral */
 #lateral {
-  width: 5%;
-  height: 80%;
+  width: 5%;               /* controlas el ancho */
+  min-height: 200px;        /* altura mínima */
   background: url("darkmode/lateral.png") no-repeat center/contain;
   margin-right: 1%;
 }
 
-/* Main (Top, Bot, Footer) */
+/* Main */
 #main {
   display: flex;
   flex-direction: column;
@@ -67,27 +62,27 @@ body {
 
 #top {
   width: 40%;
-  height: 40%;
+  min-height: 200px;
   background: url("darkmode/top/ZONA_TOP.png") no-repeat center/contain;
   margin-bottom: 1%;
 }
 
 #bot {
   width: 40%;
-  height: 25%;
+  min-height: 150px;
   background: url("darkmode/bot/ZONA_BOT.png") no-repeat center/contain;
   margin-bottom: 1%;
 }
 
 #footer {
   width: 40%;
-  height: 5%;
+  min-height: 50px;
   background: url("darkmode/FOOTER.png") no-repeat center/contain;
 }
 
 /* Info */
 #info {
   width: 15%;
-  height: 80%;
+  min-height: 200px;
   background: url("darkmode/info/RECTANGULO_LARGO.png") no-repeat center/contain;
 }
