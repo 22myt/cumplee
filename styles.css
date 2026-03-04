@@ -1,99 +1,169 @@
-/* Reset básico */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-family: sans-serif;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
 }
 
-/* Head */
-#head {
-  width: 1556px;
-  height: 134px;
-  background: url("darkmode/head/FONDO.png") no-repeat center;
-  position: relative;
+/* CONTENEDOR PRINCIPAL - ANCHO TOTAL 1556px */
+.container {
+    width: 1556px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* Botones */
-#buttons {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
-  flex-direction: column;
+/* HEAD - 1556x134px */
+.head {
+    width: 1556px;
+    height: 134px;
+    background-image: url('darkmode/head/FONDO.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-#buttons button {
-  width: 49px;
-  height: 49px;
-  border: none;
-  background-size: cover;
-  cursor: pointer;
+/* WRAPPER FLEX para el resto del contenido */
+.content-wrapper {
+    display: flex;
+    width: 1556px;
 }
 
-#light-btn {
-  background-image: url("darkmode/buttons/lightmode1.png");
-}
-#light-btn:hover {
-  background-image: url("darkmode/buttons/lightmode2.png");
-}
-
-#dark-day-btn,
-#dark-night-btn {
-  background-image: url("darkmode/buttons/darkmode1.png");
-}
-#dark-day-btn:hover,
-#dark-night-btn:hover {
-  background-image: url("darkmode/buttons/darkmode2.png");
+/* COLUMNA IZQUIERDA (botones + lateral) */
+.buttons-column {
+    display: flex;
+    flex-direction: column;
+    width: 49px; /* Ancho del lateral */
 }
 
-/* Layout general */
-#layout {
-  display: flex;
-  margin-top: 10px;
+/* BOTONES - apilados verticalmente */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 0;
+    width: 49px;
 }
 
-/* Lateral */
-#lateral {
-  width: 49px;
-  height: 1449px;
-  background: url("darkmode/lateral.png") no-repeat center;
+.mode-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    background-color: transparent;
+    transition: transform 0.2s;
 }
 
-/* Sección principal */
-#main {
-  display: flex;
-  flex-direction: column;
+.mode-btn:hover {
+    transform: scale(1.1);
 }
 
-#top {
-  width: 1186px;
-  height: 875px;
-  background: url("darkmode/top/ZONA_TOP.png") no-repeat center;
+/* LATERAL - 49x1449px */
+.lateral {
+    width: 49px;
+    height: 1449px;
+    background-image: url('darkmode/lateral.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-#bot {
-  width: 1186px;
-  height: 514px;
-  background: url("darkmode/bot/ZONA_BOT.png") no-repeat center;
+/* SECCIÓN PRINCIPAL */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    width: 1186px;
 }
 
-#footer {
-  width: 1186px;
-  height: 88px;
-  background: url("darkmode/FOOTER.png") no-repeat center;
+/* TOP - 1186x875px */
+.top {
+    width: 1186px;
+    height: 875px;
+    background-image: url('darkmode/top/ZONA_TOP.png');
+    background-size: cover;
 }
 
-/* Info */
-#info {
-  width: 353px;
-  height: 1449px;
-  background: url("darkmode/info/RECTANGULO_LARGO.png") no-repeat center;
-  margin-left: 10px;
+/* BOT - 1186x514px */
+.bot {
+    width: 1186px;
+    height: 514px;
+    background-image: url('darkmode/bot/ZONA_BOT.png');
+    background-size: cover;
+}
+
+/* FOOTER - 1186x88px */
+.footer {
+    width: 1186px;
+    height: 88px;
+    background-image: url('darkmode/FOOTER.png');
+    background-size: cover;
+}
+
+/* INFO - 353x1449px */
+.info {
+    width: 353px;
+    height: 1449px;
+    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
+    background-size: cover;
+}
+
+/* ESTILOS DE BOTONES POR DEFECTO (dark mode 1) */
+#mode-light {
+    background-image: url('darkmode/buttons/lightmode1.png');
+}
+#mode-light:hover {
+    background-image: url('darkmode/buttons/lightmode2.png');
+}
+
+#mode-dark1, #mode-dark2 {
+    background-image: url('darkmode/buttons/darkmode1.png');
+}
+#mode-dark1:hover, #mode-dark2:hover {
+    background-image: url('darkmode/buttons/darkmode2.png');
+}
+
+/* MODO LIGHT */
+body.light-mode .head {
+    background-image: url('lightmode/head/FONDO.png');
+}
+body.light-mode .lateral {
+    background-image: url('lightmode/lateral.png');
+}
+body.light-mode .top {
+    background-image: url('lightmode/top/ZONA_TOP.png');
+}
+body.light-mode .bot {
+    background-image: url('lightmode/bot/ZONA_BOT.png');
+}
+body.light-mode .footer {
+    background-image: url('lightmode/FOOTER.png');
+}
+body.light-mode .info {
+    background-image: url('lightmode/info/RECTANGULO_LARGO.png');
+}
+
+/* MODO DARK 2 (NOCHE) - por ahora igual que dark 1 */
+body.dark-mode-2 .head {
+    background-image: url('darkmode/head/FONDO.png');
+}
+body.dark-mode-2 .lateral {
+    background-image: url('darkmode/lateral.png');
+}
+body.dark-mode-2 .top {
+    background-image: url('darkmode/top/ZONA_TOP.png');
+}
+body.dark-mode-2 .bot {
+    background-image: url('darkmode/bot/ZONA_BOT.png');
+}
+body.dark-mode-2 .footer {
+    background-image: url('darkmode/FOOTER.png');
+}
+body.dark-mode-2 .info {
+    background-image: url('darkmode/info/RECTANGULO_LARGO.png');
 }
