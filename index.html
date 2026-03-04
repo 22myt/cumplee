@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Perfil Web</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil Web - 3 Modos</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-day">
-  <div id="head">
-    <div id="buttons">
-      <button id="light-btn"></button>
-      <button id="dark-day-btn"></button>
-      <button id="dark-night-btn"></button>
+<body class="dark-mode-1">
+    <!-- CONTENEDOR PRINCIPAL con ancho total de 1556px -->
+    <div class="container">
+        <!-- CABECERA (ocupa todo el ancho) -->
+        <header class="head"></header>
+        
+        <!-- CONTENEDOR FLEX para el resto -->
+        <div class="content-wrapper">
+            <!-- Botones (columna izquierda vertical) -->
+            <div class="buttons-column">
+                <div class="buttons">
+                    <button id="mode-light" class="mode-btn" aria-label="Modo Claro"></button>
+                    <button id="mode-dark1" class="mode-btn" aria-label="Modo Oscuro Día"></button>
+                    <button id="mode-dark2" class="mode-btn" aria-label="Modo Oscuro Noche"></button>
+                </div>
+                
+                <!-- SECCIÓN LATERAL (debajo de los botones) -->
+                <aside class="lateral"></aside>
+            </div>
+            
+            <!-- SECCIÓN PRINCIPAL (Top, Bot, Footer) -->
+            <main class="main-content">
+                <div class="top"></div>
+                <div class="bot"></div>
+                <footer class="footer"></footer>
+            </main>
+            
+            <!-- SECCIÓN INFO (derecha) -->
+            <aside class="info"></aside>
+        </div>
     </div>
-  </div>
-
-  <div id="layout">
-    <div id="lateral"></div>
-    <div id="main">
-      <div id="top"></div>
-      <div id="bot"></div>
-      <div id="footer"></div>
-    </div>
-    <div id="info"></div>
-  </div>
-
-  <script src="script.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
