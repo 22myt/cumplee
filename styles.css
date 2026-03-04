@@ -1,89 +1,89 @@
-body {
-    display: flex;
-    justify-content: center;      
-    align-items: center;         
-    height: 100vh;                 
-    background-color: #111;
+/* FUENTES (si las necesitas, como en la referencia) */
+@font-face {
+    font-family: 'RailroadGothicCC';
+    src: url('fonts/RailroadGothicCC.otf') format('opentype');
 }
 
-/* Layout padre: buttons + space */
-#layout {
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* cursor: url('MOUSE2.png'), auto; */ /* Comentado si no tienes los archivos */
+}
+
+body {
+    background-color: #111;
+    font-family: 'RailroadGothicCC', sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden; /* IMPORTANTE: ocultar scroll vertical */
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor principal - como el .container de la referencia */
+#main-container {
+    width: 950px; /* Ajusta según el ancho total de tu diseño */
+    margin: 0 auto;
+    position: relative;
     display: flex;
     flex-direction: row;
-    align-items: center;  /* Centrado vertical */
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    align-items: flex-start; /* Alineación superior para que buttons esté a la altura del head */
+    transform-origin: top center;
+    zoom: 0.70; /* Factor de reducción general como en la referencia */
+    flex-shrink: 0;
+}
+
+/* Left side - buttons (como .left-side-elements en la referencia) */
+#left-side {
     position: relative;
-}
-
-/* Buttons */
-#buttons {
-    display: flex;
-    flex-direction: column;
-    margin-right: -5px;      
-}
-
-#buttons button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    margin-bottom: 0px;        
-}
-
-#buttons img {
-    display: block;
-    height: 67px;           
-    width: auto;
-}
-
-/* HOVER PARA BOTONES - Cambian a lightmode2.png o darkmode2.png según el modo */
-#light-btn:hover #img-light {
-    content: url('darkmode/buttons/lightmode2.png');
-}
-
-#dark-day-btn:hover #img-dark-day,
-#dark-night-btn:hover #img-dark-night {
-    content: url('darkmode/buttons/darkmode2.png');
-}
-
-/* Space */
-#space {
-    transition: transform 0.1s ease;
-    transform-origin: center center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    will-change: transform; /* Optimización de rendimiento */
+    gap: 0px;
+    margin-right: -20px; /* Margen negativo para acercar al space */
+    margin-top: 25px; /* Ajusta para alinear con el head */
+    z-index: 10;
 }
 
-#space.scaled {
-    transform-origin: center center;
+#left-side button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 0; /* Elimina espacio extra */
 }
 
-/* Evita que los elementos hijos se compriman durante el scaling */
-#space > * {
-    flex-shrink: 0;
+#left-side button img {
+    display: block;
+    height: 67px;
+    width: auto;
 }
 
-/* Los botones también deben mantener su tamaño */
-#buttons {
-    flex-shrink: 0;
+/* Space - contenedor principal de imágenes */
+#space {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 /* Head */
 #head {
-    margin-bottom: 1.9px;     
+    margin-bottom: 1.9px;
 }
 
 #img-head {
     display: block;
-    height: 65.7px;            
+    height: 65.7px;
     width: auto;
 }
 
-/* Content debajo de Head */
+/* Content */
 #content {
     display: flex;
     flex-direction: row;
@@ -91,42 +91,58 @@ body {
 }
 
 /* Lateral */
-#lateral img {
+#lateral {
+    margin-right: -5px;
+}
+
+#img-lateral {
     display: block;
-    height: 707.8px;       
+    height: 707.8px;
     width: auto;
-    margin-right: -5px;          
 }
 
 /* Main */
 #main {
     display: flex;
     flex-direction: column;
-    margin-right: 0px;         
 }
 
 #img-top {
     height: auto;
     width: 578px;
-    margin-bottom: -10px;         
+    margin-bottom: -10px;
 }
 
 #img-bot {
     height: auto;
-    width: 578px;                 
-    margin-bottom: -10px;          
+    width: 578px;
+    margin-bottom: -10px;
 }
 
 #img-footer {
     height: auto;
-    width: 578px;                 
+    width: 578px;
 }
 
 /* Info */
-#info img {
+#info {
+    margin-left: -5px;
+}
+
+#img-info {
     display: block;
-    height: 707.8px;              
+    height: 707.8px;
     width: auto;
+}
+
+/* HOVER PARA BOTONES */
+#light-btn:hover #img-light {
+    content: url('darkmode/buttons/lightmode2.png');
+}
+
+#dark-day-btn:hover #img-dark-day,
+#dark-night-btn:hover #img-dark-night {
+    content: url('darkmode/buttons/darkmode2.png');
 }
 
 /* ============================================ */
@@ -182,7 +198,7 @@ body.light #dark-night-btn:hover #img-dark-night {
 /* MODO DARK 2 (MYTMODE) - Segundo dark mode    */
 /* ============================================ */
 body.dark-night #img-head {
-    content: url('mytmode/head/FONDO.png');      /* Cambia 'mytmode' por el nombre real de tu carpeta */
+    content: url('mytmode/head/FONDO.png');
 }
 
 body.dark-night #img-lateral {
@@ -225,5 +241,19 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     content: url('mytmode/buttons/darkmode2.png');
 }
 
-/* NOTA: El modo dark-day (primer dark mode) ya está por defecto
-   con las rutas 'darkmode/' que tienes en el HTML */
+/* SAFARI HACK - como en la referencia */
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance:none) {
+        #main-container {
+            zoom: 1 !important;
+            transform: scale(0.70);
+            transform-origin: top center;
+        }
+    }
+}
+
+_::-webkit-full-page-media, _:future, :root #main-container {
+    zoom: 1 !important;
+    transform: scale(0.70);
+    transform-origin: top center;
+}
