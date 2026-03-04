@@ -10,7 +10,12 @@ body {
 #layout {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;      
+    align-items: center;  /* Centrado vertical */
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 /* Buttons */
@@ -45,9 +50,26 @@ body {
 
 /* Space */
 #space {
+    transition: transform 0.1s ease;
+    transform-origin: center center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    will-change: transform; /* Optimización de rendimiento */
+}
+
+#space.scaled {
+    transform-origin: center center;
+}
+
+/* Evita que los elementos hijos se compriman durante el scaling */
+#space > * {
+    flex-shrink: 0;
+}
+
+/* Los botones también deben mantener su tamaño */
+#buttons {
+    flex-shrink: 0;
 }
 
 /* Head */
