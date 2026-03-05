@@ -682,6 +682,7 @@ body {
     bottom: 66.5px;
     left: 175px;
     z-index: 20;
+    filter: blur(0.25px);
 }
 
 /* Símbolos Medio - debajo de GIF-ASUKA */
