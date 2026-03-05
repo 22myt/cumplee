@@ -33,8 +33,26 @@
 
       <!-- Contenedor principal Space -->
       <div id="space">
+        <!-- ============================================ -->
+        <!-- HEAD MODIFICADO: AHORA CON SUPERPOSICIONES   -->
+        <!-- ============================================ -->
         <div id="head">
-          <img id="img-head" src="darkmode/head/FONDO.png" alt="Head" class="mode-img">
+          <!-- Imagen de Fondo (base) -->
+          <img id="img-head-bg" src="darkmode/head/FONDO.png" alt="Head Background" class="mode-img head-bg">
+
+          <!-- Contenedor para elementos superpuestos -->
+          <div class="head-overlays">
+            <!-- Título (estático) -->
+            <img id="img-head-title" src="darkmode/head/title.png" alt="Title" class="head-title mode-img">
+            
+            <!-- Contenedor del Logo y el GIF (para manejar el hover sincronizado) -->
+            <div class="logo-gif-container">
+              <!-- Logo (cambia con hover) -->
+              <img id="img-head-logo" src="darkmode/head/logo.png" alt="Logo" class="head-logo mode-img">
+              <!-- GIF (cambia con hover) -->
+              <img id="img-head-gif" src="darkmode/head/logogif1.gif" alt="Logo GIF" class="head-gif mode-img">
+            </div>
+          </div>
         </div>
 
         <div id="content">
