@@ -299,19 +299,19 @@ body {
 
 /* Panel 1 */
 .top-panel-1 {
-    height: 60px;
+    height: 130px;
     width: auto;
     right: 10px;
-    top: 5px;
+    top: 10px;
     z-index: 10;
 }
 
 /* Texto 1 - clase base para posición */
 .top-texto {
-    height: 30px;
+    height: 20px;
     width: auto;
-    right: 15px;
-    top: 70px;
+    right: 92px;
+    top: 105px;
 }
 
 /* Versión normal (visible) */
@@ -337,7 +337,7 @@ body {
 
 /* Panel 2 */
 .top-panel-2 {
-    height: 50px;
+    height: 175px;
     width: auto;
     right: 10px;
     top: 120px;
@@ -346,10 +346,10 @@ body {
 
 /* Panel 3 */
 .top-panel-3 {
-    height: 70px;
+    height: 65px;
     width: auto;
     right: 10px;
-    top: 180px;
+    top: 354px;
     z-index: 14;
 }
 
@@ -379,10 +379,10 @@ body {
 
 /* Clase base para CUADRO 1 (posición y tamaño) */
 .top-cuadro1 {
-    height: 60px;
+    height: 40px;
     width: auto;
     position: absolute;
-    top: 0;
+    top: 174px;
     left: 0;
 }
 
@@ -420,10 +420,10 @@ body {
 
 /* Clase base para CUADRO 2 (posición y tamaño) */
 .top-cuadro2 {
-    height: 60px;
+    height: 40px;
     width: auto;
     position: absolute;
-    top: 0;
+    top: 60px;
     left: 0;
 }
 
@@ -453,10 +453,10 @@ body {
 /* ============================================ */
 
 .top-asukas {
-    height: 80px;
+    height: 470px;
     width: auto;
-    left: 50%;
-    top: 0;
+    left: 34.5%;
+    top: -47.6px;
     transform: translateX(-50%);
     z-index: 30;
     pointer-events: none;
