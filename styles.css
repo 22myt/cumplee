@@ -780,6 +780,345 @@ body {
     z-index: 1;
 }
 
+
+#info {
+    position: relative;
+    flex-shrink: 0;
+    line-height: 0;
+}
+
+#img-info-bg {
+    display: block;
+    height: 707.8px;
+    width: auto;
+    z-index: 1;
+    position: relative;
+}
+
+.info-overlays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    font-family: 'Karla', sans-serif;
+}
+
+.info-overlays img {
+    position: absolute;
+    display: block;
+    pointer-events: auto;
+}
+
+/* ===== SECCIÓN 1: PROFILE ===== */
+.info-profile-section {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: calc(100% - 40px);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.profile-icon-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    pointer-events: auto;
+    z-index: 11;
+}
+
+.profile-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 50px;
+    transition: opacity 0.3s ease;
+}
+
+.profile-icon-img {
+    z-index: 11;
+    opacity: 1;
+}
+
+.profile-icon-hover {
+    z-index: 12;
+    opacity: 0;
+}
+
+.profile-icon-container:hover .profile-icon-img {
+    opacity: 0;
+}
+
+.profile-icon-container:hover .profile-icon-hover {
+    opacity: 1;
+}
+
+.profile-bubble-text {
+    position: absolute;
+    top: 5px;
+    left: 60px;
+    pointer-events: auto;
+    z-index: 13;
+    animation: floatBubble 3s ease-in-out infinite;
+}
+
+@keyframes floatBubble {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+.profile-bubble {
+    height: auto;
+    width: 300px;
+    position: relative;
+    z-index: 14;
+}
+
+.profile-text {
+    position: absolute;
+    top: 13px;
+    left: 25px;
+    width: 250px;
+    font-family: 'Karla', sans-serif;
+    font-size: 8pt;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: justify;
+    color: #ffffff;
+    z-index: 15;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    text-decoration: none;
+    transition: text-decoration 0.2s ease;
+}
+
+.profile-bubble-text:hover .profile-text {
+    text-decoration: underline;
+}
+
+/* ===== SECCIÓN 2: MENSAJE ===== */
+.info-message-section {
+    position: absolute;
+    top: 150px;
+    left: 25px;
+    width: 250px;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.message-img-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    pointer-events: auto;
+    z-index: 21;
+    margin-bottom: 5px;
+}
+
+.message-img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.message-img-normal {
+    z-index: 21;
+    opacity: 1;
+}
+
+.message-img-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 22;
+    opacity: 0;
+}
+
+.message-img-container:hover .message-img-normal {
+    opacity: 0;
+}
+
+.message-img-container:hover .message-img-hover {
+    opacity: 1;
+}
+
+.message-text-box {
+    width: 100%;
+    height: 150px;
+    padding: 8px 10px;
+    font-family: 'Karla', sans-serif;
+    font-size: 7.5pt;
+    line-height: 1.4;
+    text-align: justify;
+    overflow-y: auto;
+    pointer-events: auto;
+    z-index: 23;
+    border: none;
+    box-shadow: inset 0 0 0 1px #676767;
+    background-color: #2a2122;
+    color: #cccccc;
+    border-radius: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #3a2a2b;
+}
+
+.message-text-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.message-text-box::-webkit-scrollbar-track {
+    background: #3a2a2b;
+}
+
+.message-text-box::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.message-text-box p {
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== SECCIÓN 3: RADIO ===== */
+.info-radio-section {
+    position: absolute;
+    bottom: 230px;
+    left: 30px;
+    width: 150px;
+    height: auto;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.radio-base {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 31;
+    pointer-events: auto;
+}
+
+.radio-cassette {
+    position: absolute;
+    width: 80%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 32;
+    pointer-events: none;
+}
+
+/* ===== SECCIÓN 4: DECORADO ===== */
+.info-decor-section {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 250px;
+    pointer-events: none;
+    z-index: 40;
+}
+
+.decor-sic-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    pointer-events: auto;
+    z-index: 41;
+    margin-bottom: 5px;
+}
+
+.decor-sic {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.decor-sic-img {
+    z-index: 41;
+    opacity: 1;
+}
+
+.decor-sic-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 42;
+    opacity: 0;
+}
+
+.decor-sic-container:hover .decor-sic-img {
+    opacity: 0;
+}
+
+.decor-sic-container:hover .decor-sic-hover {
+    opacity: 1;
+}
+
+.decor-c4ts {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 43;
+    margin: 5px 0;
+    pointer-events: auto;
+}
+
+.decor-text {
+    font-family: 'Karla', sans-serif;
+    font-size: 7pt;
+    font-weight: 200;
+    line-height: 1.3;
+    text-align: justify;
+    color: #ffffff;
+    margin: 5px 0;
+    padding: 0 2px;
+    z-index: 44;
+    pointer-events: none;
+}
+
+.decor-y2 {
+    position: relative;
+    width: 60%;
+    height: auto;
+    z-index: 45;
+    margin: 5px 0;
+    pointer-events: auto;
+}
+
+.decor-image2 {
+    position: relative;
+    width: 80%;
+    height: auto;
+    z-index: 46;
+    margin: 5px 0;
+    pointer-events: auto;
+}
+
+.decor-madeby {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 47;
+    margin-top: 10px;
+    pointer-events: auto;
+}
+
 /* ============================================ */
 /* MODOS DE COLOR                                */
 /* ============================================ */
@@ -930,6 +1269,75 @@ body.light #img-footer {
 body.light #img-info {
     content: url('lightmode/info/RECTANGULO_LARGO.png');
 }
+
+body.light #img-info-bg {
+    content: url('lightmode/info/RECTANGULO_LARGO.png');
+}
+
+/* Profile - Light */
+body.light .profile-icon-img {
+    content: url('lightmode/info/icon.png');
+}
+body.light .profile-icon-hover {
+    content: url('lightmode/info/iconhover.png');
+}
+body.light .profile-bubble {
+    content: url('lightmode/info/burbuja.png');
+}
+body.light .profile-text {
+    color: #27196f;
+}
+
+/* Message - Light */
+body.light .message-img-normal {
+    content: url('lightmode/info/sec1.png');
+}
+body.light .message-img-hover {
+    content: url('lightmode/info/sec2.png');
+}
+body.light .message-text-box {
+    background-color: #d1d1d1;
+    box-shadow: inset 0 0 0 1px #1c105a;
+    color: #222222;
+}
+body.light .message-text-box::-webkit-scrollbar-track {
+    background: #b8b8b8;
+}
+body.light .message-text-box::-webkit-scrollbar-thumb {
+    background-color: #1c105a;
+}
+
+/* Radio - Light */
+body.light .radio-base {
+    content: url('lightmode/info/BASE_METALICA.png');
+}
+body.light .radio-cassette {
+    content: url('lightmode/info/cassette.png');
+}
+
+/* Decorado - Light */
+body.light .decor-sic-img {
+    content: url('lightmode/info/sic1.png');
+}
+body.light .decor-sic-hover {
+    content: url('lightmode/info/sic2.png');
+}
+body.light .decor-c4ts {
+    content: url('lightmode/info/c4ts.png');
+}
+body.light .decor-text {
+    color: #27196f;
+}
+body.light .decor-y2 {
+    content: url('lightmode/info/y2.png');
+}
+body.light .decor-image2 {
+    content: url('lightmode/info/image2.png');
+}
+body.light .decor-madeby {
+    content: url('lightmode/info/madeby.png');
+}
+
 
 /* Botones en modo light */
 body.light #img-light {
@@ -1085,6 +1493,74 @@ body.dark-night #img-footer {
 }
 body.dark-night #img-info {
     content: url('mytmode/info/RECTANGULO_LARGO.png');
+}
+
+body.dark-night #img-info-bg {
+    content: url('mytmode/info/RECTANGULO_LARGO.png');
+}
+
+/* Profile - Mytmode */
+body.dark-night .profile-icon-img {
+    content: url('mytmode/info/icon.png');
+}
+body.dark-night .profile-icon-hover {
+    content: url('mytmode/info/iconhover.png');
+}
+body.dark-night .profile-bubble {
+    content: url('mytmode/info/burbuja.png');
+}
+body.dark-night .profile-text {
+    color: #7c643a;
+}
+
+/* Message - Mytmode */
+body.dark-night .message-img-normal {
+    content: url('mytmode/info/sec1.png');
+}
+body.dark-night .message-img-hover {
+    content: url('mytmode/info/sec2.png');
+}
+body.dark-night .message-text-box {
+    background-color: #000000;
+    box-shadow: inset 0 0 0 1px #261910;
+    color: #a8a8a8;
+}
+body.dark-night .message-text-box::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+body.dark-night .message-text-box::-webkit-scrollbar-thumb {
+    background-color: #5c4a32;
+}
+
+/* Radio - Mytmode */
+body.dark-night .radio-base {
+    content: url('mytmode/info/BASE_METALICA.png');
+}
+body.dark-night .radio-cassette {
+    content: url('mytmode/info/cassette.png');
+}
+
+/* Decorado - Mytmode */
+body.dark-night .decor-sic-img {
+    content: url('mytmode/info/sic1.png');
+}
+body.dark-night .decor-sic-hover {
+    content: url('mytmode/info/sic2.png');
+}
+body.dark-night .decor-c4ts {
+    content: url('mytmode/info/c4ts.png');
+}
+body.dark-night .decor-text {
+    color: #7c643a;
+}
+body.dark-night .decor-y2 {
+    content: url('mytmode/info/y2.png');
+}
+body.dark-night .decor-image2 {
+    content: url('mytmode/info/image2.png');
+}
+body.dark-night .decor-madeby {
+    content: url('mytmode/info/madeby.png');
 }
 
 /* Botones en modo dark-night */
