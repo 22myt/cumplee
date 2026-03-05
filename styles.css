@@ -589,11 +589,11 @@ body {
 
 .bot-top-container {
     position: absolute;
-    top: 15px;                 /* Ajusta esta posición */
-    left: 20px;                /* Ajusta esta posición */
+    top: 15px;
+    left: 20px;
     width: auto;
     height: auto;
-    pointer-events: none;      /* El contenedor no recibe eventos */
+    pointer-events: none;
     z-index: 10;
 }
 
@@ -607,21 +607,22 @@ body {
 
 /* Imagen ARACHNID */
 .bot-arachnid {
-    height: 60px;              /* Ajusta la altura según tu imagen */
+    height: 105.2px;
+    top: -11px;
+    left: -15px;
     width: auto;
-    position: relative;        /* Relativo dentro del grupo */
-    z-index: 11;
+    position: relative;
+    z-index: 28;
 }
 
 /* GIF japonés */
 .bot-jap-gif {
-    height: 30px;              /* Ajusta la altura según tu imagen */
+    height: 65px;
     width: auto;
     position: absolute;
-    top: 5px;                  /* Posición relativa a ARACHNID */
-    left: 40px;                /* Posición relativa a ARACHNID */
-    z-index: 12;
-    pointer-events: none;      /* No recibe hover directamente, depende del grupo */
+    top: 10px;
+    left: 56px;
+    z-index: 29;
 }
 
 /* HOVER SINCRONIZADO */
@@ -634,12 +635,12 @@ body {
 
 /* Subtítulo (debajo de ARACHNID) */
 .bot-subtexto {
-    height: 20px;              /* Ajusta la altura según tu imagen */
+    height: 20px;
     width: auto;
     position: relative;
-    margin-top: 5px;           /* Espacio debajo del grupo */
-    left: 0;
-    top: 65px;                  /* Ajusta para que quede justo debajo del grupo */
+    margin-top: 30px;
+    left: 85px;
+    top: 65px;
     z-index: 13;
     pointer-events: none;
 }
@@ -650,56 +651,54 @@ body {
 
 .bot-left-section {
     position: absolute;
-    bottom: 30px;              /* Ajusta para posicionar en la parte inferior */
-    left: 15px;                /* Ajusta la distancia desde la izquierda */
-    width: 350px;              /* Un ancho aproximado para contener todos estos elementos */
-    height: 200px;             /* Un alto aproximado */
-    pointer-events: none;
+    bottom: 0px;
     z-index: 20;
 }
 
 /* Asuka con sandía - la más a la izquierda y con z-index alto */
 .bot-asuka-sandia {
-    height: 150px;             /* Ajusta la altura */
+    height: 138.2px;
+    top: -138.5px;
     width: auto;
     bottom: 0;
-    left: 0;
-    z-index: 25;               /* Por encima del GIF Asuka */
+    left: 6.3px;
+    z-index: 25;
 }
+
 
 /* GIF Asuka - detrás de AsukaSandía */
 .bot-gif-asuka {
-    height: 100px;             /* Ajusta la altura */
+    height: 40px;
     width: auto;
-    bottom: 20px;              /* Posición relativa para que se vea detrás */
-    left: 70px;                /* A la derecha de AsukaSandía */
-    z-index: 21;               /* Por debajo de AsukaSandía (25) pero por encima de otros */
+    bottom: 70px;
+    left: 90px;
+    z-index: 21;
 }
 
 /* PewDiePie - a la derecha del GIF */
 .bot-pewdiepie {
-    height: 60px;              /* Ajusta la altura */
+    height: 45.5px;
     width: auto;
-    bottom: 50px;              /* Ajusta para alinearlo con los otros */
-    left: 150px;               /* A la derecha de GIF-ASUKA */
-    z-index: 22;
+    bottom: 66.5px;
+    left: 175px;
+    z-index: 20;
 }
 
 /* Símbolos Medio - debajo de GIF-ASUKA */
 .bot-simbolos {
-    height: 25px;              /* Ajusta la altura */
+    height: 65px;
     width: auto;
-    bottom: 5px;               /* Posición baja */
-    left: 70px;                /* Alineado con GIF-ASUKA */
-    z-index: 23;
+    bottom: 10px;
+    left: 95px;
+    z-index: 20;
 }
 
 /* Flores - a la derecha de Símbolos */
 .bot-flores {
-    height: 40px;              /* Ajusta la altura */
+    height: 53px;
     width: auto;
-    bottom: 5px;               /* Misma línea que Símbolos */
-    left: 160px;               /* A la derecha de Símbolos */
+    bottom: 10px;
+    left: 178px;
     z-index: 24;
 }
 
@@ -709,54 +708,51 @@ body {
 
 .bot-right-section {
     position: absolute;
-    bottom: 30px;              /* Alineado con la sección izquierda */
-    right: 15px;               /* Posicionado a la derecha */
-    width: 200px;              /* Ancho aproximado */
-    height: 200px;             /* Alto aproximado */
+    bottom: 0px;
+    right: 0px;
     pointer-events: none;
     z-index: 30;
 }
-
-/* Evan 02 - z-index medio (base) */
+/* Evan 02 */
 .bot-evan {
-    height: 130px;             /* Ajusta la altura */
+    height: 165px;
     width: auto;
     bottom: 0;
-    right: 60px;               /* Posición respecto a la derecha */
-    z-index: 31;               /* Por encima del cubo */
+    right: 8px;
+    z-index: 31;
 }
 
 /* Cubo - z-index bajo (detrás de Evan) */
 .bot-cube {
-    height: 80px;              /* Ajusta la altura */
+    height: 90px;
     width: auto;
-    bottom: 20px;              /* Posición */
-    right: 0;                  /* Pegado a la derecha */
-    z-index: 30;               /* El más bajo de esta sección */
+    bottom: 15px;
+    right: 180px;
+    z-index: 30;
 }
 
 /* Contenedor del enlace LINK GIF */
 .bot-link-gif-link {
     position: absolute;
     display: block;
-    pointer-events: auto;      /* El enlace recibe eventos */
+    pointer-events: auto;
     text-decoration: none;
-    z-index: 32;               /* El más alto de esta sección */
-    bottom: 50px;              /* Posición */
-    right: 40px;               /* Posición, encima del cubo/evan */
-    transition: transform 0.3s ease; /* Transición suave para el hover */
+    z-index: 32;
+    bottom: 125px;
+    right: 289px;
+    transition: transform 0.3s ease;
 }
 
 /* Imagen LINK GIF */
 .bot-link-gif {
-    height: 60px;              /* Ajusta la altura */
+    height: 130px;
     width: auto;
     display: block;
 }
 
 /* HOVER: Agrandar el enlace */
 .bot-link-gif-link:hover {
-    transform: scale(1.2);     /* Escala al 120% */
+    transform: scale(0.6);     /* Escala al 120% */
 }
 
 /* ============================================ */
