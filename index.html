@@ -61,9 +61,49 @@
           </div>
 
           <div id="main">
-            <div id="top">
-              <img id="img-top" src="darkmode/top/ZONA_TOP.png" alt="Top" class="mode-img">
+          <div id="top">
+            <!-- Imagen de fondo -->
+            <img id="img-top-bg" src="darkmode/top/ZONA_TOP.png" alt="Top Background" class="mode-img top-bg">
+            
+            <!-- Contenedor para elementos superpuestos -->
+            <div class="top-overlays">
+              
+              <!-- ELEMENTOS DE LA DERECHA -->
+              <div class="top-right">
+                <!-- Panel 1 (estático) -->
+                <img src="darkmode/top/Panel_1.png" alt="Panel 1" class="top-panel-1 mode-img">
+                
+                <!-- Texto 1 con hover -->
+                <img src="darkmode/top/texto1.png" alt="Texto 1" class="top-texto mode-img top-texto-normal">
+                <img src="darkmode/top/texto2.png" alt="Texto 1 Hover" class="top-texto mode-img top-texto-hover">
+                
+                <!-- Panel 2 (estático) -->
+                <img src="darkmode/top/Panel_2.png" alt="Panel 2" class="top-panel-2 mode-img">
+                
+                <!-- Panel 3 (estático) -->
+                <img src="darkmode/top/Panel_3.png" alt="Panel 3" class="top-panel-3 mode-img">
+              </div>
+              
+              <!-- ELEMENTOS DE LA IZQUIERDA -->
+              <div class="top-left">
+                <!-- CUADRO 1 con hover -->
+                <div class="top-cuadro1-container">
+                  <img src="darkmode/top/CUADRO1.png" alt="Cuadro 1" class="top-cuadro1 mode-img top-cuadro1-normal">
+                  <img src="darkmode/top/CUADRO1hover.png" alt="Cuadro 1 Hover" class="top-cuadro1 mode-img top-cuadro1-hover">
+                </div>
+                
+                <!-- CUADRO 2 con hover -->
+                <div class="top-cuadro2-container">
+                  <img src="darkmode/top/CUADRO2.png" alt="Cuadro 2" class="top-cuadro2 mode-img top-cuadro2-normal">
+                  <img src="darkmode/top/CUADRO2hover.png" alt="Cuadro 2 Hover" class="top-cuadro2 mode-img top-cuadro2-hover">
+                </div>
+              </div>
+              
+              <!-- ELEMENTO CENTRAL SUPERIOR (Asukas) - POR ENCIMA DE TODO -->
+              <img src="darkmode/top/Asukas.png" alt="Asukas" class="top-asukas mode-img">
+              
             </div>
+          </div>
             <div id="bot">
               <img id="img-bot" src="darkmode/bot/ZONA_BOT.png" alt="Bot" class="mode-img">
             </div>
