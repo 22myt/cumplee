@@ -594,7 +594,6 @@ body {
     width: auto;
     height: auto;
     pointer-events: none;
-    z-index: 10;
 }
 
 /* Grupo que contiene ARACHNID y su GIF */
