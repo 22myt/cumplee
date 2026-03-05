@@ -379,13 +379,13 @@ body {
 .top-description-container {
     position: absolute;
     right: 10px;
-    top: 295.5px;
+    top: 296px;
     width: 220px;
     pointer-events: auto;
     z-index: 15;
     font-family: 'Karla', sans-serif;
     font-size: 8pt;
-    line-height: 1.1;
+    line-height: 1.06;
     letter-spacing: 0.4px;
     text-align: justify;
     text-justify: inter-word;
