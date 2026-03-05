@@ -910,8 +910,6 @@ body {
     z-index: 21;
 }
 
-
-/* Clase base para TODAS las imágenes de mensaje */
 .message-img {
     position: relative;
     width: 130px;
@@ -919,24 +917,12 @@ body {
     left: -4px;
     top: -37px;
     display: block;
-}
-
-.message-img-normal {
     z-index: 21;
-    opacity: 1;
+    transition: all 0.3s ease;
 }
 
-.message-img-hover {
-    z-index: 22;
-    opacity: 0;
-}
-
-.message-img-container:hover .message-img-normal {
-    opacity: 0;
-}
-
-.message-img-container:hover .message-img-hover {
-    opacity: 1;
+.message-img-container:hover .message-img {
+    content: url('darkmode/info/sec2.png'); /* Cambia la imagen en hover */
 }
 
 .message-text-box {
@@ -1034,7 +1020,6 @@ body {
     z-index: 41;
 }
 
-/* Clase base para TODAS las imágenes decorativas */
 .decor-sic {
     position: relative;
     width: 93px;
@@ -1042,24 +1027,12 @@ body {
     left: 30.5px;
     height: auto;
     display: block;
-}
-
-.decor-sic-img {
     z-index: 41;
-    opacity: 1;
+    transition: all 0.3s ease;
 }
 
-.decor-sic-hover {
-    z-index: 42;
-    opacity: 0;
-}
-
-.decor-sic-container:hover .decor-sic-img {
-    opacity: 0;
-}
-
-.decor-sic-container:hover .decor-sic-hover {
-    opacity: 1;
+.decor-sic-container:hover .decor-sic {
+    content: url('darkmode/info/sic2.png'); /* Cambia la imagen en hover */
 }
 
 
@@ -1291,10 +1264,10 @@ body.light .profile-text {
 }
 
 /* Message - Light */
-body.light .message-img-normal {
+body.light .message-img {
     content: url('lightmode/info/sec1.png');
 }
-body.light .message-img-hover {
+body.light .message-img-container:hover .message-img {
     content: url('lightmode/info/sec2.png');
 }
 
@@ -1323,12 +1296,13 @@ body.light .radio-cassette {
 }
 
 /* Decorado - Light */
-body.light .decor-sic-img {
+body.light .decor-sic {
     content: url('lightmode/info/sic1.png');
 }
-body.light .decor-sic-hover {
+body.light .decor-sic-container:hover .decor-sic {
     content: url('lightmode/info/sic2.png');
 }
+
 body.light .decor-c4ts {
     content: url('lightmode/info/c4ts.png');
 }
@@ -1521,13 +1495,12 @@ body.dark-night .profile-text {
 }
 
 /* Message - Mytmode */
-body.dark-night .message-img-normal {
+body.dark-night .message-img {
     content: url('mytmode/info/sec1.png');
 }
-body.dark-night .message-img-hover {
+body.dark-night .message-img-container:hover .message-img {
     content: url('mytmode/info/sec2.png');
 }
-
 
 /* DARK-NIGHT (MYTMODE) */
 body.dark-night .message-text-box {
@@ -1553,13 +1526,14 @@ body.dark-night .radio-cassette {
     content: url('mytmode/info/cassette.png');
 }
 
-/* Decorado - Mytmode */
-body.dark-night .decor-sic-img {
+body.dark-night .decor-sic {
     content: url('mytmode/info/sic1.png');
 }
-body.dark-night .decor-sic-hover {
+body.dark-night .decor-sic-container:hover .decor-sic {
     content: url('mytmode/info/sic2.png');
 }
+
+
 body.dark-night .decor-c4ts {
     content: url('mytmode/info/c4ts.png');
 }
