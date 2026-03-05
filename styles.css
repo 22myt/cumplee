@@ -360,7 +360,7 @@ body {
 .top-left {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 6px;
     width: auto;
     height: 100%;
     pointer-events: none;
