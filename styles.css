@@ -527,7 +527,7 @@ body {
 
 
 /* ============================================ */
-/* ELEMENTOS TOP                                        */
+/*  ABAJO VIENEN BOT     */
 /* ============================================ */
 
 #img-bot {
@@ -543,6 +543,220 @@ body {
     width: 578px;
     display: block;
     z-index: 1;
+}
+
+/* ============================================ */
+/* BOT - SUPERPOSICIONES           */
+/* ============================================ */
+
+#bot {
+    position: relative;        /* Para posicionar los overlays */
+    line-height: 0;
+    flex-shrink: 0;
+}
+
+/* Imagen de fondo del BOT */
+#img-bg-bot {
+    display: block;
+    height: auto;
+    width: 578px;              /* Mismo ancho que el TOP */
+    margin-bottom: -6px;
+    z-index: 1;
+    position: relative;
+}
+
+/* Contenedor de superposiciones */
+.bot-overlays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;      /* El contenedor no recibe clicks, pero los hijos que lo necesiten sí */
+    z-index: 2;
+}
+
+/* Estilos comunes para imágenes superpuestas */
+.bot-overlays img {
+    position: absolute;
+    display: block;
+    pointer-events: auto;      /* Las imágenes que necesiten hover o click lo tendrán */
+}
+
+/* ============================================ */
+/* SECCIÓN SUPERIOR (ARACHNID + GIF + SUBTEXTO) */
+/* ============================================ */
+
+.bot-top-container {
+    position: absolute;
+    top: 15px;                 /* Ajusta esta posición */
+    left: 20px;                /* Ajusta esta posición */
+    width: auto;
+    height: auto;
+    pointer-events: none;      /* El contenedor no recibe eventos */
+    z-index: 10;
+}
+
+/* Grupo que contiene ARACHNID y su GIF */
+.arachnid-group {
+    position: relative;
+    width: auto;
+    height: auto;
+    pointer-events: auto;      /* Este grupo recibe el hover */
+}
+
+/* Imagen ARACHNID */
+.bot-arachnid {
+    height: 60px;              /* Ajusta la altura según tu imagen */
+    width: auto;
+    position: relative;        /* Relativo dentro del grupo */
+    z-index: 11;
+}
+
+/* GIF japonés */
+.bot-jap-gif {
+    height: 30px;              /* Ajusta la altura según tu imagen */
+    width: auto;
+    position: absolute;
+    top: 5px;                  /* Posición relativa a ARACHNID */
+    left: 40px;                /* Posición relativa a ARACHNID */
+    z-index: 12;
+    pointer-events: none;      /* No recibe hover directamente, depende del grupo */
+}
+
+/* HOVER SINCRONIZADO */
+.arachnid-group:hover .bot-arachnid-img {
+    content: url('darkmode/bot/ARACHNID_hover.png');
+}
+.arachnid-group:hover .bot-jap-gif-img {
+    content: url('darkmode/bot/jap2.gif');
+}
+
+/* Subtítulo (debajo de ARACHNID) */
+.bot-subtexto {
+    height: 20px;              /* Ajusta la altura según tu imagen */
+    width: auto;
+    position: relative;
+    margin-top: 5px;           /* Espacio debajo del grupo */
+    left: 0;
+    top: 65px;                  /* Ajusta para que quede justo debajo del grupo */
+    z-index: 13;
+    pointer-events: none;
+}
+
+/* ============================================ */
+/* SECCIÓN IZQUIERDA                             */
+/* ============================================ */
+
+.bot-left-section {
+    position: absolute;
+    bottom: 30px;              /* Ajusta para posicionar en la parte inferior */
+    left: 15px;                /* Ajusta la distancia desde la izquierda */
+    width: 350px;              /* Un ancho aproximado para contener todos estos elementos */
+    height: 200px;             /* Un alto aproximado */
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Asuka con sandía - la más a la izquierda y con z-index alto */
+.bot-asuka-sandia {
+    height: 150px;             /* Ajusta la altura */
+    width: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 25;               /* Por encima del GIF Asuka */
+}
+
+/* GIF Asuka - detrás de AsukaSandía */
+.bot-gif-asuka {
+    height: 100px;             /* Ajusta la altura */
+    width: auto;
+    bottom: 20px;              /* Posición relativa para que se vea detrás */
+    left: 70px;                /* A la derecha de AsukaSandía */
+    z-index: 21;               /* Por debajo de AsukaSandía (25) pero por encima de otros */
+}
+
+/* PewDiePie - a la derecha del GIF */
+.bot-pewdiepie {
+    height: 60px;              /* Ajusta la altura */
+    width: auto;
+    bottom: 50px;              /* Ajusta para alinearlo con los otros */
+    left: 150px;               /* A la derecha de GIF-ASUKA */
+    z-index: 22;
+}
+
+/* Símbolos Medio - debajo de GIF-ASUKA */
+.bot-simbolos {
+    height: 25px;              /* Ajusta la altura */
+    width: auto;
+    bottom: 5px;               /* Posición baja */
+    left: 70px;                /* Alineado con GIF-ASUKA */
+    z-index: 23;
+}
+
+/* Flores - a la derecha de Símbolos */
+.bot-flores {
+    height: 40px;              /* Ajusta la altura */
+    width: auto;
+    bottom: 5px;               /* Misma línea que Símbolos */
+    left: 160px;               /* A la derecha de Símbolos */
+    z-index: 24;
+}
+
+/* ============================================ */
+/* SECCIÓN DERECHA (CUBO, EVAN, LINK GIF)       */
+/* ============================================ */
+
+.bot-right-section {
+    position: absolute;
+    bottom: 30px;              /* Alineado con la sección izquierda */
+    right: 15px;               /* Posicionado a la derecha */
+    width: 200px;              /* Ancho aproximado */
+    height: 200px;             /* Alto aproximado */
+    pointer-events: none;
+    z-index: 30;
+}
+
+/* Evan 02 - z-index medio (base) */
+.bot-evan {
+    height: 130px;             /* Ajusta la altura */
+    width: auto;
+    bottom: 0;
+    right: 60px;               /* Posición respecto a la derecha */
+    z-index: 31;               /* Por encima del cubo */
+}
+
+/* Cubo - z-index bajo (detrás de Evan) */
+.bot-cube {
+    height: 80px;              /* Ajusta la altura */
+    width: auto;
+    bottom: 20px;              /* Posición */
+    right: 0;                  /* Pegado a la derecha */
+    z-index: 30;               /* El más bajo de esta sección */
+}
+
+/* Contenedor del enlace LINK GIF */
+.bot-link-gif-link {
+    position: absolute;
+    display: block;
+    pointer-events: auto;      /* El enlace recibe eventos */
+    text-decoration: none;
+    z-index: 32;               /* El más alto de esta sección */
+    bottom: 50px;              /* Posición */
+    right: 40px;               /* Posición, encima del cubo/evan */
+    transition: transform 0.3s ease; /* Transición suave para el hover */
+}
+
+/* Imagen LINK GIF */
+.bot-link-gif {
+    height: 60px;              /* Ajusta la altura */
+    width: auto;
+    display: block;
+}
+
+/* HOVER: Agrandar el enlace */
+.bot-link-gif-link:hover {
+    transform: scale(1.2);     /* Escala al 120% */
 }
 
 /* ============================================ */
@@ -653,9 +867,57 @@ body.light .top-asukas {
 body.light #img-top {
     content: url('lightmode/top/ZONA_TOP.png');
 }
+
+
+body.light #img-bg-bot {
+    content: url('lightmode/bot/ZONA_BOT.png');
+}
+body.light .bot-arachnid-img {
+    content: url('lightmode/bot/ARACHNID.png');
+}
+body.light .arachnid-group:hover .bot-arachnid-img {
+    content: url('lightmode/bot/ARACHNID_hover.png');
+}
+body.light .bot-jap-gif-img {
+    content: url('lightmode/bot/jap1.gif');
+}
+body.light .arachnid-group:hover .bot-jap-gif-img {
+    content: url('lightmode/bot/jap2.gif');
+}
+body.light .bot-subtexto {
+    content: url('lightmode/bot/SUBTEXTO.png');
+}
+body.light .bot-asuka-sandia {
+    content: url('lightmode/bot/asuka_with_watermelon.png');
+}
+body.light .bot-gif-asuka {
+    content: url('lightmode/bot/GIF-ASUKA.gif');
+}
+body.light .bot-pewdiepie {
+    content: url('lightmode/bot/pewdiepie.png');
+}
+body.light .bot-simbolos {
+    content: url('lightmode/bot/SYMBOLS_MEDIO.png');
+}
+body.light .bot-flores {
+    content: url('lightmode/bot/FLORES.png');
+}
+body.light .bot-evan {
+    content: url('lightmode/bot/evan_02.png');
+}
+body.light .bot-cube {
+    content: url('lightmode/bot/CUBE.png');
+}
+body.light .bot-link-gif {
+    content: url('lightmode/bot/LINK.gif');
+}
+
+
 body.light #img-bot {
     content: url('lightmode/bot/ZONA_BOT.png');
 }
+
+
 body.light #img-footer {
     content: url('lightmode/FOOTER.png');
 }
@@ -765,6 +1027,50 @@ body.dark-night .top-asukas {
 body.dark-night #img-top {
     content: url('mytmode/top/ZONA_TOP.png');
 }
+
+body.dark-night #img-bg-bot {
+    content: url('mytmode/bot/ZONA_BOT.png');
+}
+body.dark-night .bot-arachnid-img {
+    content: url('mytmode/bot/ARACHNID.png');
+}
+body.dark-night .arachnid-group:hover .bot-arachnid-img {
+    content: url('mytmode/bot/ARACHNID_hover.png');
+}
+body.dark-night .bot-jap-gif-img {
+    content: url('mytmode/bot/jap1.gif');
+}
+body.dark-night .arachnid-group:hover .bot-jap-gif-img {
+    content: url('mytmode/bot/jap2.gif');
+}
+body.dark-night .bot-subtexto {
+    content: url('mytmode/bot/SUBTEXTO.png');
+}
+body.dark-night .bot-asuka-sandia {
+    content: url('mytmode/bot/asuka_with_watermelon.png');
+}
+body.dark-night .bot-gif-asuka {
+    content: url('mytmode/bot/GIF-ASUKA.gif');
+}
+body.dark-night .bot-pewdiepie {
+    content: url('mytmode/bot/pewdiepie.png');
+}
+body.dark-night .bot-simbolos {
+    content: url('mytmode/bot/SYMBOLS_MEDIO.png');
+}
+body.dark-night .bot-flores {
+    content: url('mytmode/bot/FLORES.png');
+}
+body.dark-night .bot-evan {
+    content: url('mytmode/bot/evan_02.png');
+}
+body.dark-night .bot-cube {
+    content: url('mytmode/bot/CUBE.png');
+}
+body.dark-night .bot-link-gif {
+    content: url('mytmode/bot/LINK.gif');
+}
+
 body.dark-night #img-bot {
     content: url('mytmode/bot/ZONA_BOT.png');
 }
