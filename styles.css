@@ -910,30 +910,18 @@ body {
     z-index: 21;
 }
 
-.message-img {
+
+.message-img-normal {
     position: relative;
     width: 130px;
     height: auto;
     left: -4px;
     top: -37px;
     display: block;
-}
-
-
-
-.message-img-normal {
     z-index: 21;
     opacity: 1;
 }
 
-.message-img-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 22;
-    opacity: 0;
-}
 
 .message-img-container:hover .message-img-normal {
     opacity: 0;
@@ -941,6 +929,11 @@ body {
 
 .message-img-container:hover .message-img-hover {
     opacity: 1;
+}
+
+/* La imagen hover SOLO con opacidad, las demás características las hereda */
+.message-img-hover {
+    opacity: 0;
 }
 
 .message-text-box {
@@ -957,20 +950,29 @@ body {
     pointer-events: auto;
     z-index: 23;
     border: none;
-    box-shadow: inset 0 0 0 1px #676767;
-    background-color: #2a2122;
-    color: #cccccc;
     border-radius: 2px;
     scrollbar-width: thin;
-    scrollbar-color: #888 #3a2a2b;
 }
 
 .message-text-box::-webkit-scrollbar {
-    width: 4px;        /* Reducido */
+    width: 4px;
+}
+
+.message-text-box p {
+    margin: 0;
+    padding: 0;
+}
+
+/* DARK-DAY (por defecto) */
+.message-text-box {
+    box-shadow: inset 0 0 0 1px #676767;
+    background-color: #2a2122;
+    color: #cccccc;
+    scrollbar-color: #888 #151111;
 }
 
 .message-text-box::-webkit-scrollbar-track {
-    background: #3a2a2b;
+    background: #151111;
 }
 
 .message-text-box::-webkit-scrollbar-thumb {
@@ -978,9 +980,36 @@ body {
     border-radius: 3px;
 }
 
-.message-text-box p {
-    margin: 0;
-    padding: 0;
+/* LIGHT */
+body.light .message-text-box {
+    background-color: #d1d1d1;
+    box-shadow: inset 0 0 0 1px #1c105a;
+    color: #222222;
+    scrollbar-color: #2f2f84 #7e8cb8;
+}
+
+body.light .message-text-box::-webkit-scrollbar-track {
+    background: #7e8cb8;
+}
+
+body.light .message-text-box::-webkit-scrollbar-thumb {
+    background-color: #2f2f84;
+}
+
+/* DARK-NIGHT (MYTMODE) */
+body.dark-night .message-text-box {
+    background-color: #000000;
+    box-shadow: inset 0 0 0 1px #261910;
+    color: #a8a8a8;
+    scrollbar-color: #332a2b #151111;
+}
+
+body.dark-night .message-text-box::-webkit-scrollbar-track {
+    background: #151111;
+}
+
+body.dark-night .message-text-box::-webkit-scrollbar-thumb {
+    background-color: #332a2b;
 }
 
 /* ===== SECCIÓN 3: RADIO ===== */
@@ -1031,27 +1060,15 @@ body {
     z-index: 41;
 }
 
-.decor-sic {
+.decor-sic-img {
     position: relative;
     width: 93px;
     top: -58px;
     left: 30.5px;
     height: auto;
     display: block;
-}
-
-.decor-sic-img {
     z-index: 41;
     opacity: 1;
-}
-
-.decor-sic-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 42;
-    opacity: 0;
 }
 
 .decor-sic-container:hover .decor-sic-img {
@@ -1060,6 +1077,11 @@ body {
 
 .decor-sic-container:hover .decor-sic-hover {
     opacity: 1;
+}
+
+/* La imagen hover SOLO con opacidad, las demás características las hereda */
+.decor-sic-hover {
+    opacity: 0;
 }
 
 .decor-c4ts {
@@ -1073,14 +1095,18 @@ body {
 }
 
 .decor-text {
+    position: absolute;  /* Cambiar a absolute */
     font-family: 'Karla', sans-serif;
     font-size: 6pt;
     font-weight: 200;
     line-height: 1.2;
     text-align: justify;
     color: #ffffff;
-    margin: 4px 0;
-    padding: 0 2px;
+    width: 140px;        /* Ancho fijo */
+    top: -30px;          /* Ajusta según necesites */
+    left: 30px;          /* Ajusta según necesites */
+    margin: 0;           /* Quitar márgenes */
+    padding: 0;
     z-index: 44;
     pointer-events: none;
 }
@@ -1291,17 +1317,6 @@ body.light .message-img-normal {
 }
 body.light .message-img-hover {
     content: url('lightmode/info/sec2.png');
-}
-body.light .message-text-box {
-    background-color: #d1d1d1;
-    box-shadow: inset 0 0 0 1px #1c105a;
-    color: #222222;
-}
-body.light .message-text-box::-webkit-scrollbar-track {
-    background: #b8b8b8;
-}
-body.light .message-text-box::-webkit-scrollbar-thumb {
-    background-color: #1c105a;
 }
 
 /* Radio - Light */
@@ -1516,17 +1531,6 @@ body.dark-night .message-img-normal {
 }
 body.dark-night .message-img-hover {
     content: url('mytmode/info/sec2.png');
-}
-body.dark-night .message-text-box {
-    background-color: #000000;
-    box-shadow: inset 0 0 0 1px #261910;
-    color: #a8a8a8;
-}
-body.dark-night .message-text-box::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-body.dark-night .message-text-box::-webkit-scrollbar-thumb {
-    background-color: #5c4a32;
 }
 
 /* Radio - Mytmode */
