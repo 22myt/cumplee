@@ -869,7 +869,7 @@ body {
     z-index: 14;
 }
 
-profile-text {
+.profile-text {
     position: absolute;
     top: 12px;
     left: 5px;
@@ -884,6 +884,7 @@ profile-text {
     z-index: 15;
     margin: 0;
     padding: 0;
+    /* pointer-events: none; */
     text-decoration: none;
     transition: text-decoration 0.2s ease;
 }
