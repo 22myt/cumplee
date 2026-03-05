@@ -251,7 +251,7 @@ body {
 /* ============================================ */
 
 #top {
-    position: relative;        /* Para posicionamiento absoluto de los overlays */
+    position: relative;
     line-height: 0;
     flex-shrink: 0;
 }
@@ -273,7 +273,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;      /* Los clics pasan a través, pero los hijos con pointer-events: auto los reciben */
+    pointer-events: none;
     z-index: 2;
 }
 
@@ -281,7 +281,7 @@ body {
 .top-overlays img {
     position: absolute;
     display: block;
-    pointer-events: auto;      /* Para que puedan recibir hover */
+    pointer-events: auto;
 }
 
 /* ============================================ */
@@ -294,43 +294,40 @@ body {
     top: 0;
     width: auto;
     height: 100%;
-    pointer-events: none;      /* El contenedor no recibe eventos, pero sus hijos sí */
+    pointer-events: none;
 }
 
-/* Panel 1 - posición y tamaño (ajusta según necesites) */
+/* Panel 1 */
 .top-panel-1 {
-    height: 60px;              /* Ajusta según tamaño real */
+    height: 60px;
     width: auto;
-    right: 10px;               /* Distancia desde la derecha */
-    top: 5px;                  /* Distancia desde arriba */
+    right: 10px;
+    top: 5px;
     z-index: 10;
 }
 
-/* Texto 1 - normal (visible por defecto) */
-.top-texto-normal {
-    height: 30px;              /* Ajusta según tamaño real */
+/* Texto 1 - clase base para posición */
+.top-texto {
+    height: 30px;
     width: auto;
-    right: 15px;               /* Distancia desde la derecha */
-    top: 70px;                 /* Debajo del Panel 1 */
+    right: 15px;
+    top: 70px;
+}
+
+/* Versión normal (visible) */
+.top-texto-img {
     z-index: 11;
     opacity: 1;
-    transition: opacity 0.2s ease;
 }
 
-/* Texto 1 - hover (oculto por defecto) */
+/* Versión hover (oculta por defecto) */
 .top-texto-hover {
-    height: 30px;              /* Misma altura que la versión normal */
-    width: auto;
-    right: 15px;               /* Misma posición que la versión normal */
-    top: 70px;
     z-index: 12;
     opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;      /* No bloquea la interacción */
+    pointer-events: none;  /* No bloquea la interacción */
 }
 
-/* Contenedor para el hover del texto */
-.top-right:hover .top-texto-normal {
+.top-right:hover .top-texto-img {
     opacity: 0;
 }
 
@@ -340,19 +337,19 @@ body {
 
 /* Panel 2 */
 .top-panel-2 {
-    height: 50px;              /* Ajusta según tamaño real */
+    height: 50px;
     width: auto;
     right: 10px;
-    top: 120px;                /* Debajo del texto */
+    top: 120px;
     z-index: 13;
 }
 
 /* Panel 3 */
 .top-panel-3 {
-    height: 70px;              /* Ajusta según tamaño real */
+    height: 70px;
     width: auto;
     right: 10px;
-    top: 180px;                /* Debajo del Panel 2 */
+    top: 180px;
     z-index: 14;
 }
 
@@ -369,43 +366,40 @@ body {
     pointer-events: none;
 }
 
-/* Contenedor para CUADRO 1 (para manejar hover) */
+/* Contenedor para CUADRO 1 */
 .top-cuadro1-container {
     position: absolute;
-    left: 10px;                /* Distancia desde la izquierda */
-    top: 10px;                 /* Distancia desde arriba */
-    height: 60px;              /* Altura del cuadro */
+    left: 10px;
+    top: 10px;
+    height: 60px;
     width: auto;
     pointer-events: auto;
     z-index: 20;
 }
 
-/* CUADRO 1 - normal */
-.top-cuadro1-normal {
+/* Clase base para CUADRO 1 (posición y tamaño) */
+.top-cuadro1 {
     height: 60px;
     width: auto;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 21;
-    opacity: 1;
-    transition: opacity 0.2s ease;
 }
 
-/* CUADRO 1 - hover */
+/* Versión normal (visible) */
+.top-cuadro1-container .top-cuadro1:first-child {
+    z-index: 21;
+    opacity: 1;
+}
+
+/* Versión hover (oculta por defecto) */
 .top-cuadro1-hover {
-    height: 60px;
-    width: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 22;
     opacity: 0;
-    transition: opacity 0.2s ease;
     pointer-events: none;
 }
 
-.top-cuadro1-container:hover .top-cuadro1-normal {
+.top-cuadro1-container:hover .top-cuadro1:first-child {
     opacity: 0;
 }
 
@@ -416,40 +410,37 @@ body {
 /* Contenedor para CUADRO 2 */
 .top-cuadro2-container {
     position: absolute;
-    left: 10px;                /* Misma izquierda que CUADRO 1 */
-    top: 80px;                 /* Debajo del CUADRO 1 */
-    height: 60px;              /* Altura del cuadro */
+    left: 10px;
+    top: 80px;
+    height: 60px;
     width: auto;
     pointer-events: auto;
     z-index: 23;
 }
 
-/* CUADRO 2 - normal */
-.top-cuadro2-normal {
+/* Clase base para CUADRO 2 (posición y tamaño) */
+.top-cuadro2 {
     height: 60px;
     width: auto;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 24;
-    opacity: 1;
-    transition: opacity 0.2s ease;
 }
 
-/* CUADRO 2 - hover */
+/* Versión normal (visible) */
+.top-cuadro2-container .top-cuadro2:first-child {
+    z-index: 24;
+    opacity: 1;
+}
+
+/* Versión hover (oculta por defecto) */
 .top-cuadro2-hover {
-    height: 60px;
-    width: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 25;
     opacity: 0;
-    transition: opacity 0.2s ease;
     pointer-events: none;
 }
 
-.top-cuadro2-container:hover .top-cuadro2-normal {
+.top-cuadro2-container:hover .top-cuadro2:first-child {
     opacity: 0;
 }
 
@@ -462,15 +453,14 @@ body {
 /* ============================================ */
 
 .top-asukas {
-    height: 80px;              /* Ajusta según tamaño real */
+    height: 80px;
     width: auto;
-    left: 50%;                 /* Centrado horizontal */
-    top: 0;                    /* Pegado al borde superior */
+    left: 50%;
+    top: 0;
     transform: translateX(-50%);
-    z-index: 30;               /* Por encima de todos los demás elementos */
-    pointer-events: none;      /* No necesita interacción, solo decorativo */
+    z-index: 30;
+    pointer-events: none;
 }
-
 
 #img-top {
     height: auto;
@@ -566,7 +556,7 @@ body.light #img-top-bg {
 body.light .top-panel-1 {
     content: url('lightmode/top/Panel_1.png');
 }
-body.light .top-texto-normal {
+body.light .top-texto-img {
     content: url('lightmode/top/texto1.png');
 }
 body.light .top-texto-hover {
@@ -578,13 +568,13 @@ body.light .top-panel-2 {
 body.light .top-panel-3 {
     content: url('lightmode/top/Panel_3.png');
 }
-body.light .top-cuadro1-normal {
+body.light .top-cuadro1:first-child {
     content: url('lightmode/top/CUADRO1.png');
 }
 body.light .top-cuadro1-hover {
     content: url('lightmode/top/CUADRO1hover.png');
 }
-body.light .top-cuadro2-normal {
+body.light .top-cuadro2:first-child {
     content: url('lightmode/top/CUADRO2.png');
 }
 body.light .top-cuadro2-hover {
@@ -593,6 +583,7 @@ body.light .top-cuadro2-hover {
 body.light .top-asukas {
     content: url('lightmode/top/Asukas.png');
 }
+
 
 
 body.light #img-top {
@@ -669,7 +660,7 @@ body.dark-night #img-top-bg {
 body.dark-night .top-panel-1 {
     content: url('mytmode/top/Panel_1.png');
 }
-body.dark-night .top-texto-normal {
+body.dark-night .top-texto-img {
     content: url('mytmode/top/texto1.png');
 }
 body.dark-night .top-texto-hover {
@@ -681,13 +672,13 @@ body.dark-night .top-panel-2 {
 body.dark-night .top-panel-3 {
     content: url('mytmode/top/Panel_3.png');
 }
-body.dark-night .top-cuadro1-normal {
+body.dark-night .top-cuadro1:first-child {
     content: url('mytmode/top/CUADRO1.png');
 }
 body.dark-night .top-cuadro1-hover {
     content: url('mytmode/top/CUADRO1hover.png');
 }
-body.dark-night .top-cuadro2-normal {
+body.dark-night .top-cuadro2:first-child {
     content: url('mytmode/top/CUADRO2.png');
 }
 body.dark-night .top-cuadro2-hover {
@@ -696,7 +687,6 @@ body.dark-night .top-cuadro2-hover {
 body.dark-night .top-asukas {
     content: url('mytmode/top/Asukas.png');
 }
-
 
 body.dark-night #img-top {
     content: url('mytmode/top/ZONA_TOP.png');
