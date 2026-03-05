@@ -310,17 +310,16 @@ body {
 /* Contenedor para el texto (para manejar el hover específico) */
 .top-texto-container {
     position: absolute;
-    right: 92px;
-    top: 105px;
-    height: 20px;           /* Misma altura que la imagen */
+    right: 205px;
+    top: 106px;
     width: auto;
-    pointer-events: auto;    /* Este contenedor recibe el hover */
+    pointer-events: auto;
     z-index: 11;
 }
 
 /* Texto 1 - clase base para posición */
 .top-texto {
-    height: 20px;
+    height: 21px;
     width: auto;
     position: absolute;
     top: 0;
@@ -385,7 +384,7 @@ body {
 .top-cuadro1-container {
     position: absolute;
     left: 10px;
-    top: 174px;            /* Posición específica para CUADRO1 */
+    top: 184px;            /* Posición específica para CUADRO1 */
     height: 40px;           /* Misma altura que la imagen */
     width: auto;
     pointer-events: auto;   /* Este contenedor recibe el hover */
@@ -426,7 +425,7 @@ body {
 .top-cuadro2-container {
     position: absolute;
     left: 10px;
-    top: 224px;            /* Posición específica para CUADRO2 (debajo del CUADRO1) */
+    top: 140px;            /* Posición específica para CUADRO2 (debajo del CUADRO1) */
     height: 40px;           /* Misma altura que la imagen */
     width: auto;
     pointer-events: auto;   /* Este contenedor recibe el hover */
