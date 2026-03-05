@@ -899,7 +899,7 @@ body.light .bot-gif-asuka {
     content: url('lightmode/bot/GIF-ASUKA.gif');
 }
 body.light .bot-pewdiepie {
-    content: url('lightmode/bot/pewdiepie.png');
+    content: url('lightmode/bot/pewdiepie.gif');
 }
 body.light .bot-simbolos {
     content: url('lightmode/bot/SYMBOLS_MEDIO.png');
@@ -1058,7 +1058,7 @@ body.dark-night .bot-gif-asuka {
     content: url('mytmode/bot/GIF-ASUKA.gif');
 }
 body.dark-night .bot-pewdiepie {
-    content: url('mytmode/bot/pewdiepie.png');
+    content: url('mytmode/bot/pewdiepie.gif');
 }
 body.dark-night .bot-simbolos {
     content: url('mytmode/bot/SYMBOLS_MEDIO.png');
