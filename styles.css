@@ -304,8 +304,9 @@ body {
     right: 10px;
     top: 10px;
     z-index: 10;
-    pointer-events: none;  /* Estático, no necesita interacción */
-}
+    pointer-events: none !important;  /* Forzar que sea atravesable */
+    user-select: none;                 /* Evita que se pueda seleccionar */
+    -webkit-user-drag: none;           /* Evita que se pueda arrastrar */}
 
 /* Contenedor para el texto (para manejar el hover específico) */
 .top-texto-container {
@@ -354,8 +355,9 @@ body {
     right: 10px;
     top: 120px;
     z-index: 13;
-    pointer-events: none;  /* Estático, no necesita interacción */
-}
+    pointer-events: none !important;  /* Forzar que sea atravesable */
+    user-select: none;                 /* Evita que se pueda seleccionar */
+    -webkit-user-drag: none;           /* Evita que se pueda arrastrar */}
 
 /* Panel 3 - sin interacción */
 .top-panel-3 {
@@ -364,7 +366,9 @@ body {
     right: 10px;
     top: 354px;
     z-index: 14;
-    pointer-events: none;  /* Estático, no necesita interacción */
+    pointer-events: none !important;  /* Forzar que sea atravesable */
+    user-select: none;                 /* Evita que se pueda seleccionar */
+    -webkit-user-drag: none;           /* Evita que se pueda arrastrar */
 }
 
 /* ============================================ */
