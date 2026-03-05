@@ -739,7 +739,7 @@ body {
     text-decoration: none;
     z-index: 32;
     bottom: 125px;    /* Posición base que ya tenías */
-    right: 289px;     /* Posición base que ya tenías */
+    right: 290.5px;     /* Posición base que ya tenías */
     transition: all 0.3s ease; /* Cambiamos a 'all' para que también transicione la posición */
 }
 
@@ -759,8 +759,9 @@ body {
 }
 
 .bot-link-gif-link:hover .bot-link-gif {
-    height: 143px;    /* 130px * 1.1 = 143px */
-    /* width se ajusta automáticamente */
+    height: 140px;
+    margin-top: -11px;
+    margin-left: -13px;
 }
 
 /* ============================================ */
