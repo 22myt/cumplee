@@ -474,9 +474,10 @@ body {
     top: -37.6px;
     transform: translateX(-50%);
     z-index: 30;
-    pointer-events: none;  /* ¡CRUCIAL! Hace que el mouse atraviese el elemento */
+    pointer-events: none !important;  /* Forzar que sea atravesable */
+    user-select: none;                 /* Evita que se pueda seleccionar */
+    -webkit-user-drag: none;           /* Evita que se pueda arrastrar */
 }
-
 #img-top {
     height: auto;
     width: 578px;
