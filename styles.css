@@ -377,17 +377,17 @@ body {
 /* ============================================ */
 
 .top-description-container {
-  position: absolute;
-  right: 30px;           /* Ajusta según necesites */
-  top: 310px;            /* Posicionado justo debajo del Panel 2 (ajusta este valor) */
-  width: 210px;          /* Ancho fijo para que el texto se justifique */
-  pointer-events: none;  /* Para que no interfiera con clicks, cambia a 'auto' si necesitas interacción */
-  z-index: 15;
-  font-family: 'Karla', sans-serif;
-  font-size: 9pt;
-  line-height: 1.4;      /* Espaciado entre líneas */
-  text-align: justify;   /* Texto justificado */
-  text-justify: inter-word;
+    position: absolute;
+    right: 10px;
+    top: 297px;
+    width: 220px;
+    pointer-events: auto;
+    z-index: 15;
+    font-family: 'Karla', sans-serif;
+    font-size: 7pt;
+    line-height: 1.5;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .top-description {
@@ -395,22 +395,16 @@ body {
   padding: 0;
 }
 
-.description-light {
+/* Estilos base para el texto (dark-day por defecto) */
+.top-description .description-light {
   font-weight: 200;      /* Karla ExtraLight */
+  color: #ffffff;        /* Dark-day: blanco */
 }
 
-.description-bold {
+.top-description .description-bold {
   font-weight: 700;      /* Karla Bold */
+  color: #b65252;        /* Dark-day: rojo/marron */
 }
-
-/* MODO DARK-DAY (por defecto) */
-.description-light {
-  color: #ffffff;
-}
-.description-bold {
-  color: #b65252;
-}
-
 
 /* ============================================ */
 /* ELEMENTOS DE LA IZQUIERDA                      */
@@ -628,12 +622,15 @@ body.light .top-panel-2 {
 body.light .top-panel-3 {
     content: url('lightmode/top/Panel_3.png');
 
-body.light .description-light {
-  color: #27196f;
+/* MODO LIGHT - Sobrescribir colores */
+body.light .top-description .description-light {
+  color: #27196f;        /* Light: azul oscuro */
 }
-body.light .description-bold {
-  color: #b65252;
+
+body.light .top-description .description-bold {
+  color: #b65252;        /* Light: rojo/marron (igual que dark-day) */
 }
+
 
 
 }
@@ -742,11 +739,13 @@ body.dark-night .top-panel-3 {
     content: url('mytmode/top/Panel_3.png');
 }
 
-body.dark-night .description-light {
-  color: #7b633a;
+/* MODO DARK-NIGHT (MYTMODE) - Sobrescribir colores */
+body.dark-night .top-description .description-light {
+  color: #7b633a;        /* Mytmode: marron claro */
 }
-body.dark-night .description-bold {
-  color: #5c2c35;
+
+body.dark-night .top-description .description-bold {
+  color: #5c2c35;        /* Mytmode: rojo oscuro/marron */
 }
 
 body.dark-night .top-cuadro1:first-child {
