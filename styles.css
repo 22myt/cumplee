@@ -622,16 +622,16 @@ body.light .top-panel-2 {
 }
 body.light .top-panel-3 {
     content: url('lightmode/top/Panel_3.png');
+}
 
-/* MODO LIGHT - Sobrescribir colores */
+/* MODO LIGHT - Sobrescribir colores del texto descriptivo */
 body.light .top-description .description-light {
-  color: #27196f;        /* Light: azul oscuro */
+    color: #27196f;        /* Light: azul oscuro */
 }
 
 body.light .top-description .description-bold {
-  color: #b65252;        /* Light: rojo/marron (igual que dark-day) */
+    color: #b65252;        /* Light: rojo/marron (igual que dark-day) */
 }
-
 
 body.light .top-cuadro1:first-child {
     content: url('lightmode/top/CUADRO1.png');
@@ -648,7 +648,6 @@ body.light .top-cuadro2-hover {
 body.light .top-asukas {
     content: url('lightmode/top/Asukas.png');
 }
-
 
 
 body.light #img-top {
