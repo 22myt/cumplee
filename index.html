@@ -117,9 +117,64 @@
                                                                   
                               </div>
                             </div>
-            <div id="bot">
-              <img id="img-bot" src="darkmode/bot/ZONA_BOT.png" alt="Bot" class="mode-img">
-            </div>
+<div id="bot">
+  <!-- Imagen de fondo (la original ZONA_BOT.png) -->
+  <img id="img-bg-bot" src="darkmode/bot/ZONA_BOT.png" alt="Bot Background" class="mode-img bot-bg">
+
+  <!-- Contenedor para todas las superposiciones -->
+  <div class="bot-overlays">
+
+    <!-- ========================================= -->
+    <!-- SECCIÓN SUPERIOR (ARACHNID + GIF)        -->
+    <!-- ========================================= -->
+    <div class="bot-top-container">
+      <!-- Contenedor para el grupo ARACHNID (maneja el hover sincronizado) -->
+      <div class="arachnid-group">
+        <img src="darkmode/bot/ARACHNID.png" alt="ARACHNID" class="bot-arachnid mode-img bot-arachnid-img">
+        <img src="darkmode/bot/jap1.gif" alt="Jap GIF" class="bot-jap-gif mode-img bot-jap-gif-img">
+      </div>
+      <!-- Subtítulo que va debajo del grupo ARACHNID -->
+      <img src="darkmode/bot/SUBTEXTO.png" alt="Subtítulo" class="bot-subtexto mode-img">
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECCIÓN IZQUIERDA (Sandía, GIF, PewDiePie, Símbolos, Flores) -->
+    <!-- ========================================= -->
+    <div class="bot-left-section">
+      <!-- Asuka con sandía (z-index alto) -->
+      <img src="darkmode/bot/asuka_with_watermelon.png" alt="Asuka Sandía" class="bot-asuka-sandia mode-img">
+      
+      <!-- GIF Asuka (detrás de la sandía) -->
+      <img src="darkmode/bot/GIF-ASUKA.gif" alt="GIF Asuka" class="bot-gif-asuka mode-img">
+      
+      <!-- PewDiePie (a la derecha del GIF) -->
+      <img src="darkmode/bot/pewdiepie.png" alt="PewDiePie" class="bot-pewdiepie mode-img">
+
+      <!-- Símbolos Medio (debajo del GIF Asuka) -->
+      <img src="darkmode/bot/SYMBOLS_MEDIO.png" alt="Símbolos Medio" class="bot-simbolos mode-img">
+
+      <!-- Flores (a la derecha de Símbolos) -->
+      <img src="darkmode/bot/FLORES.png" alt="Flores" class="bot-flores mode-img">
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SECCIÓN DERECHA (CUBO, EVAN, LINK GIF)   -->
+    <!-- ========================================= -->
+    <div class="bot-right-section">
+      <!-- Evan 02 (z-index medio, base) -->
+      <img src="darkmode/bot/evan_02.png" alt="Evan 02" class="bot-evan mode-img">
+      
+      <!-- Cubo (z-index bajo) -->
+      <img src="darkmode/bot/CUBE.png" alt="CUBE" class="bot-cube mode-img">
+      
+      <!-- LINK GIF (encima de todo) -->
+      <a href="https://xat.me/942659922" target="_blank" class="bot-link-gif-link">
+        <img src="darkmode/bot/LINK.gif" alt="LINK GIF" class="bot-link-gif mode-img">
+      </a>
+    </div>
+
+  </div>
+</div>
             <div id="footer">
               <img id="img-footer" src="darkmode/FOOTER.png" alt="Footer" class="mode-img">
             </div>
