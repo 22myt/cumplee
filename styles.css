@@ -371,6 +371,47 @@ body {
     -webkit-user-drag: none;           /* Evita que se pueda arrastrar */
 }
 
+
+/* ============================================ */
+/* TEXTO DESCRIPTIVO (NUEVO)                    */
+/* ============================================ */
+
+.top-description-container {
+  position: absolute;
+  right: 30px;           /* Ajusta según necesites */
+  top: 310px;            /* Posicionado justo debajo del Panel 2 (ajusta este valor) */
+  width: 210px;          /* Ancho fijo para que el texto se justifique */
+  pointer-events: none;  /* Para que no interfiera con clicks, cambia a 'auto' si necesitas interacción */
+  z-index: 15;
+  font-family: 'Karla', sans-serif;
+  font-size: 9pt;
+  line-height: 1.4;      /* Espaciado entre líneas */
+  text-align: justify;   /* Texto justificado */
+  text-justify: inter-word;
+}
+
+.top-description {
+  margin: 0;
+  padding: 0;
+}
+
+.description-light {
+  font-weight: 200;      /* Karla ExtraLight */
+}
+
+.description-bold {
+  font-weight: 700;      /* Karla Bold */
+}
+
+/* MODO DARK-DAY (por defecto) */
+.description-light {
+  color: #ffffff;
+}
+.description-bold {
+  color: #b65252;
+}
+
+
 /* ============================================ */
 /* ELEMENTOS DE LA IZQUIERDA                      */
 /* ============================================ */
@@ -586,6 +627,15 @@ body.light .top-panel-2 {
 }
 body.light .top-panel-3 {
     content: url('lightmode/top/Panel_3.png');
+
+body.light .description-light {
+  color: #27196f;
+}
+body.light .description-bold {
+  color: #b65252;
+}
+
+
 }
 body.light .top-cuadro1:first-child {
     content: url('lightmode/top/CUADRO1.png');
@@ -691,6 +741,14 @@ body.dark-night .top-panel-2 {
 body.dark-night .top-panel-3 {
     content: url('mytmode/top/Panel_3.png');
 }
+
+body.dark-night .description-light {
+  color: #7b633a;
+}
+body.dark-night .description-bold {
+  color: #5c2c35;
+}
+
 body.dark-night .top-cuadro1:first-child {
     content: url('mytmode/top/CUADRO1.png');
 }
