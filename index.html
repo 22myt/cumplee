@@ -180,9 +180,78 @@
             </div>
           </div>
 
+          <!-- ... (código anterior: #main y #bot) ... -->
           <div id="info">
-            <img id="img-info" src="darkmode/info/RECTANGULO_LARGO.png" alt="Info" class="mode-img">
-          </div>
+            <!-- Imagen de fondo (estática) -->
+            <img id="img-info" src="darkmode/info/RECTANGULO_LARGO.png" alt="Info Background" class="mode-img">
+
+            <!-- Contenedor para las superposiciones (profile, mensaje, radio, decorado) -->
+            <div class="info-overlays">
+
+              <!-- ========================================= -->
+              <!-- SECCIÓN 1: PROFILE (ARRIBA)              -->
+              <!-- ========================================= -->
+              <div class="info-profile">
+                <!-- Icono con hover -->
+                <div class="profile-icon-container">
+                  <img src="darkmode/info/icon.png" alt="Icon" class="profile-icon mode-img profile-icon-img">
+                  <img src="darkmode/info/iconhover.png" alt="Icon Hover" class="profile-icon mode-img profile-icon-hover">
+                </div>
+                <!-- Contenedor de burbuja y texto (se mueven juntos) -->
+                <div class="profile-bubble-text">
+                  <img src="darkmode/info/burbuja.png" alt="Bubble" class="profile-bubble mode-img">
+                  <p class="profile-text">pesudo: Jade | ♀ femme | 22 y.o. | spinning threads 🕷️ | domains: c4ts & forest</p>
+                </div>
+              </div>
+
+              <!-- ========================================= -->
+              <!-- SECCIÓN 2: MENSAJE                        -->
+              <!-- ========================================= -->
+              <div class="info-mensaje">
+                <!-- Imagen con hover -->
+                <div class="mensaje-image-container">
+                  <img src="darkmode/info/sec1.png" alt="Mensaje" class="mensaje-img mode-img mensaje-img-normal">
+                  <img src="darkmode/info/sec2.png" alt="Mensaje Hover" class="mensaje-img mode-img mensaje-img-hover">
+                </div>
+                <!-- Caja de texto con scroll -->
+                <div class="mensaje-text-box">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+              </div>
+
+              <!-- ========================================= -->
+              <!-- SECCIÓN 3: RADIO                           -->
+              <!-- ========================================= -->
+              <div class="info-radio">
+                <img src="darkmode/info/BASE_METALICA.png" alt="Base Metálica" class="radio-base mode-img">
+                <img src="darkmode/info/cassette.png" alt="Cassette" class="radio-cassette mode-img">
+              </div>
+
+              <!-- ========================================= -->
+              <!-- SECCIÓN 4: DECORADO                        -->
+              <!-- ========================================= -->
+              <div class="info-decorado">
+                <!-- SIC con hover -->
+                <div class="decorado-sic-container">
+                  <img src="darkmode/info/sic1.png" alt="SIC" class="decorado-sic mode-img decorado-sic-img">
+                  <img src="darkmode/info/sic2.png" alt="SIC Hover" class="decorado-sic mode-img decorado-sic-hover">
+                </div>
+                <!-- C4TS -->
+                <img src="darkmode/info/c4ts.png" alt="C4TS" class="decorado-c4ts mode-img">
+                <!-- Texto decorado -->
+                <p class="decorado-text">The colors hide within the symbols. Each one obeys a different transmission, shifting with signal and environment. The cassette releases a signal no mind can decipher.</p>
+                <!-- Y2 -->
+                <img src="darkmode/info/y2.png" alt="Y2" class="decorado-y2 mode-img">
+                <!-- Image2 -->
+                <img src="darkmode/info/image2.png" alt="Image2" class="decorado-image2 mode-img">
+                <!-- Made by (si la ruta es darkmode/madeby.png, ajústala) -->
+                <img src="darkmode/madeby.png" alt="Made By" class="decorado-madeby mode-img">
+              </div>
+
+            </div> <!-- Fin info-overlays -->
+          </div> <!-- Fin #info -->
+
+          
         </div>
       </div>
     </div>
