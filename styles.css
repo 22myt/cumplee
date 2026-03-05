@@ -766,20 +766,8 @@ body {
 }
 
 /* ============================================ */
-/* INFO                                          */
+/* INFO - NUEVAS SUPERPOSICIONES                */
 /* ============================================ */
-
-#info {
-    flex-shrink: 0;
-}
-
-#info img {
-    display: block;
-    height: 707.8px;
-    width: auto;
-    z-index: 1;
-}
-
 
 #info {
     position: relative;
@@ -789,7 +777,7 @@ body {
 
 #img-info-bg {
     display: block;
-    height: 707.8px;
+    height: 707.8px;  /* El fondo mantiene su tamaño original */
     width: auto;
     z-index: 1;
     position: relative;
@@ -804,6 +792,8 @@ body {
     pointer-events: none;
     z-index: 2;
     font-family: 'Karla', sans-serif;
+    transform: scale(0.75); /* REDUCE TODO UN 25% */
+    transform-origin: top left; /* Escala desde la esquina superior izquierda */
 }
 
 .info-overlays img {
@@ -815,8 +805,8 @@ body {
 /* ===== SECCIÓN 1: PROFILE ===== */
 .info-profile-section {
     position: absolute;
-    top: 30px;
-    left: 20px;
+    top: 40px;      /* Ajustado por el scale */
+    left: 25px;      /* Ajustado por el scale */
     width: calc(100% - 40px);
     pointer-events: none;
     z-index: 10;
@@ -826,8 +816,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 40px;     /* Reducido */
+    height: 40px;     /* Reducido */
     pointer-events: auto;
     z-index: 11;
 }
@@ -837,7 +827,7 @@ body {
     top: 0;
     left: 0;
     width: auto;
-    height: 50px;
+    height: 40px;     /* Reducido de 50px */
     transition: opacity 0.3s ease;
 }
 
@@ -862,7 +852,7 @@ body {
 .profile-bubble-text {
     position: absolute;
     top: 5px;
-    left: 60px;
+    left: 45px;      /* Reducido de 60px */
     pointer-events: auto;
     z-index: 13;
     animation: floatBubble 3s ease-in-out infinite;
@@ -870,24 +860,24 @@ body {
 
 @keyframes floatBubble {
     0% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    50% { transform: translateY(-4px); } /* Reducido de -5px */
     100% { transform: translateY(0); }
 }
 
 .profile-bubble {
     height: auto;
-    width: 300px;
+    width: 240px;     /* Reducido de 300px */
     position: relative;
     z-index: 14;
 }
 
 .profile-text {
     position: absolute;
-    top: 13px;
-    left: 25px;
-    width: 250px;
+    top: 10px;        /* Ajustado */
+    left: 20px;        /* Ajustado */
+    width: 200px;      /* Reducido de 250px */
     font-family: 'Karla', sans-serif;
-    font-size: 8pt;
+    font-size: 7pt;    /* Reducido de 8pt */
     font-weight: 400;
     line-height: 1.2;
     text-align: justify;
@@ -907,9 +897,9 @@ body {
 /* ===== SECCIÓN 2: MENSAJE ===== */
 .info-message-section {
     position: absolute;
-    top: 150px;
-    left: 25px;
-    width: 250px;
+    top: 180px;       /* Ajustado de 150px */
+    left: 30px;        /* Ajustado de 25px */
+    width: 200px;      /* Reducido de 250px */
     pointer-events: none;
     z-index: 20;
 }
@@ -920,7 +910,7 @@ body {
     height: auto;
     pointer-events: auto;
     z-index: 21;
-    margin-bottom: 5px;
+    margin-bottom: 4px; /* Reducido */
 }
 
 .message-img {
@@ -955,11 +945,11 @@ body {
 
 .message-text-box {
     width: 100%;
-    height: 150px;
-    padding: 8px 10px;
+    height: 120px;     /* Reducido de 150px */
+    padding: 6px 8px;  /* Reducido */
     font-family: 'Karla', sans-serif;
-    font-size: 7.5pt;
-    line-height: 1.4;
+    font-size: 6.5pt;  /* Reducido de 7.5pt */
+    line-height: 1.3;
     text-align: justify;
     overflow-y: auto;
     pointer-events: auto;
@@ -974,7 +964,7 @@ body {
 }
 
 .message-text-box::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;        /* Reducido */
 }
 
 .message-text-box::-webkit-scrollbar-track {
@@ -994,9 +984,9 @@ body {
 /* ===== SECCIÓN 3: RADIO ===== */
 .info-radio-section {
     position: absolute;
-    bottom: 230px;
-    left: 30px;
-    width: 150px;
+    bottom: 180px;     /* Ajustado de 230px */
+    left: 35px;        /* Ajustado de 30px */
+    width: 120px;      /* Reducido de 150px */
     height: auto;
     pointer-events: none;
     z-index: 30;
@@ -1012,7 +1002,7 @@ body {
 
 .radio-cassette {
     position: absolute;
-    width: 80%;
+    width: 75%;        /* Ajustado */
     height: auto;
     top: 50%;
     left: 50%;
@@ -1025,8 +1015,8 @@ body {
 .info-decor-section {
     position: absolute;
     bottom: 20px;
-    left: 20px;
-    width: 250px;
+    left: 25px;        /* Ajustado de 20px */
+    width: 200px;      /* Reducido de 250px */
     pointer-events: none;
     z-index: 40;
 }
@@ -1037,7 +1027,7 @@ body {
     height: auto;
     pointer-events: auto;
     z-index: 41;
-    margin-bottom: 5px;
+    margin-bottom: 4px; /* Reducido */
 }
 
 .decor-sic {
@@ -1072,21 +1062,21 @@ body {
 
 .decor-c4ts {
     position: relative;
-    width: 100%;
+    width: 90%;        /* Reducido */
     height: auto;
     z-index: 43;
-    margin: 5px 0;
+    margin: 4px 0;     /* Reducido */
     pointer-events: auto;
 }
 
 .decor-text {
     font-family: 'Karla', sans-serif;
-    font-size: 7pt;
+    font-size: 6pt;    /* Reducido de 7pt */
     font-weight: 200;
-    line-height: 1.3;
+    line-height: 1.2;
     text-align: justify;
     color: #ffffff;
-    margin: 5px 0;
+    margin: 4px 0;     /* Reducido */
     padding: 0 2px;
     z-index: 44;
     pointer-events: none;
@@ -1094,28 +1084,28 @@ body {
 
 .decor-y2 {
     position: relative;
-    width: 60%;
+    width: 50%;        /* Reducido de 60% */
     height: auto;
     z-index: 45;
-    margin: 5px 0;
+    margin: 4px 0;     /* Reducido */
     pointer-events: auto;
 }
 
 .decor-image2 {
     position: relative;
-    width: 80%;
+    width: 70%;        /* Reducido de 80% */
     height: auto;
     z-index: 46;
-    margin: 5px 0;
+    margin: 4px 0;     /* Reducido */
     pointer-events: auto;
 }
 
 .decor-madeby {
     position: relative;
-    width: 100%;
+    width: 90%;        /* Reducido */
     height: auto;
     z-index: 47;
-    margin-top: 10px;
+    margin-top: 8px;   /* Reducido de 10px */
     pointer-events: auto;
 }
 
