@@ -103,20 +103,97 @@ body {
 }
 
 /* ============================================ */
-/* HEAD                                          */
+/* HEAD (MODIFICADO)                             */
 /* ============================================ */
 
 #head {
+    position: relative;        /* Para que los elementos absolutos se posicionen dentro */
     margin-bottom: -1px;
     line-height: 0;
     flex-shrink: 0;
 }
 
-#img-head {
+/* Imagen de fondo - ocupa todo el contenedor */
+#img-head-bg {
     display: block;
     height: 73.4px;
     width: auto;
     z-index: 1;
+    position: relative;        /* Asegura que esté en su propia capa */
+}
+
+/* Contenedor de las superposiciones */
+.head-overlays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;      /* Permite que los clics "atraviesen" el contenedor, pero no a los hijos que los necesiten */
+    z-index: 2;                /* Por encima de la imagen de fondo */
+}
+
+/* Estilos comunes para imágenes superpuestas */
+.head-overlays img {
+    position: absolute;        /* Posicionamiento absoluto dentro de #head */
+    display: block;
+    pointer-events: auto;      /* Los hijos que necesiten interacción (como hover) deben recibir eventos */
+}
+
+/* Título - posicionado a la izquierda (ajusta según necesites) */
+.head-title {
+    height: 30px;              /* Ajusta la altura según el tamaño real de tu title.png */
+    width: auto;
+    left: 10px;                /* Distancia desde la izquierda */
+    top: 50%;                  /* Centrado vertical */
+    transform: translateY(-50%); /* Ajuste fino para centrado vertical */
+    z-index: 3;
+}
+
+/* Contenedor especial para logo y gif, para que el hover se aplique al área conjunta */
+.logo-gif-container {
+    position: absolute;
+    pointer-events: auto;      /* Este contenedor recibirá los eventos de hover */
+    z-index: 4;
+    /* Ajusta la posición y tamaño del contenedor para que coincida con tu logo/GIF */
+    right: 15px;               /* Distancia desde la derecha */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;              /* Debe ser al menos tan alto como el logo/gif */
+    width: 40px;               /* Debe ser al menos tan ancho como el logo/gif */
+}
+
+/* Logo - ocupa todo el contenedor */
+.head-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* Ajusta la imagen sin deformarla */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+/* GIF - ocupa todo el contenedor (por defecto oculto) */
+.head-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* Ajusta la imagen sin deformarla */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;                /* Oculto por defecto */
+    transition: opacity 0.2s ease; /* Transición suave al aparecer */
+    z-index: 6;
+}
+
+/* HOVER SINCRONIZADO: Al pasar el ratón sobre el contenedor... */
+.logo-gif-container:hover .head-logo {
+    opacity: 0;                /* Ocultamos el logo estático */
+}
+
+.logo-gif-container:hover .head-gif {
+    opacity: 1;                /* Mostramos el GIF animado */
 }
 
 /* ============================================ */
@@ -201,34 +278,47 @@ body {
 
 /* MODO DARK-DAY (por defecto) */
 body.dark-day {
-    background-color: #242323;  /* Color para dark-day */
+    background-color: #242323;
 }
 
 /* MODO LIGHT */
 body.light {
-    background-color: #d1d1d1;  /* Color para light */
+    background-color: #d1d1d1;
 }
 
-body.light #img-head {
+/* Cambios de imágenes para LIGHT */
+body.light #img-head-bg {
     content: url('lightmode/head/FONDO.png');
+}
+body.light #img-head-title {
+    content: url('lightmode/head/title.png');
+}
+body.light .head-logo {
+    content: url('lightmode/head/logo.png');
+}
+body.light .head-gif {
+    content: url('lightmode/head/logogif1.gif');
+}
+body.light .logo-gif-container:hover .head-logo {
+    /* En hover, el logo.png se oculta con opacidad, pero si quisieras cambiarlo por otra imagen estática, lo harías aquí.
+       Como el GIF se encarga del hover, no es necesario cambiar el src del logo. */
+}
+body.light .logo-gif-container:hover .head-gif {
+    content: url('lightmode/head/logogif2.gif'); /* GIF en hover para modo light */
 }
 
 body.light #img-lateral {
     content: url('lightmode/lateral.png');
 }
-
 body.light #img-top {
     content: url('lightmode/top/ZONA_TOP.png');
 }
-
 body.light #img-bot {
     content: url('lightmode/bot/ZONA_BOT.png');
 }
-
 body.light #img-footer {
     content: url('lightmode/FOOTER.png');
 }
-
 body.light #img-info {
     content: url('lightmode/info/RECTANGULO_LARGO.png');
 }
@@ -237,17 +327,13 @@ body.light #img-info {
 body.light #img-light {
     content: url('lightmode/buttons/lightmode1.png');
 }
-
 body.light #img-dark-day,
 body.light #img-dark-night {
     content: url('lightmode/buttons/darkmode1.png');
 }
-
-/* Hovers en modo light */
 body.light #light-btn:hover #img-light {
     content: url('lightmode/buttons/lightmode2.png');
 }
-
 body.light #dark-day-btn:hover #img-dark-day,
 body.light #dark-night-btn:hover #img-dark-night {
     content: url('lightmode/buttons/darkmode2.png');
@@ -258,29 +344,38 @@ body.light #dark-night-btn:hover #img-dark-night {
 /* ============================================ */
 
 body.dark-night {
-    background-color: #080707;  /* Color para mytmode */
+    background-color: #080707;
 }
 
-body.dark-night #img-head {
+/* Cambios de imágenes para DARK-NIGHT */
+body.dark-night #img-head-bg {
     content: url('mytmode/head/FONDO.png');
+}
+body.dark-night #img-head-title {
+    content: url('mytmode/head/title.png');
+}
+body.dark-night .head-logo {
+    content: url('mytmode/head/logo.png');
+}
+body.dark-night .head-gif {
+    content: url('mytmode/head/logogif1.gif');
+}
+body.dark-night .logo-gif-container:hover .head-gif {
+    content: url('mytmode/head/logogif2.gif'); /* GIF en hover para modo mytmode */
 }
 
 body.dark-night #img-lateral {
     content: url('mytmode/lateral.png');
 }
-
 body.dark-night #img-top {
     content: url('mytmode/top/ZONA_TOP.png');
 }
-
 body.dark-night #img-bot {
     content: url('mytmode/bot/ZONA_BOT.png');
 }
-
 body.dark-night #img-footer {
     content: url('mytmode/FOOTER.png');
 }
-
 body.dark-night #img-info {
     content: url('mytmode/info/RECTANGULO_LARGO.png');
 }
@@ -289,17 +384,13 @@ body.dark-night #img-info {
 body.dark-night #img-light {
     content: url('mytmode/buttons/lightmode1.png');
 }
-
 body.dark-night #img-dark-day,
 body.dark-night #img-dark-night {
     content: url('mytmode/buttons/darkmode1.png');
 }
-
-/* Hovers en modo dark-night */
 body.dark-night #light-btn:hover #img-light {
     content: url('mytmode/buttons/lightmode2.png');
 }
-
 body.dark-night #dark-day-btn:hover #img-dark-day,
 body.dark-night #dark-night-btn:hover #img-dark-night {
     content: url('mytmode/buttons/darkmode2.png');
