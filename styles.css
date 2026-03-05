@@ -159,33 +159,37 @@ body {
     right: 15px;               /* Distancia desde la derecha */
     top: 50%;
     transform: translateY(-50%);
-    height: 48px;              /* Misma altura que el title para consistencia */
-    width: 48px;               /* Ajusta según el tamaño de tu logo/GIF */
+    height: 48px;              /* Altura fija para el contenedor */
+    width: auto;               /* Ancho automático basado en el contenido */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Logo - visible siempre */
 .head-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;       /* Ajusta la imagen sin deformarla */
+    height: 48px;              /* Misma altura que el contenedor */
+    width: auto;               /* Ancho proporcional automático */
+    display: block;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
     z-index: 5;
-    transition: opacity 0.2s ease; /* Transición suave si quieres efectos */
+    transition: opacity 0.2s ease;
 }
 
 /* GIF - visible siempre, superpuesto al logo */
 .head-gif {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;       /* Ajusta la imagen sin deformarla */
+    height: 48px;              /* Misma altura que el logo */
+    width: auto;               /* Ancho proporcional automático */
+    display: block;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
     z-index: 6;                /* Mayor z-index para estar ENCIMA del logo */
-    /* AMBOS VISIBLES: eliminamos opacity: 0 */
-    pointer-events: none;      /* El GIF no bloquea la interacción, los eventos van al contenedor */
+    pointer-events: none;      /* El GIF no bloquea la interacción */
 }
 
 /* HOVER SINCRONIZADO: Ambos elementos cambian */
@@ -305,11 +309,12 @@ body.light .head-gif {
 
 /* Hover en modo light */
 body.light .logo-gif-container:hover .head-logo {
-    content: url('lightmode/head/logo_hover.png'); /* Logo hover para light */
+    content: url('lightmode/head/logo_hover.png');
 }
 body.light .logo-gif-container:hover .head-gif {
-    content: url('lightmode/head/logogif2.gif'); /* GIF hover para light */
+    content: url('lightmode/head/logogif2.gif');
 }
+
 
 body.light #img-lateral {
     content: url('lightmode/lateral.png');
@@ -358,6 +363,8 @@ body.dark-night #img-head-bg {
 body.dark-night #img-head-title {
     content: url('mytmode/head/title.png');
 }
+
+
 /* Logo y GIF base para dark-night */
 body.dark-night .head-logo {
     content: url('mytmode/head/logo.png');
@@ -368,11 +375,12 @@ body.dark-night .head-gif {
 
 /* Hover en modo dark-night */
 body.dark-night .logo-gif-container:hover .head-logo {
-    content: url('mytmode/head/logo_hover.png'); /* Logo hover para mytmode */
+    content: url('mytmode/head/logo_hover.png');
 }
 body.dark-night .logo-gif-container:hover .head-gif {
-    content: url('mytmode/head/logogif2.gif'); /* GIF hover para mytmode */
+    content: url('mytmode/head/logogif2.gif');
 }
+
 
 body.dark-night #img-lateral {
     content: url('mytmode/lateral.png');
