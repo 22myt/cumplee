@@ -731,30 +731,36 @@ body {
     z-index: 30;
 }
 
-/* Contenedor del enlace LINK GIF */
+/* Contenedor del enlace LINK GIF - VERSIÓN CON POSICIONAMIENTO MANUAL */
 .bot-link-gif-link {
     position: absolute;
     display: block;
     pointer-events: auto;
     text-decoration: none;
     z-index: 32;
-    bottom: 125px;
-    right: 289px;
-    transition: transform 0.3s ease;
-    /* AÑADE ESTA LÍNEA - Asegura que la transformación origine desde el centro */
-    transform-origin: center center;
+    bottom: 125px;    /* Posición base que ya tenías */
+    right: 289px;     /* Posición base que ya tenías */
+    transition: all 0.3s ease; /* Cambiamos a 'all' para que también transicione la posición */
 }
 
-/* Imagen LINK GIF */
+/* Imagen LINK GIF - tamaño base */
 .bot-link-gif {
     height: 130px;
     width: auto;
     display: block;
+    transition: all 0.3s ease;
 }
 
-/* HOVER: Agrandar el enlace */
+/* HOVER: CONTROL MANUAL TOTAL */
 .bot-link-gif-link:hover {
-    transform: scale(1.1);     /* Escala al 110% - AHORA SERÁ DESDE EL CENTRO */
+    /* Nuevas coordenadas para mantener el centro */
+    bottom: 118.5px;  /* 125px - 6.5px (la mitad del crecimiento) */
+    right: 282.5px;   /* 289px - 6.5px (la mitad del crecimiento) */
+}
+
+.bot-link-gif-link:hover .bot-link-gif {
+    height: 143px;    /* 130px * 1.1 = 143px */
+    /* width se ajusta automáticamente */
 }
 
 /* ============================================ */
