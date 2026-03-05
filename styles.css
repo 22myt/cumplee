@@ -294,24 +294,37 @@ body {
     top: 0;
     width: auto;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none;  /* El contenedor no recibe eventos */
 }
 
-/* Panel 1 */
+/* Panel 1 - sin interacción */
 .top-panel-1 {
     height: 130px;
     width: auto;
     right: 10px;
     top: 10px;
     z-index: 10;
+    pointer-events: none;  /* Estático, no necesita interacción */
+}
+
+/* Contenedor para el texto (para manejar el hover específico) */
+.top-texto-container {
+    position: absolute;
+    right: 92px;
+    top: 105px;
+    height: 20px;           /* Misma altura que la imagen */
+    width: auto;
+    pointer-events: auto;    /* Este contenedor recibe el hover */
+    z-index: 11;
 }
 
 /* Texto 1 - clase base para posición */
 .top-texto {
     height: 20px;
     width: auto;
-    right: 92px;
-    top: 105px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* Versión normal (visible) */
@@ -324,33 +337,35 @@ body {
 .top-texto-hover {
     z-index: 12;
     opacity: 0;
-    pointer-events: none;  /* No bloquea la interacción */
+    pointer-events: none;
 }
 
-.top-right:hover .top-texto-img {
+.top-texto-container:hover .top-texto-img {
     opacity: 0;
 }
 
-.top-right:hover .top-texto-hover {
+.top-texto-container:hover .top-texto-hover {
     opacity: 1;
 }
 
-/* Panel 2 */
+/* Panel 2 - sin interacción */
 .top-panel-2 {
     height: 175px;
     width: auto;
     right: 10px;
     top: 120px;
     z-index: 13;
+    pointer-events: none;  /* Estático, no necesita interacción */
 }
 
-/* Panel 3 */
+/* Panel 3 - sin interacción */
 .top-panel-3 {
     height: 65px;
     width: auto;
     right: 10px;
     top: 354px;
     z-index: 14;
+    pointer-events: none;  /* Estático, no necesita interacción */
 }
 
 /* ============================================ */
@@ -363,17 +378,17 @@ body {
     top: 6px;
     width: auto;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none;  /* El contenedor no recibe eventos */
 }
 
 /* Contenedor para CUADRO 1 */
 .top-cuadro1-container {
     position: absolute;
     left: 10px;
-    top: 10px;
-    height: 60px;
+    top: 174px;            /* Posición específica para CUADRO1 */
+    height: 40px;           /* Misma altura que la imagen */
     width: auto;
-    pointer-events: auto;
+    pointer-events: auto;   /* Este contenedor recibe el hover */
     z-index: 20;
 }
 
@@ -382,7 +397,7 @@ body {
     height: 40px;
     width: auto;
     position: absolute;
-    top: 174px;
+    top: 0;
     left: 0;
 }
 
@@ -411,10 +426,10 @@ body {
 .top-cuadro2-container {
     position: absolute;
     left: 10px;
-    top: 80px;
-    height: 60px;
+    top: 224px;            /* Posición específica para CUADRO2 (debajo del CUADRO1) */
+    height: 40px;           /* Misma altura que la imagen */
     width: auto;
-    pointer-events: auto;
+    pointer-events: auto;   /* Este contenedor recibe el hover */
     z-index: 23;
 }
 
@@ -423,7 +438,7 @@ body {
     height: 40px;
     width: auto;
     position: absolute;
-    top: 60px;
+    top: 0;
     left: 0;
 }
 
@@ -459,7 +474,7 @@ body {
     top: -37.6px;
     transform: translateX(-50%);
     z-index: 30;
-    pointer-events: none;
+    pointer-events: none;  /* ¡CRUCIAL! Hace que el mouse atraviese el elemento */
 }
 
 #img-top {
