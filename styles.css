@@ -792,8 +792,7 @@ body {
     pointer-events: none;
     z-index: 2;
     font-family: 'Karla', sans-serif;
-    transform: scale(0.75); /* REDUCE TODO UN 25% */
-    transform-origin: top left; /* Escala desde la esquina superior izquierda */
+    transform-origin: top left;
 }
 
 .info-overlays img {
@@ -805,8 +804,8 @@ body {
 /* ===== SECCIÓN 1: PROFILE ===== */
 .info-profile-section {
     position: absolute;
-    top: 40px;      /* Ajustado por el scale */
-    left: 25px;      /* Ajustado por el scale */
+    top: 40px;
+    left: 25px;
     width: calc(100% - 40px);
     pointer-events: none;
     z-index: 10;
@@ -816,20 +815,19 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 40px;     /* Reducido */
-    height: 40px;     /* Reducido */
     pointer-events: auto;
     z-index: 11;
 }
 
 .profile-icon {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -35px;
+    left: -16px;
     width: auto;
-    height: 40px;     /* Reducido de 50px */
+    height: 155px;
     transition: opacity 0.3s ease;
 }
+
 
 .profile-icon-img {
     z-index: 11;
@@ -851,8 +849,8 @@ body {
 
 .profile-bubble-text {
     position: absolute;
-    top: 5px;
-    left: 45px;      /* Reducido de 60px */
+    top: 118px;
+    left: -10px;
     pointer-events: auto;
     z-index: 13;
     animation: floatBubble 3s ease-in-out infinite;
@@ -866,40 +864,40 @@ body {
 
 .profile-bubble {
     height: auto;
-    width: 240px;     /* Reducido de 300px */
+    width: 143px;
     position: relative;
     z-index: 14;
 }
 
-.profile-text {
+profile-text {
     position: absolute;
-    top: 10px;        /* Ajustado */
-    left: 20px;        /* Ajustado */
-    width: 200px;      /* Reducido de 250px */
+    top: 12px;
+    left: 5px;
+    width: 133px;
     font-family: 'Karla', sans-serif;
-    font-size: 7pt;    /* Reducido de 8pt */
+    font-size: 7pt;
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.3;
     text-align: justify;
+    letter-spacing: 0.25px;
     color: #ffffff;
     z-index: 15;
     margin: 0;
     padding: 0;
-    pointer-events: none;
     text-decoration: none;
     transition: text-decoration 0.2s ease;
 }
 
 .profile-bubble-text:hover .profile-text {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* ===== SECCIÓN 2: MENSAJE ===== */
 .info-message-section {
     position: absolute;
-    top: 180px;       /* Ajustado de 150px */
-    left: 30px;        /* Ajustado de 25px */
-    width: 200px;      /* Reducido de 250px */
+    top: 260px;
+    left: 25px;
+    width: 153px;
     pointer-events: none;
     z-index: 20;
 }
@@ -910,16 +908,18 @@ body {
     height: auto;
     pointer-events: auto;
     z-index: 21;
-    margin-bottom: 4px; /* Reducido */
 }
 
 .message-img {
     position: relative;
-    width: 100%;
+    width: 130px;
     height: auto;
+    left: -4px;
+    top: -37px;
     display: block;
-    transition: opacity 0.3s ease;
 }
+
+
 
 .message-img-normal {
     z-index: 21;
@@ -945,10 +945,12 @@ body {
 
 .message-text-box {
     width: 100%;
-    height: 120px;     /* Reducido de 150px */
-    padding: 6px 8px;  /* Reducido */
+    height: 93px;
+    margin-left: -15px;
+    margin-top: -13px;
+    padding: 6px 8px;
     font-family: 'Karla', sans-serif;
-    font-size: 6.5pt;  /* Reducido de 7.5pt */
+    font-size: 7pt;
     line-height: 1.3;
     text-align: justify;
     overflow-y: auto;
@@ -984,9 +986,8 @@ body {
 /* ===== SECCIÓN 3: RADIO ===== */
 .info-radio-section {
     position: absolute;
-    bottom: 180px;     /* Ajustado de 230px */
-    left: 35px;        /* Ajustado de 30px */
-    width: 120px;      /* Reducido de 150px */
+    bottom: 299px;
+    left: 0px;
     height: auto;
     pointer-events: none;
     z-index: 30;
@@ -994,7 +995,9 @@ body {
 
 .radio-base {
     position: relative;
-    width: 100%;
+    width: 75px;
+    top: -60px;
+    left: 49px;
     height: auto;
     z-index: 31;
     pointer-events: auto;
@@ -1002,40 +1005,39 @@ body {
 
 .radio-cassette {
     position: absolute;
-    width: 75%;        /* Ajustado */
+    width: 165px;
     height: auto;
-    top: 50%;
-    left: 50%;
+    top: 18px;
+    left: 88px;
     transform: translate(-50%, -50%);
-    z-index: 32;
+    z-index: 30;
     pointer-events: none;
 }
 
 /* ===== SECCIÓN 4: DECORADO ===== */
 .info-decor-section {
     position: absolute;
-    bottom: 20px;
-    left: 25px;        /* Ajustado de 20px */
-    width: 200px;      /* Reducido de 250px */
+    bottom: 100px;
+    left: 10px;
+    width: 200px;
     pointer-events: none;
     z-index: 40;
 }
 
 .decor-sic-container {
     position: relative;
-    width: 100%;
     height: auto;
     pointer-events: auto;
     z-index: 41;
-    margin-bottom: 4px; /* Reducido */
 }
 
 .decor-sic {
     position: relative;
-    width: 100%;
+    width: 93px;
+    top: -58px;
+    left: 30.5px;
     height: auto;
     display: block;
-    transition: opacity 0.3s ease;
 }
 
 .decor-sic-img {
@@ -1062,21 +1064,22 @@ body {
 
 .decor-c4ts {
     position: relative;
-    width: 90%;        /* Reducido */
+    width: 142px;
     height: auto;
+    left: 5px;
+    top: -25px;
     z-index: 43;
-    margin: 4px 0;     /* Reducido */
     pointer-events: auto;
 }
 
 .decor-text {
     font-family: 'Karla', sans-serif;
-    font-size: 6pt;    /* Reducido de 7pt */
+    font-size: 6pt;
     font-weight: 200;
     line-height: 1.2;
     text-align: justify;
     color: #ffffff;
-    margin: 4px 0;     /* Reducido */
+    margin: 4px 0;
     padding: 0 2px;
     z-index: 44;
     pointer-events: none;
@@ -1084,28 +1087,32 @@ body {
 
 .decor-y2 {
     position: relative;
-    width: 50%;        /* Reducido de 60% */
+    width: 138px;
+    left: 8px;
     height: auto;
     z-index: 45;
-    margin: 4px 0;     /* Reducido */
     pointer-events: auto;
 }
 
 .decor-image2 {
     position: relative;
-    width: 70%;        /* Reducido de 80% */
+    width: 130px;
+    top: 57px;
+    left: 13px;
     height: auto;
     z-index: 46;
-    margin: 4px 0;     /* Reducido */
+    margin: 4px 0;
     pointer-events: auto;
 }
 
 .decor-madeby {
     position: relative;
-    width: 90%;        /* Reducido */
+    width: 85px;
+    top: 109px;
     height: auto;
+    left: 43px;
     z-index: 47;
-    margin-top: 8px;   /* Reducido de 10px */
+    margin-top: 8px;
     pointer-events: auto;
 }
 
