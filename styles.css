@@ -1325,7 +1325,7 @@ body.light .decor-image2 {
     content: url('lightmode/info/image2.png');
 }
 body.light .decor-madeby {
-    content: url('lightmode/info/madeby.png');
+    content: url('lightmode/madeby.png');
 }
 
 
@@ -1550,7 +1550,7 @@ body.dark-night .decor-image2 {
     content: url('mytmode/info/image2.png');
 }
 body.dark-night .decor-madeby {
-    content: url('mytmode/info/madeby.png');
+    content: url('mytmode/madeby.png');
 }
 
 /* Botones en modo dark-night */
