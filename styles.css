@@ -741,6 +741,8 @@ body {
     bottom: 125px;
     right: 289px;
     transition: transform 0.3s ease;
+    /* AÑADE ESTA LÍNEA - Asegura que la transformación origine desde el centro */
+    transform-origin: center center;
 }
 
 /* Imagen LINK GIF */
@@ -752,7 +754,7 @@ body {
 
 /* HOVER: Agrandar el enlace */
 .bot-link-gif-link:hover {
-    transform: scale(1.1);     /* Escala al 110% */
+    transform: scale(1.1);     /* Escala al 110% - AHORA SERÁ DESDE EL CENTRO */
 }
 
 /* ============================================ */
