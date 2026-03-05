@@ -142,9 +142,9 @@ body {
 
 /* Título - posicionado a la izquierda (ajusta según necesites) */
 .head-title {
-    height: 30px;              /* Ajusta la altura según el tamaño real de tu title.png */
+    height: 48px;              /* Ajusta la altura según el tamaño real de tu title.png */
     width: auto;
-    left: 10px;                /* Distancia desde la izquierda */
+    left: 12px;                /* Distancia desde la izquierda */
     top: 50%;                  /* Centrado vertical */
     transform: translateY(-50%); /* Ajuste fino para centrado vertical */
     z-index: 3;
@@ -155,15 +155,15 @@ body {
     position: absolute;
     pointer-events: auto;      /* Este contenedor recibirá los eventos de hover */
     z-index: 4;
-    /* Ajusta la posición y tamaño del contenedor para que coincida con tu logo/GIF */
+    /* Ajusta la posición y tamaño del contenedor */
     right: 15px;               /* Distancia desde la derecha */
     top: 50%;
     transform: translateY(-50%);
-    height: 40px;              /* Debe ser al menos tan alto como el logo/gif */
-    width: 40px;               /* Debe ser al menos tan ancho como el logo/gif */
+    height: 48px;              /* Misma altura que el title para consistencia */
+    width: 48px;               /* Ajusta según el tamaño de tu logo/GIF */
 }
 
-/* Logo - ocupa todo el contenedor */
+/* Logo - visible siempre */
 .head-logo {
     width: 100%;
     height: 100%;
@@ -172,9 +172,10 @@ body {
     top: 0;
     left: 0;
     z-index: 5;
+    transition: opacity 0.2s ease; /* Transición suave si quieres efectos */
 }
 
-/* GIF - ocupa todo el contenedor (por defecto oculto) */
+/* GIF - visible siempre, superpuesto al logo */
 .head-gif {
     width: 100%;
     height: 100%;
@@ -182,18 +183,18 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;                /* Oculto por defecto */
-    transition: opacity 0.2s ease; /* Transición suave al aparecer */
-    z-index: 6;
+    z-index: 6;                /* Mayor z-index para estar ENCIMA del logo */
+    /* AMBOS VISIBLES: eliminamos opacity: 0 */
+    pointer-events: none;      /* El GIF no bloquea la interacción, los eventos van al contenedor */
 }
 
-/* HOVER SINCRONIZADO: Al pasar el ratón sobre el contenedor... */
+/* HOVER SINCRONIZADO: Ambos elementos cambian */
 .logo-gif-container:hover .head-logo {
-    opacity: 0;                /* Ocultamos el logo estático */
+    content: url('darkmode/head/logo_hover.png'); /* Cambia el logo en hover */
 }
 
 .logo-gif-container:hover .head-gif {
-    opacity: 1;                /* Mostramos el GIF animado */
+    content: url('darkmode/head/logogif2.gif'); /* Cambia el GIF en hover */
 }
 
 /* ============================================ */
@@ -293,18 +294,21 @@ body.light #img-head-bg {
 body.light #img-head-title {
     content: url('lightmode/head/title.png');
 }
+
+/* Logo y GIF base para light */
 body.light .head-logo {
     content: url('lightmode/head/logo.png');
 }
 body.light .head-gif {
     content: url('lightmode/head/logogif1.gif');
 }
+
+/* Hover en modo light */
 body.light .logo-gif-container:hover .head-logo {
-    /* En hover, el logo.png se oculta con opacidad, pero si quisieras cambiarlo por otra imagen estática, lo harías aquí.
-       Como el GIF se encarga del hover, no es necesario cambiar el src del logo. */
+    content: url('lightmode/head/logo_hover.png'); /* Logo hover para light */
 }
 body.light .logo-gif-container:hover .head-gif {
-    content: url('lightmode/head/logogif2.gif'); /* GIF en hover para modo light */
+    content: url('lightmode/head/logogif2.gif'); /* GIF hover para light */
 }
 
 body.light #img-lateral {
@@ -354,14 +358,20 @@ body.dark-night #img-head-bg {
 body.dark-night #img-head-title {
     content: url('mytmode/head/title.png');
 }
+/* Logo y GIF base para dark-night */
 body.dark-night .head-logo {
     content: url('mytmode/head/logo.png');
 }
 body.dark-night .head-gif {
     content: url('mytmode/head/logogif1.gif');
 }
+
+/* Hover en modo dark-night */
+body.dark-night .logo-gif-container:hover .head-logo {
+    content: url('mytmode/head/logo_hover.png'); /* Logo hover para mytmode */
+}
 body.dark-night .logo-gif-container:hover .head-gif {
-    content: url('mytmode/head/logogif2.gif'); /* GIF en hover para modo mytmode */
+    content: url('mytmode/head/logogif2.gif'); /* GIF hover para mytmode */
 }
 
 body.dark-night #img-lateral {
