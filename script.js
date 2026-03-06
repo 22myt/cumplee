@@ -158,10 +158,7 @@ function createMarqueeText() {
 }
 
 // ============================================
-// INICIAR ANIMACIÓN DEL MARQUEE (VERSIÓN SIMPLE)
-// ============================================
-// ============================================
-// INICIAR ANIMACIÓN DEL MARQUEE (VERSIÓN SIMPLE)
+// INICIAR ANIMACIÓN DEL MARQUEE
 // ============================================
 function startMarqueeAnimation() {
     // Detener animación anterior si existe
@@ -172,12 +169,9 @@ function startMarqueeAnimation() {
     const content = document.querySelector('.marquee-vertical-content');
     if (!content) return;
     
-    const container = document.querySelector('.marquee-vertical-container');
-    if (!container) return;
-    
     // Velocidad basada en tiempo real
     let lastTime = 0;
-    const pixelsPerSecond = 30; // 30 píxeles por segundo (mucho más lento)
+    const pixelsPerSecond = 15; // 15 píxeles por segundo (más lento)
     
     function animate(currentTime) {
         if (!lastTime) {
