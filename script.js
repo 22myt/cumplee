@@ -109,9 +109,6 @@ let marqueeAnimation = null;
 let marqueePosition = 0;
 
 // ============================================
-// CREAR TEXTO ANIMADO EN LATERAL (SIN REINICIOS)
-// ============================================
-// ============================================
 // CREAR TEXTO ANIMADO EN LATERAL
 // ============================================
 function createMarqueeText() {
@@ -141,7 +138,6 @@ function createMarqueeText() {
     
     // Generar 10 repeticiones del texto con MÁS espacios
     let fullText = '';
-    // Aumentar los espacios a 10 (antes eran 4)
     const spaces = '          '; // 10 espacios
     for (let i = 0; i < 10; i++) {
         fullText += marqueeText + spaces;
@@ -171,7 +167,7 @@ function startMarqueeAnimation() {
     
     // Velocidad basada en tiempo real
     let lastTime = 0;
-    const pixelsPerSecond = 15; // 15 píxeles por segundo (más lento)
+    const pixelsPerSecond = 15; // AJUSTA ESTE VALOR: 10 = más lento, 20 = más rápido
     
     function animate(currentTime) {
         if (!lastTime) {
@@ -181,7 +177,7 @@ function startMarqueeAnimation() {
         }
         
         // Calcular el tiempo transcurrido en segundos
-        const deltaTime = (currentTime - lastTime) / 1000; // convertir a segundos
+        const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
         
         // Mover basado en el tiempo real
