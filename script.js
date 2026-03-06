@@ -6,8 +6,6 @@ const lightBtn = document.getElementById("light-btn");
 const darkDayBtn = document.getElementById("dark-day-btn");
 const darkNightBtn = document.getElementById("dark-night-btn");
 
-let sunAnimation = null;
-
 // Función para cambiar modo
 function setMode(mode) {
     // Remueve todas las clases de modo
@@ -15,57 +13,10 @@ function setMode(mode) {
     // Añade la nueva clase
     body.classList.add(mode);
     console.log("Modo activado:", mode);
-
-    updateSunIconColor(mode);
     
     // Pequeño retraso para que las imágenes nuevas se carguen
     setTimeout(checkContainerScaling, 150);
 }
-
-// === NUEVO: Función para actualizar el color del sun icon ===
-// AGREGAR DESPUÉS de la función setMode (antes de los event listeners)
-function updateSunIconColor(mode) {
-    if (!sunAnimation) return;
-    
-    let color;
-    switch(mode) {
-        case 'light':
-            color = '#27196f'; // Azul oscuro para light
-            break;
-        case 'dark-night':
-            color = '#7c643a'; // Marrón claro para mytmode
-            break;
-        case 'dark-day':
-        default:
-            color = '#ffffff'; // Blanco para dark-day
-            break;
-    }
-    
-    // Actualizar color de todos los shapes en la animación
-    if (sunAnimation.renderer && sunAnimation.renderer.elements) {
-        // Para Lottie web player
-        sunAnimation.renderer.elements.forEach(element => {
-            if (element.type === 'gr' || element.type === 'sh') {
-                // Cambiar color de rellenos y trazos
-                if (element.shapes) {
-                    element.shapes.forEach(shape => {
-                        if (shape.ty === 'st' || shape.ty === 'fl') {
-                            if (shape.ks && shape.ks.c && shape.ks.c.k) {
-                                // Convertir color hex a RGB array
-                                const r = parseInt(color.slice(1,3), 16) / 255;
-                                const g = parseInt(color.slice(3,5), 16) / 255;
-                                const b = parseInt(color.slice(5,7), 16) / 255;
-                                shape.ks.c.k = [r, g, b, 1];
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        sunAnimation.renderer.renderFrame(sunAnimation.currentFrame);
-    }
-}
-
 
 // Event listeners
 lightBtn.addEventListener("click", () => {
@@ -79,66 +30,6 @@ darkDayBtn.addEventListener("click", () => {
 darkNightBtn.addEventListener("click", () => {
     setMode("dark-night");
 });
-
-
-// === NUEVO: INICIALIZAR LOTTE (SUN ICON) ===
-// AGREGAR DESPUÉS de los event listeners (antes del sistema de scaling)
-function initLottie() {
-    // Verificar si lottie está disponible (debes incluir la librería en tu HTML)
-    if (typeof lottie === 'undefined') {
-        console.warn('Lottie no está cargado. El icono de sol no funcionará.');
-        return;
-    }
-    
-    const sunContainer = document.getElementById('sun-icon');
-    if (!sunContainer) return;
-    
-    sunAnimation = lottie.loadAnimation({
-        container: sunContainer,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'icons8-sun.json' // Ruta al archivo JSON
-    });
-    
-    sunAnimation.addEventListener('DOMLoaded', () => {
-        // Aplicar color inicial según el modo actual
-        const currentMode = body.classList.contains('light') ? 'light' : 
-                           (body.classList.contains('dark-night') ? 'dark-night' : 'dark-day');
-        updateSunIconColor(currentMode);
-    });
-}
-
-// === NUEVO: CREAR TEXTO ANIMADO EN LATERAL ===
-// AGREGAR DESPUÉS de initLottie
-function createMarqueeText() {
-    const lateral = document.getElementById('lateral');
-    if (!lateral) return;
-    
-    // Verificar si ya existe el contenedor
-    if (document.querySelector('.marquee-vertical-container')) return;
-    
-    const marqueeText = "© All illustrations are the intellectual property of Neon Genesis Evangelion, created by Hideaki Anno. | Coded & designed by Myt";
-    
-    // Crear contenedor
-    const container = document.createElement('div');
-    container.className = 'marquee-vertical-container';
-    
-    // Crear contenido con duplicado para efecto continuo
-    const content = document.createElement('div');
-    content.className = 'marquee-vertical-content';
-    
-    // Repetir el texto varias veces para asegurar continuidad
-    content.innerHTML = `
-        <span>${marqueeText}</span>
-        <span>${marqueeText}</span>
-        <span>${marqueeText}</span>
-    `;
-    
-    container.appendChild(content);
-    lateral.appendChild(container);
-}
-
 
 // ============================================
 // SISTEMA DE SCALING (adaptado de la referencia)
@@ -210,9 +101,123 @@ function initScaling() {
     scalingInterval = setInterval(checkContainerScaling, 500);
 }
 
+
+// ============================================
+// VARIABLES GLOBALES PARA EL MARQUEE
+// ============================================
+let marqueeAnimation = null;
+let marqueePosition = 0;
+
+// ============================================
+// CREAR TEXTO ANIMADO EN LATERAL (SIN REINICIOS)
+// ============================================
+function createMarqueeText() {
+    const lateral = document.getElementById('lateral');
+    if (!lateral) {
+        console.warn('No se encontró el elemento #lateral');
+        return;
+    }
+    
+    console.log('Creando marquee en lateral');
+    
+    // Verificar si ya existe el contenedor
+    if (document.querySelector('.marquee-vertical-container')) {
+        console.log('El marquee ya existe');
+        return;
+    }
+    
+    const marqueeText = "© All illustrations are the intellectual property of Neon Genesis Evangelion, created by Hideaki Anno. | Coded & designed by Myt";
+    
+    // Crear contenedor
+    const container = document.createElement('div');
+    container.className = 'marquee-vertical-container';
+    
+    // Crear contenido con MUCHAS repeticiones
+    const content = document.createElement('div');
+    content.className = 'marquee-vertical-content';
+    
+    // Generar 15 repeticiones del texto para asegurar continuidad
+    let fullText = '';
+    for (let i = 0; i < 15; i++) {
+        fullText += marqueeText + '    '; // 4 espacios como separador
+    }
+    content.textContent = fullText;
+    
+    container.appendChild(content);
+    lateral.appendChild(container);
+    
+    console.log('Marquee creado correctamente con 15 repeticiones');
+    
+    // Iniciar animación manual
+    startMarqueeAnimation();
+}
+
+// ============================================
+// INICIAR ANIMACIÓN DEL MARQUEE
+// ============================================
+function startMarqueeAnimation() {
+    // Detener animación anterior si existe
+    if (marqueeAnimation) {
+        cancelAnimationFrame(marqueeAnimation);
+    }
+    
+    const content = document.querySelector('.marquee-vertical-content');
+    if (!content) return;
+    
+    const container = document.querySelector('.marquee-vertical-container');
+    if (!container) return;
+    
+    // Velocidad de movimiento (píxeles por frame)
+    const speed = 0.3;
+    
+    function animate() {
+        marqueePosition -= speed;
+        
+        // Cuando hemos movido la mitad del contenido, resetear posición
+        // El reinicio es imperceptible porque hay muchas repeticiones
+        if (marqueePosition <= -content.scrollWidth / 2) {
+            marqueePosition = 0;
+        }
+        
+        content.style.transform = `translateX(${marqueePosition}px)`;
+        
+        // Continuar la animación
+        marqueeAnimation = requestAnimationFrame(animate);
+    }
+    
+    // Iniciar animación
+    animate();
+}
+
+// ============================================
+// DETENER ANIMACIÓN DEL MARQUEE
+// ============================================
+function stopMarqueeAnimation() {
+    if (marqueeAnimation) {
+        cancelAnimationFrame(marqueeAnimation);
+        marqueeAnimation = null;
+    }
+}
+
+// ============================================
+// REINICIAR ANIMACIÓN DEL MARQUEE
+// ============================================
+function restartMarqueeAnimation() {
+    stopMarqueeAnimation();
+    marqueePosition = 0;
+    
+    const content = document.querySelector('.marquee-vertical-content');
+    if (content) {
+        content.style.transform = 'translateX(0)';
+    }
+    
+    startMarqueeAnimation();
+}
+
 // ============================================
 // INICIALIZACIÓN
 // ============================================
+
 
 // Asegurar que no haya scroll
 document.documentElement.style.overflow = 'hidden';
@@ -221,14 +226,8 @@ document.body.style.overflow = 'hidden';
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ DOM cargado, inicializando...');
     
-    // === MODIFICADO: AGREGAR ESTAS DOS LÍNEAS AQUÍ ===
-    // Crear texto animado en lateral
+    // Crear marquee
     createMarqueeText();
-    
-    // Inicializar Lottie para el icono de sol
-    setTimeout(() => {
-        initLottie();
-    }, 100); // Pequeño retraso para asegurar que el DOM esté listo
     
     initScaling();
 });
@@ -237,12 +236,18 @@ window.addEventListener('load', function() {
     console.log('✅ Página completamente cargada');
     checkContainerScaling();
     
-    // === NUEVO: Re-aplicar color al sun icon después de carga completa ===
-    // AGREGAR DESPUÉS de checkContainerScaling()
-    if (sunAnimation) {
-        const currentMode = body.classList.contains('light') ? 'light' : 
-                           (body.classList.contains('dark-night') ? 'dark-night' : 'dark-day');
-        updateSunIconColor(currentMode);
+    // Reiniciar marquee después de carga completa (por si acaso)
+    setTimeout(() => {
+        restartMarqueeAnimation();
+    }, 500);
+});
+
+// Pausar animación cuando la pestaña no está visible (opcional, para ahorrar recursos)
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        stopMarqueeAnimation();
+    } else {
+        startMarqueeAnimation();
     }
 });
 
