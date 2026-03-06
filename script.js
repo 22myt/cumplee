@@ -167,7 +167,7 @@ function startMarqueeAnimation() {
     
     // Velocidad basada en tiempo real
     let lastTime = 0;
-    const pixelsPerSecond = 15; // AJUSTA ESTE VALOR: 10 = más lento, 20 = más rápido
+    const pixelsPerSecond = 15; // AJUSTA: 10 = más lento, 20 = más rápido
     
     function animate(currentTime) {
         if (!lastTime) {
@@ -227,7 +227,6 @@ function restartMarqueeAnimation() {
 // INICIALIZACIÓN
 // ============================================
 
-
 // Asegurar que no haya scroll
 document.documentElement.style.overflow = 'hidden';
 document.body.style.overflow = 'hidden';
@@ -251,7 +250,7 @@ window.addEventListener('load', function() {
     }, 500);
 });
 
-// Pausar animación cuando la pestaña no está visible (opcional, para ahorrar recursos)
+// Pausar animación cuando la pestaña no está visible
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
         stopMarqueeAnimation();
