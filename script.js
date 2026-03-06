@@ -395,10 +395,11 @@ window.addEventListener('load', function() {
 
 
 // ============================================
-// SISTEMA DE SONIDOS HOVER
+// SISTEMA DE SONIDOS HOVER - MEJORADO
+// Con cola de reproducción y sin acumulación
 // ============================================
 
-// Configuración centralizada de sonidos
+// Configuración de sonidos
 const hoverSounds = {
     'bubble': new Audio('sounds/bubble_sound.mp3'),
     'alien': new Audio('sounds/hoveralien.mp3'),
@@ -406,32 +407,131 @@ const hoverSounds = {
     'click': new Audio('sounds/sounds_click7.wav')
 };
 
-// Función para reproducir sonido de forma segura
-function playHoverSound(soundKey) {
+// Estado del sistema de sonidos
+const soundSystem = {
+    isPlaying: false,           // Indica si hay un sonido reproduciéndose
+    currentSound: null,         // El sonido que está sonando actualmente
+    pendingSound: null,         // Sonido pendiente (si hay hover durante reproducción)
+    pendingElement: null,       // Elemento que activó el sonido pendiente
+    timeoutId: null,            // Timeout para limpiar pendiente
+    currentElement: null        // Elemento que está actualmente en hover
+};
+
+// Función para limpiar el sonido pendiente
+function clearPendingSound() {
+    if (soundSystem.timeoutId) {
+        clearTimeout(soundSystem.timeoutId);
+        soundSystem.timeoutId = null;
+    }
+    soundSystem.pendingSound = null;
+    soundSystem.pendingElement = null;
+}
+
+// Función para reproducir sonido con gestión de cola
+function playHoverSound(soundKey, element) {
+    // Si no hay sonido o no hay elemento (por seguridad)
+    if (!soundKey || !element) return;
+    
+    // Actualizar el elemento actual en hover
+    soundSystem.currentElement = element;
+    
+    // Si ya hay un sonido reproduciéndose
+    if (soundSystem.isPlaying) {
+        // Guardar este sonido como pendiente SOLO si es diferente al actual
+        // y no hay otro pendiente ya
+        if (!soundSystem.pendingSound) {
+            soundSystem.pendingSound = soundKey;
+            soundSystem.pendingElement = element;
+            
+            // Limpiar pendiente después de 2 segundos (por si el sonido actual se queda colgado)
+            soundSystem.timeoutId = setTimeout(() => {
+                if (soundSystem.pendingSound) {
+                    console.log('Timeout: limpiando sonido pendiente');
+                    soundSystem.pendingSound = null;
+                    soundSystem.pendingElement = null;
+                }
+            }, 2000);
+        }
+        // Si ya hay pendiente, ignoramos este nuevo (no se acumulan)
+        return;
+    }
+    
+    // No hay sonido reproduciéndose, podemos reproducir
+    playNow(soundKey, element);
+}
+
+// Función para reproducir inmediatamente
+function playNow(soundKey, element) {
     const sound = hoverSounds[soundKey];
     if (!sound) return;
     
-    // Clonar el audio para permitir reproducciones superpuestas
+    // Clonar el audio para evitar conflictos
     const soundClone = sound.cloneNode();
-    soundClone.volume = 0.3; // Volumen moderado (ajustable)
+    soundClone.volume = 0.3;
+    
+    // Marcar que estamos reproduciendo
+    soundSystem.isPlaying = true;
+    soundSystem.currentSound = soundClone;
+    
+    // Función para cuando termina la reproducción
+    soundClone.onended = () => {
+        soundSystem.isPlaying = false;
+        soundSystem.currentSound = null;
+        
+        // Verificar si hay sonido pendiente
+        if (soundSystem.pendingSound && soundSystem.pendingElement) {
+            // Verificar que el elemento pendiente sigue en hover
+            const isStillHovered = soundSystem.pendingElement.matches(':hover');
+            
+            if (isStillHovered) {
+                // El elemento sigue en hover, reproducimos su sonido
+                const pendingSoundKey = soundSystem.pendingSound;
+                const pendingElement = soundSystem.pendingElement;
+                
+                // Limpiar pendiente ANTES de reproducir para evitar bucles
+                clearPendingSound();
+                
+                // Reproducir el sonido pendiente
+                playNow(pendingSoundKey, pendingElement);
+            } else {
+                // El elemento ya no está en hover, limpiamos pendiente
+                clearPendingSound();
+            }
+        } else {
+            // No hay pendiente, todo bien
+            clearPendingSound();
+        }
+    };
+    
+    // Manejar errores de reproducción
+    soundClone.onerror = () => {
+        console.log('Error reproduciendo sonido');
+        soundSystem.isPlaying = false;
+        soundSystem.currentSound = null;
+        clearPendingSound();
+    };
+    
+    // Intentar reproducir
     soundClone.play().catch(e => {
-        // Ignorar errores de autoplay (el usuario debe interactuar primero)
         console.log('Error al reproducir sonido:', e);
+        soundSystem.isPlaying = false;
+        soundSystem.currentSound = null;
+        clearPendingSound();
     });
 }
 
 // Función para asignar sonidos a elementos
 function assignHoverSounds() {
-    console.log('🎵 Asignando sonidos hover...');
+    console.log('🎵 Asignando sonidos hover (sistema mejorado)...');
 
     // 1. Sonido "bubble" para bot-link-gif
     document.querySelectorAll('.bot-link-gif-link').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('bubble'));
+        el.addEventListener('mouseenter', () => playHoverSound('bubble', el));
     });
 
     // 2. Sonido "alien" para profile-icon
     document.querySelectorAll('.profile-icon-container').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('alien'));
+        el.addEventListener('mouseenter', () => playHoverSound('alien', el));
     });
 
     // 3. Sonido "tiny" para múltiples elementos
@@ -446,37 +546,72 @@ function assignHoverSounds() {
     
     tinySelectors.forEach(selector => {
         document.querySelectorAll(selector).forEach(el => {
-            el.addEventListener('mouseenter', () => playHoverSound('tiny'));
+            el.addEventListener('mouseenter', () => playHoverSound('tiny', el));
         });
     });
 
     // 4. Sonido "click" para los botones
     document.querySelectorAll('#buttons button').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('click'));
+        el.addEventListener('mouseenter', () => playHoverSound('click', el));
     });
 
-    console.log('✅ Sonidos hover asignados correctamente');
+    // Registrar cuando el mouse sale de los elementos
+    // Esto ayuda a limpiar referencias
+    document.querySelectorAll('.bot-link-gif-link, .profile-icon-container, ' +
+        '.message-img-container, .decor-sic-container, .top-cuadro1-container, ' +
+        '.top-cuadro2-container, .logo-gif-container, .arachnid-group, #buttons button')
+        .forEach(el => {
+            el.addEventListener('mouseleave', () => {
+                // Si este elemento era el que tenía pendiente, limpiar el pendiente
+                if (soundSystem.pendingElement === el) {
+                    clearPendingSound();
+                }
+                // Si este elemento era el actual, actualizar referencia
+                if (soundSystem.currentElement === el) {
+                    soundSystem.currentElement = null;
+                }
+            });
+        });
+
+    console.log('✅ Sonidos hover mejorados asignados correctamente');
+}
+
+// Función para pausar/limpiar todo (útil al cambiar de página o modo)
+function resetSoundSystem() {
+    // Detener sonido actual si existe
+    if (soundSystem.currentSound) {
+        try {
+            soundSystem.currentSound.pause();
+            soundSystem.currentSound.currentTime = 0;
+        } catch (e) {}
+    }
+    
+    // Resetear estado
+    soundSystem.isPlaying = false;
+    soundSystem.currentSound = null;
+    clearPendingSound();
+    soundSystem.currentElement = null;
 }
 
 // Inicializar cuando el DOM esté listo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', assignHoverSounds);
 } else {
-    // DOM ya está cargado
     assignHoverSounds();
 }
 
-// También re-asignar cuando se cambie de modo (por si hay elementos que se reemplazan)
-// Esto es opcional, pero útil por si algún elemento se regenera dinámicamente
+// Modificar setMode para resetear sonidos al cambiar de modo
 const originalSetModeWithSounds = setMode;
 if (typeof setMode === 'function') {
     setMode = function(mode) {
+        // Resetear sistema de sonidos
+        resetSoundSystem();
+        
         // Llamar a la función original
         originalSetModeWithSounds(mode);
         
-        // Pequeño retraso para permitir que las imágenes se actualicen
+        // Re-asignar sonidos después del cambio de modo
         setTimeout(() => {
-            // Re-asignar sonidos por si algún elemento cambió
             assignHoverSounds();
         }, 200);
     };
