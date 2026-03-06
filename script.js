@@ -167,7 +167,7 @@ function startMarqueeAnimation() {
     
     // Velocidad basada en tiempo real
     let lastTime = 0;
-    const pixelsPerSecond = 5; 
+    const pixelsPerSecond = 20; 
     
     function animate(currentTime) {
         if (!lastTime) {
