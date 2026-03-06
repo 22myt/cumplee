@@ -410,7 +410,7 @@ const hoverSounds = {
 const soundSystem = {
     isPlaying: false,           // Indica si hay un sonido reproduciéndose
     lastPlayTime: 0,            // Timestamp del último sonido reproducido
-    cooldownTime: 200          // segundos de espera entre sonidos
+    cooldownTime: 150          // segundos de espera entre sonidos
 };
 
 // Función para reproducir sonido con cooldown
