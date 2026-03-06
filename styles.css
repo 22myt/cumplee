@@ -1157,13 +1157,21 @@ body {
     z-index: 47;
 }
 
+.decor-madeby {
+    height: 9.5px;
+    top: 63.5px;
+    left: 10px;
+}
+
 .sun-icon-container {
     width: 15px;
-    height: 15px;
-    filter: blur(0.3px);
+    height: 9.5px;
+    top: 63.5px;
+    left: -5px;
+    filter: blur(0.25px);
     display: inline-block;
     position: relative;
-    z-index: 48; /* Mismo nivel que madeby.png */
+    z-index: 48;
 }
 
 /* Asegurar que el SVG generado herede el color */
