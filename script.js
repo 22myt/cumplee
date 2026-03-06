@@ -496,6 +496,102 @@ function updateFooterIndicator() {
     indicator.src = getImagePath(imageName);
 }
 
+
+// ============================================
+// EVENTOS DE HOVER PARA EL INDICADOR
+// ============================================
+function setupIndicatorHovers() {
+    const indicator = document.getElementById('indicator-img');
+    if (!indicator) return;
+    
+    // Función para cambiar imagen según el modo actual
+    function getImagePath(imageName) {
+        if (document.body.classList.contains('light')) {
+            return `lightmode/${imageName}`;
+        } else if (document.body.classList.contains('dark-night')) {
+            return `mytmode/${imageName}`;
+        } else {
+            return `darkmode/${imageName}`;
+        }
+    }
+    
+    // Función para actualizar indicador con tipo específico
+    function setIndicatorType(type) {
+        if (!indicator) return;
+        
+        let imageName = '3-a-la-vez.gif'; // Default
+        
+        if (type === 'cargando') {
+            imageName = 'cargando.gif';
+        } else if (type === 'alterar') {
+            imageName = 'alterar.gif';
+        }
+        
+        indicator.src = getImagePath(imageName);
+    }
+    
+    // 1. BOTONES - mouseenter/mouseleave
+    document.querySelectorAll('#buttons button').forEach(btn => {
+        btn.addEventListener('mouseenter', () => setIndicatorType('cargando'));
+        btn.addEventListener('mouseleave', () => {
+            if (document.body.classList.contains('radio-playing')) {
+                setIndicatorType('alterar');
+            } else {
+                setIndicatorType('default');
+            }
+        });
+    });
+    
+    // 2. LINK GIF - mouseenter/mouseleave
+    const linkGif = document.querySelector('.bot-link-gif-link');
+    if (linkGif) {
+        linkGif.addEventListener('mouseenter', () => setIndicatorType('cargando'));
+        linkGif.addEventListener('mouseleave', () => {
+            if (document.body.classList.contains('radio-playing')) {
+                setIndicatorType('alterar');
+            } else {
+                setIndicatorType('default');
+            }
+        });
+    }
+    
+    // Guardar función para usarla después
+    window.setIndicatorType = setIndicatorType;
+}
+
+// Modificar updateFooterIndicator para usar la función guardada
+const originalUpdateFooterIndicator = updateFooterIndicator;
+updateFooterIndicator = function() {
+    if (typeof window.setIndicatorType === 'function') {
+        if (document.body.classList.contains('radio-playing')) {
+            window.setIndicatorType('alterar');
+        } else {
+            window.setIndicatorType('default');
+        }
+    } else {
+        // Fallback al método original
+        const indicator = document.getElementById('indicator-img');
+        if (!indicator) return;
+        
+        function getImagePath(imageName) {
+            if (document.body.classList.contains('light')) {
+                return `lightmode/${imageName}`;
+            } else if (document.body.classList.contains('dark-night')) {
+                return `mytmode/${imageName}`;
+            } else {
+                return `darkmode/${imageName}`;
+            }
+        }
+        
+        let imageName = '3-a-la-vez.gif';
+        if (document.body.classList.contains('radio-playing')) {
+            imageName = 'alterar.gif';
+        }
+        
+        indicator.src = getImagePath(imageName);
+    }
+};
+
 // ============================================
 // PARTICLES.JS
 // ============================================
@@ -670,6 +766,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(initSunIcon, 100);
     setTimeout(() => radioPlayer.init(), 200);
     assignHoverSounds();
+    setupIndicatorHovers();
+
     
     // Configurar indicador
     updateFooterIndicator();
