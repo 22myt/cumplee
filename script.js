@@ -370,3 +370,114 @@ const originalDOMContentLoaded = document.addEventListener('DOMContentLoaded', f
 window.addEventListener('load', function() {
     setTimeout(initSunIcon, 200);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// SISTEMA DE SONIDOS HOVER
+// ============================================
+
+// Configuración centralizada de sonidos
+const hoverSounds = {
+    'bubble': new Audio('sounds/bubble_sound.mp3'),
+    'alien': new Audio('sounds/hoveralien.mp3'),
+    'tiny': new Audio('sounds/tiny.mp3'),
+    'click': new Audio('sounds/sounds_click7.wav')
+};
+
+// Función para reproducir sonido de forma segura
+function playHoverSound(soundKey) {
+    const sound = hoverSounds[soundKey];
+    if (!sound) return;
+    
+    // Clonar el audio para permitir reproducciones superpuestas
+    const soundClone = sound.cloneNode();
+    soundClone.volume = 0.3; // Volumen moderado (ajustable)
+    soundClone.play().catch(e => {
+        // Ignorar errores de autoplay (el usuario debe interactuar primero)
+        console.log('Error al reproducir sonido:', e);
+    });
+}
+
+// Función para asignar sonidos a elementos
+function assignHoverSounds() {
+    console.log('🎵 Asignando sonidos hover...');
+
+    // 1. Sonido "bubble" para bot-link-gif
+    document.querySelectorAll('.bot-link-gif-link').forEach(el => {
+        el.addEventListener('mouseenter', () => playHoverSound('bubble'));
+    });
+
+    // 2. Sonido "alien" para profile-icon
+    document.querySelectorAll('.profile-icon-container').forEach(el => {
+        el.addEventListener('mouseenter', () => playHoverSound('alien'));
+    });
+
+    // 3. Sonido "tiny" para múltiples elementos
+    const tinySelectors = [
+        '.message-img-container',
+        '.decor-sic-container',
+        '.top-cuadro1-container',
+        '.top-cuadro2-container',
+        '.logo-gif-container',
+        '.arachnid-group'
+    ];
+    
+    tinySelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+            el.addEventListener('mouseenter', () => playHoverSound('tiny'));
+        });
+    });
+
+    // 4. Sonido "click" para los botones
+    document.querySelectorAll('#buttons button').forEach(el => {
+        el.addEventListener('mouseenter', () => playHoverSound('click'));
+    });
+
+    console.log('✅ Sonidos hover asignados correctamente');
+}
+
+// Inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', assignHoverSounds);
+} else {
+    // DOM ya está cargado
+    assignHoverSounds();
+}
+
+// También re-asignar cuando se cambie de modo (por si hay elementos que se reemplazan)
+// Esto es opcional, pero útil por si algún elemento se regenera dinámicamente
+const originalSetModeWithSounds = setMode;
+if (typeof setMode === 'function') {
+    setMode = function(mode) {
+        // Llamar a la función original
+        originalSetModeWithSounds(mode);
+        
+        // Pequeño retraso para permitir que las imágenes se actualicen
+        setTimeout(() => {
+            // Re-asignar sonidos por si algún elemento cambió
+            assignHoverSounds();
+        }, 200);
+    };
+}
