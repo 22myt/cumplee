@@ -236,6 +236,10 @@ body {
 /* LATERAL - MARQUEE SIN REINICIOS               */
 /* ============================================ */
 
+/* ============================================ */
+/* LATERAL - MARQUEE SIN REINICIOS               */
+/* ============================================ */
+
 .marquee-vertical-container {
     position: absolute;
     top: 7px;
@@ -252,42 +256,28 @@ body {
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
 }
 
-
 .marquee-vertical-content {
-    display: flex; /* Cambiar a flex para mejor control */
+    display: flex;
     font-family: 'Karla', sans-serif;
     font-weight: 300;
-    font-size: inherit; /* Heredar del contenedor */
+    font-size: inherit;
     letter-spacing: 1px;
     text-transform: uppercase;
     white-space: nowrap;
     width: max-content;
-    /* Animación más larga y suave */
-    animation: marquee-vertical 30s linear infinite;
-}
-
-@keyframes marquee-vertical {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        /* Mover exactamente el ancho de UN grupo de spans */
-        transform: translateX(-50%);
-    }
+    /* ANIMACIÓN ELIMINADA - AHORA USA JS */
 }
 
 .marquee-vertical-content span {
     display: inline-block;
-    padding-right: 50px; /* Espacio entre repeticiones */
+    padding-right: 50px;
     white-space: nowrap;
 }
 
-
 .marquee-vertical-content {
-    color: #ffffff; /* Blanco para dark-day */
-    font-size: inherit; /* Hereda del contenedor */
+    color: #ffffff;
+    font-size: inherit;
 }
-
 /* Para evitar el reinicio, necesitamos que el contenido sea aún más largo */
 /* Esto lo manejaremos desde JavaScript */
 
