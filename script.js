@@ -132,22 +132,23 @@ function createMarqueeText() {
     const container = document.createElement('div');
     container.className = 'marquee-vertical-container';
     
-    // Crear contenido con MUCHAS repeticiones
+    // Crear contenido
     const content = document.createElement('div');
     content.className = 'marquee-vertical-content';
     
-    // Generar 10 repeticiones del texto con MÁS espacios
-    let fullText = '';
-    const spaces = '                    '; 
+    // Generar 10 repeticiones del texto con ESPACIOS usando SPANS
+    let htmlContent = '';
+    const spaces = ' '; // Los espacios ya no son necesarios aquí porque usaremos padding en CSS
     for (let i = 0; i < 10; i++) {
-        fullText += marqueeText + spaces;
+        // Cada repetición va dentro de un SPAN
+        htmlContent += `<span>${marqueeText}</span>`;
     }
-    content.textContent = fullText;
+    content.innerHTML = htmlContent; // CAMBIADO: innerHTML en lugar de textContent
     
     container.appendChild(content);
     lateral.appendChild(container);
     
-    console.log('Marquee creado correctamente con 10 repeticiones y espacios amplios');
+    console.log('Marquee creado correctamente con 10 repeticiones usando spans');
     
     // Iniciar animación manual
     startMarqueeAnimation();
