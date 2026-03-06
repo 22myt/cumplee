@@ -1143,18 +1143,11 @@ body {
     pointer-events: auto;
 }
 
-.decor-madeby {
-    position: relative;
-    width: 85px;
-    top: 62.5px;
-    height: auto;
-    left: 45px;
-    z-index: 47;
-    margin-top: 8px;
-    pointer-events: auto;
-}
+/* ============================================ */
+/* SUN ICON CONTAINER - CORREGIDO                */
+/* ============================================ */
 
-.sun-icon-container {
+.decor-madeby-container {
     position: relative;
     display: flex;
     align-items: center;
@@ -1162,10 +1155,22 @@ body {
     margin-top: 8px;
     left: 30px;
     z-index: 47;
+}
+
+.sun-icon-container {
     width: 15px;
     height: 15px;
     filter: blur(0.3px);
     display: inline-block;
+    /* Asegurar que el contenedor tenga posición relativa para Lottie */
+    position: relative;
+}
+
+/* Estilos para el SVG generado por Lottie */
+.sun-icon-container svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 /* ============================================ */
