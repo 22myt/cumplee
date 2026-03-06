@@ -450,7 +450,7 @@ function playHoverSound(soundKey, element) {
                     soundSystem.pendingSound = null;
                     soundSystem.pendingElement = null;
                 }
-            }, 2000);
+            }, 1500);
         }
         // Si ya hay pendiente, ignoramos este nuevo (no se acumulan)
         return;
