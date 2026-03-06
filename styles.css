@@ -232,33 +232,36 @@ body {
     z-index: 1;
 }
 
+/* ============================================ */
+/* LATERAL - MARQUEE SIN REINICIOS               */
+/* ============================================ */
+
 .marquee-vertical-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+    top: 7px;
+    left: 9px;
+    width: 687px;
+    height: 30px;
     z-index: 10;
-    /* CORRECCIÓN: Rotar 90 grados a la izquierda */
     transform: rotate(-90deg) translateX(-100%);
     transform-origin: left top;
     white-space: nowrap;
     overflow: hidden;
+    /* Ajustar tamaño de tipografía */
+    font-size: 12px; /* Aumentado de 10px a 12px */
 }
 
 .marquee-vertical-content {
-    display: inline-block;
+    display: flex; /* Cambiar a flex para mejor control */
     font-family: 'Karla', sans-serif;
     font-weight: 300;
-    font-size: 10px;
+    font-size: inherit; /* Heredar del contenedor */
     letter-spacing: 1px;
     text-transform: uppercase;
     white-space: nowrap;
-    /* La animación se aplica aquí */
-    animation: marquee-vertical 20s linear infinite;
-    padding-left: 0; /* Quitar padding-left */
-    transform: translateX(0); /* Resetear transform */
+    width: max-content;
+    /* Animación más larga y suave */
+    animation: marquee-vertical 30s linear infinite;
 }
 
 @keyframes marquee-vertical {
@@ -266,17 +269,19 @@ body {
         transform: translateX(0);
     }
     100% {
-        /* Mover el 50% para crear efecto continuo con los spans duplicados */
+        /* Mover exactamente el ancho de UN grupo de spans */
         transform: translateX(-50%);
     }
 }
 
-/* Duplicamos el contenido para efecto continuo */
 .marquee-vertical-content span {
     display: inline-block;
     padding-right: 50px; /* Espacio entre repeticiones */
     white-space: nowrap;
 }
+
+/* Para evitar el reinicio, necesitamos que el contenido sea aún más largo */
+/* Esto lo manejaremos desde JavaScript */
 /* Dark-day (por defecto) */
 .marquee-vertical-content {
     color: #ffffff; /* Blanco para dark-day */
