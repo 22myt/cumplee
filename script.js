@@ -530,3 +530,224 @@ if (typeof setMode === 'function') {
         }, 200);
     };
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//RADIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO//
+
+// ============================================
+// RADIO PLAYER CON PERSISTENCIA DE MODO
+// ============================================
+const radioPlayer = {
+    // Elementos del DOM
+    playPauseBtn: null,
+    prevBtn: null,
+    nextBtn: null,
+    cassetteImg: null,
+
+    // Estado de la radio
+    isPlaying: false,
+    currentSongIndex: 0,
+    songFiles: ['song1.wav', 'song2.wav', 'song3.wav'],
+
+    // Objetos de audio
+    audioElement: null,
+    radioFreqAudio: null,
+
+    // Inicialización
+    init: function() {
+        console.log('📻 Inicializando Radio Player...');
+
+        // Obtener referencias a los elementos del DOM
+        this.playPauseBtn = document.getElementById('radio-play-pause');
+        this.prevBtn = document.getElementById('radio-prev');
+        this.nextBtn = document.getElementById('radio-next');
+        this.cassetteImg = document.getElementById('radio-cassette-img');
+
+        if (!this.playPauseBtn || !this.prevBtn || !this.nextBtn || !this.cassetteImg) {
+            console.warn('⚠️ No se encontraron todos los elementos de la radio. Abortando inicialización.');
+            return;
+        }
+
+        // Crear elementos de audio
+        this.audioElement = new Audio();
+        this.radioFreqAudio = new Audio('sounds/radiofrequency.wav');
+        this.radioFreqAudio.loop = true; // El sonido de frecuencia suena en bucle
+        this.radioFreqAudio.volume = 0.2; // Un poco más bajo para no saturar
+
+        // Configurar evento para cuando la canción termina
+        this.audioElement.addEventListener('ended', () => {
+            console.log('⏭️ Canción terminada, pasando a la siguiente');
+            this.nextSong();
+        });
+
+        // Añadir event listeners a los botones
+        this.playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+        this.prevBtn.addEventListener('click', () => this.prevSong());
+        this.nextBtn.addEventListener('click', () => this.nextSong());
+
+        console.log('✅ Radio Player inicializado');
+    },
+
+    // Cargar una canción por su índice
+    loadSong: function(index) {
+        // Asegurar que el índice esté dentro del rango (0, 1, 2)
+        const safeIndex = (index + this.songFiles.length) % this.songFiles.length;
+        this.currentSongIndex = safeIndex;
+        const songPath = `jadecassette/${this.songFiles[safeIndex]}`;
+
+        console.log(`📀 Cargando canción: ${songPath}`);
+        this.audioElement.src = songPath;
+        this.audioElement.load();
+
+        // Si la radio está sonando, reproducir la nueva canción inmediatamente
+        if (this.isPlaying) {
+            this.audioElement.play().catch(e => console.log('Error al reproducir:', e));
+        }
+    },
+
+    // Alternar entre reproducir y pausar
+    togglePlayPause: function() {
+        // Cargar la primera canción si no hay ninguna cargada
+        if (!this.audioElement.src) {
+            this.loadSong(0);
+        }
+
+        if (this.isPlaying) {
+            this.pause();
+        } else {
+            this.play();
+        }
+
+        // Reproducir sonido de click (play/pause)
+        this.playSoundEffect('sounds/sounds_play.wav');
+    },
+
+    play: function() {
+        console.log('▶️ Play');
+        this.isPlaying = true;
+        document.body.classList.add('radio-playing'); // Añade la clase para el CSS
+
+        // Reproducir la canción
+        this.audioElement.play().catch(e => console.log('Error al reproducir:', e));
+
+        // Reproducir el sonido de frecuencia de fondo
+        this.radioFreqAudio.play().catch(e => console.log('Error al reproducir frecuencia:', e));
+    },
+
+    pause: function() {
+        console.log('⏸️ Pausa');
+        this.isPlaying = false;
+        document.body.classList.remove('radio-playing'); // Quita la clase para el CSS
+
+        // Pausar la canción
+        this.audioElement.pause();
+
+        // Pausar el sonido de frecuencia
+        this.radioFreqAudio.pause();
+        // Opcional: reiniciar el sonido de frecuencia para que empiece desde el principio al reanudar
+        // this.radioFreqAudio.currentTime = 0;
+    },
+
+    nextSong: function() {
+        console.log('⏭️ Siguiente canción');
+        this.loadSong(this.currentSongIndex + 1);
+        this.playSoundEffect('sounds/sounds_next.wav');
+        // Si la radio ya estaba sonando, loadSong() la reproducirá automáticamente.
+        // Si no sonaba, solo se carga.
+    },
+
+    prevSong: function() {
+        console.log('⏮️ Canción anterior');
+        this.loadSong(this.currentSongIndex - 1);
+        this.playSoundEffect('sounds/sounds_next.wav'); // Mismo sonido que "siguiente"
+    },
+
+    // Función para reproducir efectos de sonido (sin interferir con la música)
+    playSoundEffect: function(soundPath) {
+        const effect = new Audio(soundPath);
+        effect.volume = 0.3;
+        effect.play().catch(e => console.log('Error al reproducir efecto:', e));
+    },
+
+    // ¡NUEVO! Función para sincronizar la radio al cambiar de modo
+    syncWithMode: function() {
+        console.log('🔄 Sincronizando radio con el nuevo modo de color');
+        // La lógica de cambio de imágenes ya está en el CSS gracias a las clases
+        // Solo necesitamos asegurarnos de que el cassette se actualice correctamente.
+        // Forzar una pequeña actualización visual no es necesario, pero puede ayudar.
+        if (this.isPlaying && this.cassetteImg) {
+            // Al cambiar de modo, el CSS aplicará la nueva imagen 'cassetteON.gif' del modo correspondiente.
+            // Si no se actualiza, podemos forzar un reflow.
+            this.cassetteImg.style.display = 'none';
+            this.cassetteImg.offsetHeight; // Truco para forzar reflow
+            this.cassetteImg.style.display = 'block';
+        }
+    }
+};
+
+// ============================================
+// INTEGRAR RADIO CON EL SISTEMA EXISTENTE
+// ============================================
+
+// Inicializar la radio cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (tu código existente de DOMContentLoaded) ...
+
+    // Inicializar radio
+    setTimeout(() => {
+        radioPlayer.init();
+    }, 150); // Pequeño retraso para asegurar que el DOM esté completamente renderizado
+});
+
+// Modificar la función setMode para sincronizar la radio
+// (ASEGÚRATE de que esta parte esté al final de tu script, después de la definición original de setMode)
+const originalSetModeWithRadio = setMode; // Guarda la referencia a la función original
+setMode = function(mode) {
+    // Llama a la función original (que maneja las clases del body y el scaling)
+    originalSetModeWithRadio(mode);
+
+    // Sincronizar la radio con el nuevo modo
+    setTimeout(() => {
+        if (radioPlayer && typeof radioPlayer.syncWithMode === 'function') {
+            radioPlayer.syncWithMode();
+        }
+        // También actualizar el color del sol si existe
+        if (typeof updateSunColor === 'function') {
+            updateSunColor();
+        }
+    }, 100); // Un pequeño retraso para que las clases del body se apliquen primero
+};
+
+// Si tu sistema de sonidos hover interfiere, puedes silenciar los botones de la radio si es necesario,
+// pero lo ideal es que funcionen juntos. Si hay conflicto, aquí hay una forma de excluir los botones
+// de la radio del sistema de sonidos hover principal.
+const originalAssignHoverSounds = assignHoverSounds;
+assignHoverSounds = function() {
+    originalAssignHoverSounds(); // Llama a la función original
+
+    // Excluir botones de la radio del sonido 'click' (opcional, si quieres que solo tengan sus propios sonidos)
+    // Para ello, podemos sobreescribir o simplemente no hacer nada, ya que el sistema original
+    // asigna sonidos a todos los botones dentro de '#buttons'.
+    // Los botones de radio no están dentro de '#buttons', así que no se verán afectados.
+    // ¡Perfecto! No necesitamos hacer nada extra.
+};
