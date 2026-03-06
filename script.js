@@ -897,11 +897,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // PARTICLES.JS - VERSIÓN MEJORADA (SIN REINICIOS)
 // ============================================
+// PARTICLES.JS - VERSIÓN DEFINITIVA (SIN REINICIOS)
+// ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
-    let animationFrame = null;
+    let lastMode = null; // Para recordar el último modo de color
     
     // Configuración base de las partículas (adaptada de tu JSON)
     const particlesConfig = {
@@ -952,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
             move: {
                 enable: true,
                 speed: 2,
-                direction: "none", //top-right//
+                direction: "none",
                 random: false,
                 straight: false,
                 out_mode: "out",
@@ -999,6 +1001,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Función para obtener el MODO actual (ignorando radio-playing)
+    function getCurrentMode() {
+        if (document.body.classList.contains('light')) return 'light';
+        if (document.body.classList.contains('dark-night')) return 'dark-night';
+        return 'dark-day'; // Por defecto
+    }
+    
     // Inicializar particles.js UNA SOLA VEZ
     function initParticles() {
         if (!document.getElementById('particles-js')) {
@@ -1008,6 +1017,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Actualizar color inicial
         particlesConfig.particles.color.value = getParticleColor();
+        lastMode = getCurrentMode(); // Guardar modo inicial
         
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
@@ -1017,14 +1027,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ACTUALIZAR COLOR SIN REINICIAR (mantiene velocidad constante)
+    // ACTUALIZAR COLOR SOLO SI CAMBIÓ EL MODO DE COLOR
     function updateParticleColor() {
         if (!particlesInstance) {
             initParticles();
             return;
         }
         
+        const currentMode = getCurrentMode();
+        
+        // SOLO actualizar si el MODO CAMBIÓ (ignorar radio-playing)
+        if (currentMode === lastMode) {
+            return; // No hacer nada si es el mismo modo
+        }
+        
         const newColor = getParticleColor();
+        lastMode = currentMode; // Actualizar modo guardado
         
         // MÉTODO SUAVE: Cambiar color directamente en el array de partículas
         try {
@@ -1036,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         particles[i].color.value = newColor;
                     }
                 }
-                console.log('🎨 Color actualizado a:', newColor);
+                console.log('🎨 Color de partículas actualizado a:', newColor, '(modo:', currentMode + ')');
                 // NO hacer refresh, solo actualizar el valor
             } else {
                 // Fallback: solo actualizar la configuración sin reiniciar
@@ -1077,34 +1095,33 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(initParticles, 100);
     });
     
-    // Observer por si acaso (respaldo)
+    // Observer MEJORADO - Solo reacciona a cambios en modos de color
     if (document.body) {
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === 'class') {
-                    // Cancelar animation frame anterior si existe
-                    if (animationFrame) cancelAnimationFrame(animationFrame);
-                    // Programar cambio suave
-                    animationFrame = requestAnimationFrame(updateParticleColor);
+                    // Verificar si ALGUNO de los modos de color cambió
+                    const bodyClasses = document.body.classList;
+                    const hasLight = bodyClasses.contains('light');
+                    const hasDarkDay = bodyClasses.contains('dark-day');
+                    const hasDarkNight = bodyClasses.contains('dark-night');
+                    
+                    // Solo actualizar si hay EXACTAMENTE UN modo de color activo
+                    // (ignorar clases como 'radio-playing')
+                    const modeCount = (hasLight ? 1 : 0) + (hasDarkDay ? 1 : 0) + (hasDarkNight ? 1 : 0);
+                    
+                    if (modeCount === 1) {
+                        // Usar requestAnimationFrame para cambio suave
+                        requestAnimationFrame(updateParticleColor);
+                    }
                 }
             });
         });
+        
         observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    } else {
-        document.addEventListener('DOMContentLoaded', function() {
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.attributeName === 'class') {
-                        if (animationFrame) cancelAnimationFrame(animationFrame);
-                        animationFrame = requestAnimationFrame(updateParticleColor);
-                    }
-                });
-            });
-            observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-        });
     }
     
-    console.log('🚀 Particles.js v2 cargado con configuración personalizada:');
+    console.log('🚀 Particles.js v3 cargado (IGNORA radio-playing)');
     console.log('   • Partículas:', particlesConfig.particles.number.value);
     console.log('   • Opacidad:', particlesConfig.particles.opacity.value);
     console.log('   • Dirección:', particlesConfig.particles.move.direction);
