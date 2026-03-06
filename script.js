@@ -769,268 +769,95 @@ setMode = function(mode) {
 /* FOOTER INDICATOR - SUPERPOSICIÓN             */
 /* ============================================ */
 // ============================================
-// FOOTER INDICATOR - SISTEMA DE ESTADOS
+// ============================================
+// FOOTER INDICATOR - VERSIÓN SIMPLIFICADA
 // ============================================
 const footerIndicator = {
-    // Elementos
-    indicator: null,
     indicatorImg: null,
-    contentWrapper: null,
+    currentState: 'default', // default, cargando, alterar
     
-    // Estado actual
-    currentState: 'default', // radio, hover, outside, text, default
-    priority: ['radio', 'hover', 'outside', 'text', 'default'],
-    
-    // Elementos que activan hover
-    hoverElements: [
-        '#buttons button',
-        '.bot-link-gif-link',
-        '.radio-btn',
-        '.profile-icon-container',
-        '.head-gif',
-        '.logo-gif-container' // El contenedor del head-gif
-    ],
-    
-    // Elementos que activan texto
-    textElements: [
-        '.top-texto-container',
-        '.profile-text',
-        '.decor-text',
-        '.message-text-box p',
-        '.top-description'
-    ],
-    
-    // Elementos que activan outside (rojo)
-    outsideElements: [
-        '.top-cuadro1-container',
-        '.top-cuadro2-container',
-        '.top-texto-container',
-        '.arachnid-group'
-    ],
-    
-    // Inicialización
     init: function() {
-        console.log('🔘 Inicializando Footer Indicator...');
-        
-        this.indicator = document.getElementById('footer-indicator');
         this.indicatorImg = document.getElementById('indicator-img');
-        this.contentWrapper = document.getElementById('content-wrapper');
-        
-        if (!this.indicator || !this.indicatorImg || !this.contentWrapper) {
-            console.warn('⚠️ No se encontraron elementos para el Footer Indicator');
+        if (!this.indicatorImg) {
+            console.warn('No se encontró el indicador');
             return;
         }
         
-        // Configurar event listeners
+        console.log('🔘 Inicializando indicador simplificado...');
         this.setupEventListeners();
-        
-        // Estado inicial
-        this.updateState();
-        
-        console.log('✅ Footer Indicator inicializado');
+        this.setState('default');
     },
     
-    // Configurar todos los event listeners
     setupEventListeners: function() {
-        // Hover sobre elementos específicos
-        this.hoverElements.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => {
-                el.addEventListener('mouseenter', () => this.onElementHover('hover'));
-                el.addEventListener('mouseleave', () => this.onElementLeave());
-            });
+        // 1. Botones de #buttons
+        document.querySelectorAll('#buttons button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => this.setState('cargando'));
+            btn.addEventListener('mouseleave', () => this.checkState());
         });
         
-        // Hover sobre elementos de texto
-        this.textElements.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => {
-                el.addEventListener('mouseenter', () => this.onElementHover('text'));
-                el.addEventListener('mouseleave', () => this.onElementLeave());
-            });
-        });
-        
-        // Mouse move para detectar si estamos fuera del content-wrapper
-        document.addEventListener('mousemove', (e) => {
-            this.checkOutsideArea(e);
-        });
-        
-        // Observar cambios en la radio
-        this.observeRadioChanges();
-    },
-    
-    // Detectar si el mouse está fuera del content-wrapper y sobre elementos específicos
-    checkOutsideArea: function(e) {
-        if (!this.contentWrapper) return;
-        
-        const wrapperRect = this.contentWrapper.getBoundingClientRect();
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        
-        const isInsideWrapper = (
-            mouseX >= wrapperRect.left &&
-            mouseX <= wrapperRect.right &&
-            mouseY >= wrapperRect.top &&
-            mouseY <= wrapperRect.bottom
-        );
-        
-        if (!isInsideWrapper) {
-            // Verificar si el mouse está sobre algún elemento outside
-            let isOverOutsideElement = false;
-            
-            for (let selector of this.outsideElements) {
-                const elements = document.querySelectorAll(selector);
-                for (let el of elements) {
-                    const rect = el.getBoundingClientRect();
-                    if (
-                        mouseX >= rect.left &&
-                        mouseX <= rect.right &&
-                        mouseY >= rect.top &&
-                        mouseY <= rect.bottom
-                    ) {
-                        isOverOutsideElement = true;
-                        break;
-                    }
-                }
-                if (isOverOutsideElement) break;
-            }
-            
-            if (isOverOutsideElement) {
-                this.requestState('outside');
-            } else {
-                // Si no está sobre ningún elemento outside, comportamiento normal
-                this.onElementLeave();
-            }
-        } else {
-            // Si está dentro, el estado lo determinan otros eventos
-            this.onElementLeave();
+        // 2. LINK.gif
+        const linkGif = document.querySelector('.bot-link-gif-link');
+        if (linkGif) {
+            linkGif.addEventListener('mouseenter', () => this.setState('cargando'));
+            linkGif.addEventListener('mouseleave', () => this.checkState());
         }
-    },
-    
-    // Observar cambios en la radio
-    observeRadioChanges: function() {
-        // Usar MutationObserver para detectar cambios en la clase radio-playing
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    this.updateState();
-                }
-            });
-        });
         
-        observer.observe(document.body, { attributes: true });
-        
-        // También observar clicks en los botones de radio directamente
+        // 3. Radio - al hacer click en play/pause
         const radioPlay = document.getElementById('radio-play');
         const radioPause = document.getElementById('radio-pause');
         
         if (radioPlay) {
             radioPlay.addEventListener('click', () => {
-                setTimeout(() => this.updateState(), 50);
+                setTimeout(() => this.checkState(), 50);
             });
         }
         
         if (radioPause) {
             radioPause.addEventListener('click', () => {
-                setTimeout(() => this.updateState(), 50);
+                setTimeout(() => this.checkState(), 50);
             });
         }
-    },
-    
-    // Manejar hover sobre elemento
-    onElementHover: function(state) {
-        this.requestState(state);
-    },
-    
-    // Manejar cuando el mouse deja un elemento
-    onElementLeave: function() {
-        // Pequeño retraso para evitar parpadeos
-        setTimeout(() => {
-            this.updateState();
-        }, 10);
-    },
-    
-    // Solicitar un estado (con prioridad)
-    requestState: function(state) {
-        const currentPriority = this.priority.indexOf(this.currentState);
-        const newPriority = this.priority.indexOf(state);
         
-        // Solo cambiar si el nuevo estado tiene mayor o igual prioridad
-        if (newPriority <= currentPriority) {
-            this.currentState = state;
-            this.applyState();
+        // Observar cambios en la clase radio-playing
+        const observer = new MutationObserver(() => this.checkState());
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    },
+    
+    setState: function(state) {
+        if (this.currentState === state) return;
+        
+        this.currentState = state;
+        if (this.indicatorImg) {
+            this.indicatorImg.setAttribute('data-state', state);
         }
     },
     
-    // Actualizar estado basado en condiciones actuales
-    updateState: function() {
-        // 1. Verificar radio (máxima prioridad)
+    checkState: function() {
+        // Prioridad 1: Radio encendida
         if (document.body.classList.contains('radio-playing')) {
-            this.currentState = 'radio';
-            this.applyState();
+            this.setState('alterar');
             return;
         }
         
-        // Si no hay radio, mantener el estado actual (los hovers lo manejan)
-        // Solo aplicar si no hay un estado de hover activo
-        if (this.currentState !== 'hover' && this.currentState !== 'text' && this.currentState !== 'outside') {
-            this.currentState = 'default';
-            this.applyState();
-        }
+        // Prioridad 2: Si no hay radio, volver a default
+        this.setState('default');
     },
     
-    // Aplicar el estado actual al elemento
-    applyState: function() {
-        if (!this.indicatorImg) return;
-        
-        // Actualizar el atributo data-state
-        this.indicatorImg.setAttribute('data-state', this.currentState);
-        
-        // Forzar actualización del src (por si acaso)
-        const currentMode = document.body.classList.contains('light') ? 'light' : 
-                           (document.body.classList.contains('dark-night') ? 'mytmode' : 'darkmode');
-        
-        // Opcional: log para debugging
-        // console.log(`Indicator state: ${this.currentState} (${currentMode})`);
-    },
-    
-    // Reiniciar a default (útil para cambios de modo)
     reset: function() {
-        this.currentState = 'default';
-        this.applyState();
+        this.checkState();
     }
 };
 
 // ============================================
-// INTEGRAR CON EL SISTEMA EXISTENTE
+// INICIALIZACIÓN
 // ============================================
-
-// Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        footerIndicator.init();
-    }, 300); // Pequeño retraso para asegurar que todo esté cargado
+    setTimeout(() => footerIndicator.init(), 300);
 });
 
-// Modificar setMode para resetear el indicador
-const originalSetModeWithIndicator = setMode;
+// Modificar setMode para resetear
+const originalSetModeSimple = setMode;
 setMode = function(mode) {
-    originalSetModeWithIndicator(mode);
-    
-    setTimeout(() => {
-        if (footerIndicator && typeof footerIndicator.reset === 'function') {
-            footerIndicator.reset();
-        }
-        if (radioPlayer && typeof radioPlayer.syncWithMode === 'function') {
-            radioPlayer.syncWithMode();
-        }
-        if (typeof updateSunColor === 'function') {
-            updateSunColor();
-        }
-    }, 150);
+    originalSetModeSimple(mode);
+    setTimeout(() => footerIndicator.reset(), 150);
 };
-
-// También resetear cuando cambia el estado de la radio
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && footerIndicator) {
-        setTimeout(() => footerIndicator.updateState(), 100);
-    }
-});
