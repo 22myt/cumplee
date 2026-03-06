@@ -215,10 +215,12 @@ body {
 }
 
 /* ============================================ */
-/* LATERAL                                       */
+/* LATERAL - CORREGIDO                           */
 /* ============================================ */
 
 #lateral {
+    position: relative;
+    overflow: hidden; /* Oculta el texto que se sale del contenedor */
     flex-shrink: 0;
 }
 
@@ -230,20 +232,16 @@ body {
     z-index: 1;
 }
 
-#lateral {
-    position: relative;
-    overflow: hidden; /* Oculta el texto que se sale del contenedor */
-}
-
 .marquee-vertical-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Para que no interfiera con clicks */
+    pointer-events: none;
     z-index: 10;
-    transform: rotate(90deg) translateY(-50%);
+    /* CORRECCIÓN: Rotar 90 grados a la izquierda */
+    transform: rotate(-90deg) translateX(-100%);
     transform-origin: left top;
     white-space: nowrap;
     overflow: hidden;
@@ -251,14 +249,16 @@ body {
 
 .marquee-vertical-content {
     display: inline-block;
-    animation: marquee-vertical 20s linear infinite;
     font-family: 'Karla', sans-serif;
     font-weight: 300;
     font-size: 10px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding-left: 100%; /* Empieza fuera de la vista */
     white-space: nowrap;
+    /* La animación se aplica aquí */
+    animation: marquee-vertical 20s linear infinite;
+    padding-left: 0; /* Quitar padding-left */
+    transform: translateX(0); /* Resetear transform */
 }
 
 @keyframes marquee-vertical {
@@ -266,6 +266,7 @@ body {
         transform: translateX(0);
     }
     100% {
+        /* Mover el 50% para crear efecto continuo con los spans duplicados */
         transform: translateX(-50%);
     }
 }
@@ -274,8 +275,8 @@ body {
 .marquee-vertical-content span {
     display: inline-block;
     padding-right: 50px; /* Espacio entre repeticiones */
+    white-space: nowrap;
 }
-
 /* Dark-day (por defecto) */
 .marquee-vertical-content {
     color: #ffffff; /* Blanco para dark-day */
