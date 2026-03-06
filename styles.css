@@ -1700,7 +1700,10 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     z-index: 32;
 }
 
-/* Estilo base para todos los botones */
+/* ============================================ */
+/* ESTILOS BASE PARA TODOS LOS BOTONES          */
+/* ============================================ */
+
 .radio-btn {
     position: absolute;
     background: none;
@@ -1715,166 +1718,226 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     z-index: 33;
 }
 
-/* Estilo base para todas las imágenes de botones */
 .radio-btn-img {
     display: block;
-    width: 30px;  /* Ajusta según el tamaño real */
+    transition: opacity 0.15s ease;
+}
+
+/* ============================================ */
+/* BOTÓN ANTERIOR (ATRAS)                        */
+/* ============================================ */
+
+.radio-btn-prev {
+    bottom: 170px;      /* Posición vertical */
+    left: 75px;         /* Posición horizontal */
+    width: auto;
     height: auto;
 }
 
-/* ============================================ */
-/* POSICIONAMIENTO ESPECÍFICO DE CADA BOTÓN     */
-/* ============================================ */
-
-.radio-btn-prev {
-    bottom: 170px;
-    left: 75px;
+.radio-btn-prev .radio-img-prev {
+    width: 30px;        /* TAMAÑO DEL BOTÓN ATRAS - AJUSTA AQUÍ */
+    height: auto;
 }
 
-.radio-btn-play {
-    bottom: 170px;
-    left: 108px;
-}
-
-.radio-btn-pause {
-    bottom: 170px;
-    left: 108px;  /* Misma posición que play */
-}
-
-.radio-btn-next {
-    bottom: 170px;
-    left: 141px;
-}
-
-/* ============================================ */
-/* HOVERS ESPECÍFICOS PARA CADA BOTÓN           */
-/* ============================================ */
-
-/* Botón Anterior */
 .radio-btn-prev {
     position: relative;
 }
+
 .radio-img-prev-hover {
     position: absolute;
     top: 0;
     left: 0;
+    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-prev */
+    height: auto;
     opacity: 0;
-    transition: opacity 0.15s ease;
 }
+
 .radio-btn-prev:hover .radio-img-prev {
     opacity: 0;
 }
+
 .radio-btn-prev:hover .radio-img-prev-hover {
     opacity: 1;
 }
 
-/* Botón Play */
+/* ============================================ */
+/* BOTÓN PLAY                                     */
+/* ============================================ */
+
+.radio-btn-play {
+    bottom: 170px;      /* Misma posición vertical que los demás */
+    left: 108px;        /* Posición horizontal (entre atrás y pause) */
+    width: auto;
+    height: auto;
+}
+
+.radio-btn-play .radio-img-play {
+    width: 30px;        /* TAMAÑO DEL BOTÓN PLAY - AJUSTA AQUÍ */
+    height: auto;
+}
+
+/* Hover del botón play (cambia la imagen) */
 .radio-btn-play:hover .radio-img-play {
     content: url('darkmode/info/play2.png');
 }
 
-/* Botón Pausa */
+/* ============================================ */
+/* BOTÓN PAUSA                                    */
+/* ============================================ */
+
+.radio-btn-pause {
+    bottom: 170px;      /* Misma posición vertical */
+    left: 108px;        /* MISMA POSICIÓN QUE PLAY (se intercambian) */
+    width: auto;
+    height: auto;
+    display: none;      /* Oculto por defecto */
+}
+
 .radio-btn-pause {
     position: relative;
 }
+
+.radio-btn-pause .radio-img-pause {
+    width: 30px;        /* TAMAÑO DEL BOTÓN PAUSA - AJUSTA AQUÍ */
+    height: auto;
+}
+
 .radio-img-pause-hover {
     position: absolute;
     top: 0;
     left: 0;
+    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-pause */
+    height: auto;
     opacity: 0;
-    transition: opacity 0.15s ease;
 }
+
 .radio-btn-pause:hover .radio-img-pause {
     opacity: 0;
 }
+
 .radio-btn-pause:hover .radio-img-pause-hover {
     opacity: 1;
 }
 
-/* Botón Siguiente */
+/* ============================================ */
+/* BOTÓN SIGUIENTE                                */
+/* ============================================ */
+
+.radio-btn-next {
+    bottom: 170px;      /* Misma posición vertical */
+    left: 141px;        /* Posición horizontal (a la derecha de pause) */
+    width: auto;
+    height: auto;
+}
+
 .radio-btn-next {
     position: relative;
 }
+
+.radio-btn-next .radio-img-next {
+    width: 30px;        /* TAMAÑO DEL BOTÓN SIGUIENTE - AJUSTA AQUÍ */
+    height: auto;
+}
+
 .radio-img-next-hover {
     position: absolute;
     top: 0;
     left: 0;
+    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-next */
+    height: auto;
     opacity: 0;
-    transition: opacity 0.15s ease;
 }
+
 .radio-btn-next:hover .radio-img-next {
     opacity: 0;
 }
+
 .radio-btn-next:hover .radio-img-next-hover {
     opacity: 1;
 }
 
 /* ============================================ */
-/* MODOS DE COLOR - IMÁGENES DE RADIO           */
+/* MODOS DE COLOR - DARK-DAY (POR DEFECTO)      */
 /* ============================================ */
 
-/* --- MODO LIGHT --- */
+/* Hover del botón play en dark-day */
+.radio-btn-play:hover .radio-img-play {
+    content: url('darkmode/info/play2.png');
+}
+
+/* Cassette ON en dark-day */
+body.radio-playing #radio-cassette-img {
+    content: url('darkmode/info/cassetteON.gif');
+}
+
+/* ============================================ */
+/* MODOS DE COLOR - LIGHT                        */
+/* ============================================ */
+
 body.light .radio-img-prev {
     content: url('lightmode/info/atras.png');
 }
 body.light .radio-img-prev-hover {
     content: url('lightmode/info/atras2.png');
 }
+
 body.light .radio-img-play {
     content: url('lightmode/info/play.png');
 }
 body.light .radio-btn-play:hover .radio-img-play {
-    content: url('lightmode/info/play2.png') !important;
+    content: url('lightmode/info/play2.png');
 }
+
 body.light .radio-img-pause {
     content: url('lightmode/info/pausa.png');
 }
 body.light .radio-img-pause-hover {
     content: url('lightmode/info/pausa2.png');
 }
+
 body.light .radio-img-next {
     content: url('lightmode/info/siguiente.png');
 }
 body.light .radio-img-next-hover {
     content: url('lightmode/info/siguiente2.png');
 }
+
 body.light.radio-playing #radio-cassette-img {
     content: url('lightmode/info/cassetteON.gif');
 }
 
-/* --- MODO DARK-NIGHT (MYTMODE) --- */
+/* ============================================ */
+/* MODOS DE COLOR - DARK-NIGHT (MYTMODE)        */
+/* ============================================ */
+
 body.dark-night .radio-img-prev {
     content: url('mytmode/info/atras.png');
 }
 body.dark-night .radio-img-prev-hover {
     content: url('mytmode/info/atras2.png');
 }
+
 body.dark-night .radio-img-play {
     content: url('mytmode/info/play.png');
 }
 body.dark-night .radio-btn-play:hover .radio-img-play {
-    content: url('mytmode/info/play2.png') !important;
+    content: url('mytmode/info/play2.png');
 }
+
 body.dark-night .radio-img-pause {
     content: url('mytmode/info/pausa.png');
 }
 body.dark-night .radio-img-pause-hover {
     content: url('mytmode/info/pausa2.png');
 }
+
 body.dark-night .radio-img-next {
     content: url('mytmode/info/siguiente.png');
 }
 body.dark-night .radio-img-next-hover {
     content: url('mytmode/info/siguiente2.png');
 }
+
 body.dark-night.radio-playing #radio-cassette-img {
     content: url('mytmode/info/cassetteON.gif');
-}
-
-/* --- MODO DARK-DAY (por defecto) --- */
-body:not(.light):not(.dark-night) .radio-btn-play:hover .radio-img-play {
-    content: url('darkmode/info/play2.png');
-}
-body:not(.light):not(.dark-night).radio-playing #radio-cassette-img {
-    content: url('darkmode/info/cassetteON.gif');
 }
