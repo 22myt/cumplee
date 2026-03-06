@@ -80,8 +80,7 @@ body {
     content: url('darkmode/buttons/lightmode2.png');
 }
 
-#dark-day-btn:hover #img-dark-day,
-#dark-night-btn:hover #img-dark-night {
+#dark-day-btn:hover #img-dark-day {
     content: url('darkmode/buttons/darkmode2.png');
 }
 
@@ -1429,8 +1428,7 @@ body.light #img-dark-night {
 body.light #light-btn:hover #img-light {
     content: url('lightmode/buttons/lightmode2.png');
 }
-body.light #dark-day-btn:hover #img-dark-day,
-body.light #dark-night-btn:hover #img-dark-night {
+body.light #dark-day-btn:hover #img-dark-day {
     content: url('lightmode/buttons/darkmode2.png');
 }
 
@@ -1669,8 +1667,7 @@ body.dark-night #img-dark-night {
 body.dark-night #light-btn:hover #img-light {
     content: url('mytmode/buttons/lightmode2.png');
 }
-body.dark-night #dark-day-btn:hover #img-dark-day,
-body.dark-night #dark-night-btn:hover #img-dark-night {
+body.dark-night #dark-day-btn:hover #img-dark-day {
     content: url('mytmode/buttons/darkmode2.png');
 }
 
