@@ -995,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (body.classList.contains('dark-night')) {
             return "#7b633a"; // Mytmode
         } else {
-            return "#ffffff"; // Dark-day (por defecto)
+            return "#3E2120"; // Dark-day (por defecto)
         }
     }
     
