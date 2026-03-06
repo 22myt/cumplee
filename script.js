@@ -559,7 +559,8 @@ function setupIndicatorHovers() {
 // PARTICLES.JS - VERSIÓN QUE SOLO CAMBIA COLOR (CORREGIDA)
 // ============================================
 // ============================================
-// PARTICLES.JS - VERSIÓN QUE SOLO CAMBIA COLOR (SIN REINICIOS)
+// ============================================
+// PARTICLES.JS - VERSIÓN EFICIENTE (SIN REINICIOS)
 // ============================================
 (function() {
     'use strict';
@@ -571,9 +572,11 @@ function setupIndicatorHovers() {
         'dark-day': '#A94C4C'
     };
     
-    // Variable para guardar la instancia
-    let pJSDom = null;
-    
+    // Variable para guardar la instancia de particles.js
+    let particlesInstance = null;
+    let initAttempts = 0;
+    const MAX_INIT_ATTEMPTS = 10;
+
     // Inicializar particles.js
     function initParticles() {
         if (!document.getElementById('particles-js')) {
@@ -581,11 +584,13 @@ function setupIndicatorHovers() {
             return;
         }
         
+        console.log('🎨 Inicializando particles.js...');
+        
         // Configuración
         const config = {
             particles: {
                 number: { value: 61, density: { enable: true, value_area: 789.1476416322727 } },
-                color: { value: "#A94C4C" }, 
+                color: { value: "#A94C4C" }, // Color inicial
                 shape: { type: "edge", stroke: { width: 0, color: "#b1b1b1" }, polygon: { nb_sides: 3 } },
                 opacity: { value: 0.5, random: true, anim: { enable: false } },
                 size: { value: 3, random: true, anim: { enable: true, speed: 4, size_min: 1, sync: false } },
@@ -600,60 +605,80 @@ function setupIndicatorHovers() {
             retina_detect: true
         };
         
-        // Inicializar y guardar en pJSDom (particlesJS guarda las instancias aquí)
+        // Inicializar particles.js
         particlesJS('particles-js', config);
         
-        // Acceder a la instancia a través del array de particlesJS
-        setTimeout(() => {
-            if (window.pJSDom && window.pJSDom.length > 0) {
-                pJSDom = window.pJSDom[0];
-                console.log('✅ Particles.js iniciado, instancia guardada');
-            }
-        }, 500);
+        // Intentar capturar la instancia de forma más fiable
+        captureParticlesInstance();
     }
     
-    // Función para cambiar color (SIN REINICIAR)
+    // Función para capturar la instancia de particles.js (con reintentos)
+    function captureParticlesInstance() {
+        if (window.pJSDom && window.pJSDom.length > 0) {
+            particlesInstance = window.pJSDom[0];
+            console.log('✅ Particles.js instancia capturada correctamente');
+            
+            // Aplicar el color inicial basado en el modo actual
+            const currentMode = document.body.classList.contains('light') ? 'light' : 
+                               (document.body.classList.contains('dark-night') ? 'dark-night' : 'dark-day');
+            changeParticlesColor(modeColors[currentMode]);
+        } else if (initAttempts < MAX_INIT_ATTEMPTS) {
+            initAttempts++;
+            console.log(`⏳ Esperando a que particles.js esté listo... (intento ${initAttempts}/${MAX_INIT_ATTEMPTS})`);
+            setTimeout(captureParticlesInstance, 200);
+        } else {
+            console.warn('⚠️ No se pudo capturar la instancia de particles.js después de varios intentos');
+        }
+    }
+    
+    // Función para cambiar color de forma eficiente (SIN REINICIAR)
     window.changeParticlesColor = function(newColor) {
-        // Intentar obtener la instancia si no la tenemos
-        if (!pJSDom && window.pJSDom && window.pJSDom.length > 0) {
-            pJSDom = window.pJSDom[0];
+        // Validar que tenemos un color
+        if (!newColor) {
+            console.warn('⚠️ No se proporcionó un color para las partículas');
+            return;
         }
         
-        if (!pJSDom) {
-            console.log('⏳ Partículas no listas, reintentando...');
+        // Si no tenemos la instancia, intentamos capturarla
+        if (!particlesInstance && window.pJSDom && window.pJSDom.length > 0) {
+            particlesInstance = window.pJSDom[0];
+        }
+        
+        if (!particlesInstance) {
+            console.log('⏳ Partículas no listas, reintentando cambio de color en 200ms...');
             setTimeout(() => window.changeParticlesColor(newColor), 200);
             return;
         }
         
         try {
-            // MÉTODO DIRECTO: acceder a las partículas y cambiar su color
-            if (pJSDom.particles && pJSDom.particles.array) {
-                pJSDom.particles.array.forEach(p => {
-                    if (p.color) {
-                        p.color.value = newColor;
-                    }
-                });
+            // MÉTODO MEJORADO: Acceder a la configuración de las partículas
+            if (particlesInstance.pJS && particlesInstance.pJS.particles) {
+                // 1. Cambiar el color en la configuración (para nuevas partículas)
+                particlesInstance.pJS.particles.color.value = newColor;
                 
-                // Actualizar también el valor por defecto
-                if (pJSDom.particles.options && pJSDom.particles.options.color) {
-                    pJSDom.particles.options.color.value = newColor;
+                // 2. Cambiar el color de TODAS las partículas existentes
+                if (particlesInstance.pJS.particles.array && particlesInstance.pJS.particles.array.length > 0) {
+                    particlesInstance.pJS.particles.array.forEach(p => {
+                        if (p.color) {
+                            p.color.value = newColor;
+                        }
+                    });
                 }
                 
-                // Redibujar
-                if (pJSDom.draw) {
-                    pJSDom.draw();
-                }
+                // 3. REFRESCAR suavemente (esto actualiza el canvas sin reiniciar)
+                // Este es el método clave: refresh actualiza la visualización sin reiniciar el motor
+                particlesInstance.pJS.fn.particlesRefresh();
                 
-                console.log('🎨 Color de partículas cambiado a:', newColor);
+                console.log('🎨 Color de partículas cambiado a:', newColor, 'sin reiniciar la animación');
             } else {
-                console.log('No se pudo acceder a las partículas');
+                console.warn('⚠️ Estructura de particles.js no reconocida');
             }
         } catch (e) {
-            console.log('Error cambiando color:', e);
+            console.error('❌ Error cambiando color de partículas:', e);
         }
     };
     
-    // Inicializar
+    // Inicializar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initParticles);
     } else {
