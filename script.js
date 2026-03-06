@@ -27,15 +27,15 @@ function setMode(mode) {
         updateFooterIndicator();
     }
 
-    // Reiniciar partículas con nuevo color (UNA SOLA VEZ)
-    if (window.restartParticlesWithColor) {
-        const modeColors = {
-            'light': '#27196f',
-            'dark-night': '#7b633a',
-            'dark-day': '#A94C4C'
-        };
-        window.restartParticlesWithColor(modeColors[mode] || '#A94C4C');
-    }
+// Cambiar color de partículas SIN REINICIAR
+if (window.changeParticlesColor) {
+    const modeColors = {
+        'light': '#27196f',
+        'dark-night': '#7b633a',
+        'dark-day': '#A94C4C'
+    };
+    window.changeParticlesColor(modeColors[mode] || '#A94C4C');
+}
 
     // Resetear sistema de sonidos (pero NO reasignar inmediatamente)
     resetSoundSystem();
@@ -556,18 +556,19 @@ function setupIndicatorHovers() {
 }
 
 // ============================================
-// PARTICLES.JS (VERSIÓN ORIGINAL RESTAURADA)
+// PARTICLES.JS - VERSIÓN SIN REINICIOS (SOLO CAMBIA COLOR)
 // ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
+    let particlesInitialized = false;
     
-    // Configuración base de las partículas (VALORES ORIGINALES)
+    // Configuración base de las partículas
     const particlesConfig = {
         particles: {
             number: {
-                value: 58,
+                value: 61,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
@@ -647,8 +648,10 @@ function setupIndicatorHovers() {
         'dark-day': '#A94C4C'
     };
     
-    // Inicializar particles.js
+    // Inicializar particles.js (SOLO UNA VEZ)
     function initParticles() {
+        if (particlesInitialized) return;
+        
         if (!document.getElementById('particles-js')) {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
@@ -656,38 +659,45 @@ function setupIndicatorHovers() {
         
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
+            particlesInitialized = true;
             console.log('✅ Particles.js iniciado con color:', particlesConfig.particles.color.value);
         } catch (error) {
             console.error('❌ Error al inicializar particles.js:', error);
         }
     }
     
-    // REINICIAR particles.js con nuevo color
-    window.restartParticlesWithColor = function(newColor) {
-        if (!document.getElementById('particles-js')) return;
-        
-        // Actualizar el color en la configuración
-        particlesConfig.particles.color.value = newColor;
-        
-        // Destruir instancia anterior si existe
-        if (particlesInstance && typeof particlesInstance.destroy === 'function') {
-            try {
-                particlesInstance.destroy();
-            } catch (e) {
-                console.log('Error al destruir instancia anterior');
-            }
+    // CAMBIAR SOLO EL COLOR (sin reiniciar)
+    window.changeParticlesColor = function(newColor) {
+        if (!particlesInstance || !particlesInstance.particles) {
+            console.log('⏳ Partículas no listas aún');
+            return;
         }
         
-        // Inicializar de nuevo con el nuevo color
         try {
-            particlesInstance = particlesJS('particles-js', particlesConfig);
-            console.log('🔄 Partículas REINICIADAS con color:', newColor);
-        } catch (error) {
-            console.error('Error al reiniciar particles.js:', error);
+            // Cambiar el color en la configuración
+            particlesConfig.particles.color.value = newColor;
+            
+            // Acceder al array de partículas y cambiar su color
+            if (particlesInstance.particles.array && particlesInstance.particles.array.length > 0) {
+                particlesInstance.particles.array.forEach(p => {
+                    if (p.color) {
+                        p.color.value = newColor;
+                    }
+                });
+            }
+            
+            // Forzar redibujado
+            if (particlesInstance.draw) {
+                particlesInstance.draw();
+            }
+            
+            console.log('🎨 Color de partículas cambiado a:', newColor);
+        } catch (e) {
+            console.log('Error cambiando color de partículas:', e);
         }
     };
     
-    // Inicializar partículas
+    // Inicializar partículas UNA SOLA VEZ
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initParticles);
     } else {
