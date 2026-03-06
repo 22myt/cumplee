@@ -161,7 +161,8 @@ function createMarqueeText() {
 // INICIAR ANIMACIÓN DEL MARQUEE (VERSIÓN SIMPLE)
 // ============================================
 // ============================================
-
+// INICIAR ANIMACIÓN DEL MARQUEE (VERSIÓN SIMPLE)
+// ============================================
 function startMarqueeAnimation() {
     // Detener animación anterior si existe
     if (marqueeAnimation) {
@@ -174,12 +175,7 @@ function startMarqueeAnimation() {
     const container = document.querySelector('.marquee-vertical-container');
     if (!container) return;
     
-    // Velocidad MUCHO más lenta (píxeles por frame)
-    // 0.03 es 10 veces más lento que 0.3
-    const speed = 0.03; // Reducido drásticamente
-    
-    // También podemos calcular basado en el ancho total para velocidad constante
-    // Alternativa: velocidad basada en tiempo real
+    // Velocidad basada en tiempo real
     let lastTime = 0;
     const pixelsPerSecond = 30; // 30 píxeles por segundo (mucho más lento)
     
