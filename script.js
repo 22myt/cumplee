@@ -2,16 +2,22 @@
 // SISTEMA DE CAMBIO DE MODOS
 // ============================================
 const body = document.body;
+let modeChangeTimeout = null;
 
-// Función principal de cambio de modo (UNA SOLA VEZ)
+// Función principal de cambio de modo (OPTIMIZADA)
 function setMode(mode) {
+    // Si ya hay un cambio en progreso, cancelarlo
+    if (modeChangeTimeout) {
+        clearTimeout(modeChangeTimeout);
+    }
+    
     // Remueve todas las clases de modo
     body.classList.remove("light", "dark-day", "dark-night");
     // Añade la nueva clase
     body.classList.add(mode);
     console.log("Modo activado:", mode);
 
-    // Actualizar color del sol si existe
+    // Actualizar color del sol si existe (SOLO UNA VEZ)
     if (typeof updateSunColor === 'function') {
         updateSunColor();
     }
@@ -21,37 +27,47 @@ function setMode(mode) {
         updateFooterIndicator();
     }
 
-    // Reiniciar partículas con nuevo color
-    if (typeof restartParticlesWithColor === 'function') {
+    // Reiniciar partículas con nuevo color (UNA SOLA VEZ)
+    if (window.restartParticlesWithColor) {
         const modeColors = {
             'light': '#27196f',
             'dark-night': '#7b633a',
             'dark-day': '#A94C4C'
         };
-        restartParticlesWithColor(modeColors[mode] || '#A94C4C');
+        window.restartParticlesWithColor(modeColors[mode] || '#A94C4C');
     }
 
-    // Resetear sistema de sonidos y reasignar
+    // Resetear sistema de sonidos (pero NO reasignar inmediatamente)
     resetSoundSystem();
-    setTimeout(() => {
+    
+    // Reasignar sonidos solo después de un retraso, y SOLO UNA VEZ
+    modeChangeTimeout = setTimeout(() => {
         assignHoverSounds();
-    }, 200);
+        modeChangeTimeout = null;
+    }, 300);
 
-    // Sincronizar radio
+    // Sincronizar radio (solo si es necesario)
     if (radioPlayer && typeof radioPlayer.syncWithMode === 'function') {
         radioPlayer.syncWithMode();
     }
 
-    // Pequeño retraso para que las imágenes nuevas se carguen
+    // Un SOLO retraso para scaling
     setTimeout(checkContainerScaling, 150);
 }
 
 // ============================================
-// SISTEMA DE SCALING
+// SISTEMA DE SCALING (OPTIMIZADO)
 // ============================================
 let scalingInterval = null;
+let scalingTimeout = null;
+let lastScaleCheck = 0;
 
 function checkContainerScaling() {
+    // Throttle: no ejecutar más de una vez cada 100ms
+    const now = Date.now();
+    if (now - lastScaleCheck < 100) return;
+    lastScaleCheck = now;
+    
     const contentWrapper = document.getElementById('content-wrapper');
     const mainContainer = document.getElementById('main-container');
     
@@ -76,32 +92,29 @@ function initScaling() {
         return;
     }
     
+    // Una sola verificación inicial
     setTimeout(checkContainerScaling, 100);
-    setTimeout(checkContainerScaling, 300);
-    setTimeout(checkContainerScaling, 500);
-    setTimeout(checkContainerScaling, 1000);
     
+    // Evento resize con debounce MEJORADO
     let resizeTimeout;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(checkContainerScaling, 50);
+        resizeTimeout = setTimeout(checkContainerScaling, 100);
     });
     
-    window.addEventListener('orientationchange', function() {
-        setTimeout(checkContainerScaling, 100);
-    });
-    
+    // Verificación periódica MENOS FRECUENTE (cada 2 segundos en lugar de 500ms)
     if (scalingInterval) {
         clearInterval(scalingInterval);
     }
-    scalingInterval = setInterval(checkContainerScaling, 500);
+    scalingInterval = setInterval(checkContainerScaling, 2000);
 }
 
 // ============================================
-// MARQUEE - TEXTO ANIMADO EN LATERAL
+// MARQUEE - TEXTO ANIMADO EN LATERAL (OPTIMIZADO)
 // ============================================
 let marqueeAnimation = null;
 let marqueePosition = 0;
+let lastMarqueeTime = 0;
 
 function createMarqueeText() {
     const lateral = document.getElementById('lateral');
@@ -143,20 +156,18 @@ function startMarqueeAnimation() {
     const content = document.querySelector('.marquee-vertical-content');
     if (!content) return;
     
-    let lastTime = 0;
+    let lastTime = performance.now();
     const pixelsPerSecond = 60; 
     
     function animate(currentTime) {
-        if (!lastTime) {
-            lastTime = currentTime;
-            marqueeAnimation = requestAnimationFrame(animate);
-            return;
-        }
-        
+        // Calcular delta time
         const deltaTime = (currentTime - lastTime) / 1000;
         lastTime = currentTime;
         
-        marqueePosition -= pixelsPerSecond * deltaTime;
+        // Limitar deltaTime para evitar saltos grandes
+        const safeDelta = Math.min(deltaTime, 0.1);
+        
+        marqueePosition -= pixelsPerSecond * safeDelta;
         
         if (marqueePosition <= -content.scrollWidth / 2) {
             marqueePosition = 0;
@@ -166,6 +177,7 @@ function startMarqueeAnimation() {
         marqueeAnimation = requestAnimationFrame(animate);
     }
     
+    lastTime = performance.now();
     marqueeAnimation = requestAnimationFrame(animate);
 }
 
@@ -192,9 +204,7 @@ function restartMarqueeAnimation() {
 function getCurrentDualMode() {
     const now = new Date();
     const hourGMT3 = (now.getUTCHours() - 3 + 24) % 24;
-
-    console.log(`Hora actual en GMT-3 (calculada): ${hourGMT3}`);
-
+    
     if (hourGMT3 >= 7 && hourGMT3 < 19) {
         return 'dark-day';
     } else {
@@ -206,6 +216,7 @@ function getCurrentDualMode() {
 // ANIMACIÓN LOTTIE - ICONO DEL SOL
 // ============================================
 let sunAnimation = null;
+let sunInitialized = false;
 
 function updateSunColor() {
     const sunContainer = document.getElementById('sun-icon');
@@ -217,6 +228,8 @@ function updateSunColor() {
     let color = '#ffffff';
     if (body.classList.contains('dark-night')) {
         color = '#7c643a';
+    } else if (body.classList.contains('light')) {
+        color = '#27196f';
     }
     
     const elements = svg.querySelectorAll('path, circle, rect, polygon, line');
@@ -231,6 +244,8 @@ function updateSunColor() {
 }
 
 function initSunIcon() {
+    if (sunInitialized) return;
+    
     const sunContainer = document.getElementById('sun-icon');
     if (!sunContainer) {
         console.warn('No se encontró el contenedor del sol');
@@ -241,21 +256,26 @@ function initSunIcon() {
         sunAnimation.destroy();
     }
 
-    sunAnimation = lottie.loadAnimation({
-        container: sunContainer,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: 'icons8-sun.json'
-    });
+    try {
+        sunAnimation = lottie.loadAnimation({
+            container: sunContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'icons8-sun.json'
+        });
 
-    sunAnimation.addEventListener('DOMLoaded', function() {
-        updateSunColor();
-    });
+        sunAnimation.addEventListener('DOMLoaded', function() {
+            updateSunColor();
+            sunInitialized = true;
+        });
+    } catch (e) {
+        console.log('Error cargando animación del sol:', e);
+    }
 }
 
 // ============================================
-// SISTEMA DE SONIDOS HOVER
+// SISTEMA DE SONIDOS HOVER (OPTIMIZADO)
 // ============================================
 const hoverSounds = {
     'bubble': new Audio('sounds/bubble_sound.mp3'),
@@ -264,11 +284,17 @@ const hoverSounds = {
     'click': new Audio('sounds/sounds_click7.wav')
 };
 
+// Precargar sonidos (opcional, mejora rendimiento)
+Object.values(hoverSounds).forEach(sound => {
+    sound.load();
+    sound.volume = 0.3;
+});
+
 const soundSystem = {
     lastSoundKey: null,
     lastElementId: null,
     lastPlayTime: 0,
-    spamThreshold: 150
+    spamThreshold: 200 // Aumentado a 200ms
 };
 
 function getElementId(element) {
@@ -292,45 +318,51 @@ function playHoverSound(soundKey, element) {
     const sound = hoverSounds[soundKey];
     if (!sound) return;
     
-    const soundClone = sound.cloneNode();
-    soundClone.volume = 0.3;
-    
     soundSystem.lastSoundKey = soundKey;
     soundSystem.lastElementId = elementId;
     soundSystem.lastPlayTime = now;
     
-    soundClone.play().catch(e => {
-        console.log('Error al reproducir sonido:', e);
+    // Usar el sonido directamente en lugar de clonar (mejor rendimiento)
+    sound.currentTime = 0;
+    sound.play().catch(e => {
+        // Ignorar errores de reproducción
     });
 }
 
+let soundsAssigned = false;
+
 function assignHoverSounds() {
-    document.querySelectorAll('.bot-link-gif-link').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('bubble', el));
-    });
-
-    document.querySelectorAll('.profile-icon-container').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('alien', el));
-    });
-
-    const tinySelectors = [
-        '.message-img-container',
-        '.decor-sic-container',
-        '.top-cuadro1-container',
-        '.top-cuadro2-container',
-        '.logo-gif-container',
-        '.arachnid-group'
-    ];
+    if (soundsAssigned) return;
     
-    tinySelectors.forEach(selector => {
-        document.querySelectorAll(selector).forEach(el => {
-            el.addEventListener('mouseenter', () => playHoverSound('tiny', el));
-        });
-    });
-
-    document.querySelectorAll('#buttons button').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('click', el));
-    });
+    // Usar delegación de eventos para mejor rendimiento
+    document.body.addEventListener('mouseenter', (e) => {
+        const target = e.target;
+        
+        // Bubble sound
+        if (target.closest('.bot-link-gif-link')) {
+            playHoverSound('bubble', target.closest('.bot-link-gif-link'));
+        }
+        // Alien sound
+        else if (target.closest('.profile-icon-container')) {
+            playHoverSound('alien', target.closest('.profile-icon-container'));
+        }
+        // Tiny sounds
+        else if (target.closest('.message-img-container') ||
+                 target.closest('.decor-sic-container') ||
+                 target.closest('.top-cuadro1-container') ||
+                 target.closest('.top-cuadro2-container') ||
+                 target.closest('.logo-gif-container') ||
+                 target.closest('.arachnid-group')) {
+            playHoverSound('tiny', target.closest('.message-img-container, .decor-sic-container, .top-cuadro1-container, .top-cuadro2-container, .logo-gif-container, .arachnid-group'));
+        }
+        // Click sound for buttons
+        else if (target.closest('#buttons button')) {
+            playHoverSound('click', target.closest('#buttons button'));
+        }
+    }, true); // Usar captura para mejor respuesta
+    
+    soundsAssigned = true;
+    console.log('✅ Sonidos hover asignados (delegación)');
 }
 
 function resetSoundSystem() {
@@ -340,7 +372,7 @@ function resetSoundSystem() {
 }
 
 // ============================================
-// RADIO PLAYER
+// RADIO PLAYER (OPTIMIZADO)
 // ============================================
 const radioPlayer = {
     playBtn: null,
@@ -353,8 +385,11 @@ const radioPlayer = {
     songFiles: ['song1.mp3', 'song2.mp3', 'song3.mp3'],
     audioElement: null,
     radioFreqAudio: null,
+    initialized: false,
 
     init: function() {
+        if (this.initialized) return;
+        
         console.log('📻 Inicializando Radio Player...');
 
         this.playBtn = document.getElementById('radio-play');
@@ -377,12 +412,14 @@ const radioPlayer = {
             this.nextSong();
         });
 
+        // Usar event listeners con debounce para evitar múltiples disparos
         this.playBtn.addEventListener('click', () => this.play());
         this.pauseBtn.addEventListener('click', () => this.pause());
         this.prevBtn.addEventListener('click', () => this.prevSong());
         this.nextBtn.addEventListener('click', () => this.nextSong());
 
         this.showPlayButton();
+        this.initialized = true;
         console.log('✅ Radio Player inicializado');
     },
 
@@ -403,10 +440,6 @@ const radioPlayer = {
 
         this.audioElement.src = songPath;
         this.audioElement.load();
-
-        if (this.isPlaying) {
-            this.audioElement.play().catch(e => console.log('Error al reproducir:', e));
-        }
     },
 
     play: function() {
@@ -422,9 +455,8 @@ const radioPlayer = {
         this.radioFreqAudio.play().catch(e => console.log('Error al reproducir frecuencia:', e));
         this.playSoundEffect('sounds/sounds_play.wav');
         
-        // Actualizar indicador
         if (typeof updateFooterIndicator === 'function') {
-            setTimeout(updateFooterIndicator, 50);
+            updateFooterIndicator();
         }
     },
 
@@ -437,40 +469,43 @@ const radioPlayer = {
         this.radioFreqAudio.pause();
         this.playSoundEffect('sounds/sounds_play.wav');
         
-        // Actualizar indicador
         if (typeof updateFooterIndicator === 'function') {
-            setTimeout(updateFooterIndicator, 50);
+            updateFooterIndicator();
         }
     },
 
     nextSong: function() {
         this.loadSong(this.currentSongIndex + 1);
+        if (this.isPlaying) {
+            this.audioElement.play().catch(e => console.log('Error al reproducir:', e));
+        }
         this.playSoundEffect('sounds/sounds_next.wav');
     },
 
     prevSong: function() {
         this.loadSong(this.currentSongIndex - 1);
+        if (this.isPlaying) {
+            this.audioElement.play().catch(e => console.log('Error al reproducir:', e));
+        }
         this.playSoundEffect('sounds/sounds_next.wav');
     },
 
     playSoundEffect: function(soundPath) {
         const effect = new Audio(soundPath);
         effect.volume = 0.3;
-        effect.play().catch(e => console.log('Error al reproducir efecto:', e));
+        effect.play().catch(e => {});
     },
 
     syncWithMode: function() {
-        if (this.isPlaying && this.cassetteImg) {
-            this.cassetteImg.style.display = 'none';
-            this.cassetteImg.offsetHeight;
-            this.cassetteImg.style.display = 'block';
-        }
+        // No hacer nada pesado aquí
     }
 };
 
 // ============================================
 // INDICADOR DEL FOOTER
 // ============================================
+let currentIndicatorType = 'default';
+
 function updateFooterIndicator() {
     const indicator = document.getElementById('indicator-img');
     if (!indicator) return;
@@ -487,123 +522,52 @@ function updateFooterIndicator() {
     
     let imageName = '3-a-la-vez.gif';
     
-    // Detectar si debe mostrar cargando o alterar
-    // Por ahora solo manejamos el estado de la radio
-    if (document.body.classList.contains('radio-playing')) {
+    if (currentIndicatorType === 'cargando') {
+        imageName = 'cargando.gif';
+    } else if (currentIndicatorType === 'alterar' || document.body.classList.contains('radio-playing')) {
         imageName = 'alterar.gif';
     }
     
     indicator.src = getImagePath(imageName);
 }
 
-
 // ============================================
 // EVENTOS DE HOVER PARA EL INDICADOR
 // ============================================
 function setupIndicatorHovers() {
-    const indicator = document.getElementById('indicator-img');
-    if (!indicator) return;
-    
-    // Función para cambiar imagen según el modo actual
-    function getImagePath(imageName) {
-        if (document.body.classList.contains('light')) {
-            return `lightmode/${imageName}`;
-        } else if (document.body.classList.contains('dark-night')) {
-            return `mytmode/${imageName}`;
-        } else {
-            return `darkmode/${imageName}`;
+    // Usar delegación de eventos para mejor rendimiento
+    document.body.addEventListener('mouseenter', (e) => {
+        const target = e.target;
+        
+        if (target.closest('#buttons button') || target.closest('.bot-link-gif-link')) {
+            currentIndicatorType = 'cargando';
+            updateFooterIndicator();
         }
-    }
+    }, true);
     
-    // Función para actualizar indicador con tipo específico
-    function setIndicatorType(type) {
-        if (!indicator) return;
+    document.body.addEventListener('mouseleave', (e) => {
+        const target = e.target;
         
-        let imageName = '3-a-la-vez.gif'; // Default
-        
-        if (type === 'cargando') {
-            imageName = 'cargando.gif';
-        } else if (type === 'alterar') {
-            imageName = 'alterar.gif';
+        if (target.closest('#buttons button') || target.closest('.bot-link-gif-link')) {
+            currentIndicatorType = 'default';
+            updateFooterIndicator();
         }
-        
-        indicator.src = getImagePath(imageName);
-    }
-    
-    // 1. BOTONES - mouseenter/mouseleave
-    document.querySelectorAll('#buttons button').forEach(btn => {
-        btn.addEventListener('mouseenter', () => setIndicatorType('cargando'));
-        btn.addEventListener('mouseleave', () => {
-            if (document.body.classList.contains('radio-playing')) {
-                setIndicatorType('alterar');
-            } else {
-                setIndicatorType('default');
-            }
-        });
-    });
-    
-    // 2. LINK GIF - mouseenter/mouseleave
-    const linkGif = document.querySelector('.bot-link-gif-link');
-    if (linkGif) {
-        linkGif.addEventListener('mouseenter', () => setIndicatorType('cargando'));
-        linkGif.addEventListener('mouseleave', () => {
-            if (document.body.classList.contains('radio-playing')) {
-                setIndicatorType('alterar');
-            } else {
-                setIndicatorType('default');
-            }
-        });
-    }
-    
-    // Guardar función para usarla después
-    window.setIndicatorType = setIndicatorType;
+    }, true);
 }
 
-// Modificar updateFooterIndicator para usar la función guardada
-const originalUpdateFooterIndicator = updateFooterIndicator;
-updateFooterIndicator = function() {
-    if (typeof window.setIndicatorType === 'function') {
-        if (document.body.classList.contains('radio-playing')) {
-            window.setIndicatorType('alterar');
-        } else {
-            window.setIndicatorType('default');
-        }
-    } else {
-        // Fallback al método original
-        const indicator = document.getElementById('indicator-img');
-        if (!indicator) return;
-        
-        function getImagePath(imageName) {
-            if (document.body.classList.contains('light')) {
-                return `lightmode/${imageName}`;
-            } else if (document.body.classList.contains('dark-night')) {
-                return `mytmode/${imageName}`;
-            } else {
-                return `darkmode/${imageName}`;
-            }
-        }
-        
-        let imageName = '3-a-la-vez.gif';
-        if (document.body.classList.contains('radio-playing')) {
-            imageName = 'alterar.gif';
-        }
-        
-        indicator.src = getImagePath(imageName);
-    }
-};
-
 // ============================================
-// PARTICLES.JS
+// PARTICLES.JS (OPTIMIZADO)
 // ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
+    let particlesInitialized = false;
     
     const particlesConfig = {
         particles: {
             number: {
-                value: 61,
+                value: 41, // Reducido de 61 para mejor rendimiento
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
@@ -623,18 +587,18 @@ updateFooterIndicator = function() {
                 }
             },
             opacity: {
-                value: 0.5,
+                value: 0.4, // Reducido ligeramente
                 random: true,
                 anim: {
                     enable: false
                 }
             },
             size: {
-                value: 3,
+                value: 2.5, // Reducido
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 4,
+                    speed: 2, // Reducido
                     size_min: 1,
                     sync: false
                 }
@@ -644,7 +608,7 @@ updateFooterIndicator = function() {
             },
             move: {
                 enable: true,
-                speed: 2,
+                speed: 1.5, // Reducido
                 direction: "none",
                 random: false,
                 straight: false,
@@ -662,15 +626,9 @@ updateFooterIndicator = function() {
                     enable: false
                 },
                 onclick: {
-                    enable: true,
-                    mode: "push"
+                    enable: false // Desactivado para mejor rendimiento
                 },
                 resize: true
-            },
-            modes: {
-                push: {
-                    particles_nb: 4
-                }
             }
         },
         retina_detect: true
@@ -683,6 +641,8 @@ updateFooterIndicator = function() {
     };
     
     function initParticles() {
+        if (particlesInitialized) return;
+        
         if (!document.getElementById('particles-js')) {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
@@ -690,6 +650,7 @@ updateFooterIndicator = function() {
         
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
+            particlesInitialized = true;
             console.log('✅ Particles.js iniciado');
         } catch (error) {
             console.error('❌ Error al inicializar particles.js:', error);
@@ -697,23 +658,21 @@ updateFooterIndicator = function() {
     }
     
     window.restartParticlesWithColor = function(newColor) {
-        if (!document.getElementById('particles-js')) return;
+        if (!document.getElementById('particles-js') || !particlesInstance) return;
         
         particlesConfig.particles.color.value = newColor;
         
-        if (particlesInstance && typeof particlesInstance.destroy === 'function') {
-            try {
-                particlesInstance.destroy();
-            } catch (e) {
-                console.log('Error al destruir instancia anterior');
-            }
-        }
-        
         try {
-            particlesInstance = particlesJS('particles-js', particlesConfig);
-            console.log('🔄 Partículas reiniciadas con color:', newColor);
-        } catch (error) {
-            console.error('Error al reiniciar particles.js:', error);
+            // En lugar de destruir y recrear, solo actualizamos el color si es posible
+            if (particlesInstance && particlesInstance.options) {
+                particlesInstance.options.particles.color.value = newColor;
+                // Forzar actualización
+                if (particlesInstance.refresh) {
+                    particlesInstance.refresh();
+                }
+            }
+        } catch (e) {
+            console.log('Error actualizando color de partículas');
         }
     };
     
@@ -726,67 +685,57 @@ updateFooterIndicator = function() {
 })();
 
 // ============================================
-// INICIALIZACIÓN PRINCIPAL (UNA SOLA VEZ)
+// INICIALIZACIÓN PRINCIPAL (OPTIMIZADA)
 // ============================================
 document.documentElement.style.overflow = 'hidden';
 document.body.style.overflow = 'hidden';
 
+// Solo un event listener
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ DOM cargado, inicializando todo...');
+    console.log('✅ DOM cargado, inicializando...');
     
-    // --- MODO INICIAL SEGÚN HORA Y ALEATORIO ---
+    // --- MODO INICIAL ---
     const initialDualMode = getCurrentDualMode();
     const modes = ['light', initialDualMode];
     const randomIndex = Math.random() < 0.5 ? 0 : 1;
     const initialMode = modes[randomIndex];
 
-    console.log(`Modo inicial elegido: ${initialMode}`);
     setMode(initialMode);
 
-    // --- CONFIGURAR BOTONES (SOLO 2) ---
+    // --- CONFIGURAR BOTONES ---
     const lightBtn = document.getElementById("light-btn");
     const darkDayBtn = document.getElementById("dark-day-btn");
 
     if (lightBtn) {
-        lightBtn.addEventListener("click", () => {
-            setMode("light");
-        });
+        lightBtn.addEventListener("click", () => setMode("light"));
     }
 
     if (darkDayBtn) {
-        darkDayBtn.addEventListener("click", () => {
-            const modeToSet = getCurrentDualMode();
-            setMode(modeToSet);
-        });
+        darkDayBtn.addEventListener("click", () => setMode(getCurrentDualMode()));
     }
 
-    // --- INICIALIZAR COMPONENTES ---
+    // --- INICIALIZAR COMPONENTES (con retrasos escalonados) ---
     createMarqueeText();
     initScaling();
-    setTimeout(initSunIcon, 100);
-    setTimeout(() => radioPlayer.init(), 200);
-    assignHoverSounds();
-    setupIndicatorHovers();
-
     
-    // Configurar indicador
+    setTimeout(() => initSunIcon(), 200);
+    setTimeout(() => radioPlayer.init(), 400);
+    setTimeout(() => {
+        assignHoverSounds();
+        setupIndicatorHovers();
+    }, 600);
+    
+    // Estado inicial del indicador
     updateFooterIndicator();
-    
-    // Observar cambios en la clase del body para el indicador
-    const observer = new MutationObserver(updateFooterIndicator);
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 });
 
 window.addEventListener('load', function() {
-    console.log('✅ Página completamente cargada');
+    console.log('✅ Página cargada');
     checkContainerScaling();
-    
-    setTimeout(() => {
-        restartMarqueeAnimation();
-    }, 500);
+    restartMarqueeAnimation();
 });
 
-// Pausar animaciones cuando la pestaña no está visible
+// Pausar animaciones SOLO cuando la pestaña no está visible
 document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
         stopMarqueeAnimation();
@@ -795,4 +744,4 @@ document.addEventListener('visibilitychange', function() {
     }
 });
 
-console.log("✅ Perfil cargado. Modos disponibles: light y dual (dark-day/dark-night según hora)");
+console.log("✅ Sistema listo");
