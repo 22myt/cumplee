@@ -1162,16 +1162,17 @@ body {
     height: 15px;
     filter: blur(0.3px);
     display: inline-block;
-    /* Asegurar que el contenedor tenga posición relativa para Lottie */
     position: relative;
+    z-index: 48; /* Mismo nivel que madeby.png */
 }
 
-/* Estilos para el SVG generado por Lottie */
+/* Asegurar que el SVG generado herede el color */
 .sun-icon-container svg {
     width: 100%;
     height: 100%;
     display: block;
 }
+
 
 /* ============================================ */
 /* MODOS DE COLOR                                */
