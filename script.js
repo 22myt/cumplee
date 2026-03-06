@@ -874,3 +874,250 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 50);
     };
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// PARTICLES.JS - FONDO ANIMADO (AÑADIR AL FINAL)
+// ============================================
+// Este código debe ir al final de tu script.js
+// Crea un fondo de partículas que cambia de color según el modo
+// ============================================
+
+(function() {
+    'use strict';
+    
+    // Variable para almacenar la instancia de particles.js
+    let particlesInstance = null;
+    
+    // Configuración base de las partículas (adaptada de tu JSON)
+    const particlesConfig = {
+        particles: {
+            number: {
+                value: 19,
+                density: {
+                    enable: true,
+                    value_area: 789.1476416322727
+                }
+            },
+            color: {
+                value: "#ffffff" // Se actualizará dinámicamente
+            },
+            shape: {
+                type: "edge",
+                stroke: {
+                    width: 0,
+                    color: "#b1b1b1"
+                },
+                polygon: {
+                    nb_sides: 3
+                }
+            },
+            opacity: {
+                value: 0.2805971106514665,
+                random: true,
+                anim: {
+                    enable: false,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 3,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 4,
+                    size_min: 1,
+                    sync: false
+                }
+            },
+            line_linked: {
+                enable: false
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: "top-right",
+                random: false,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: {
+                    enable: false,
+                    mode: "repulse"
+                },
+                onclick: {
+                    enable: true,
+                    mode: "push"
+                },
+                resize: true
+            },
+            modes: {
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    };
+    
+    // Función para obtener el color según el modo actual
+    function getParticleColor() {
+        const body = document.body;
+        
+        if (body.classList.contains('light')) {
+            return "#27196f"; // Light mode
+        } else if (body.classList.contains('dark-night')) {
+            return "#7b633a"; // Mytmode
+        } else {
+            return "#ffffff"; // Dark-day (por defecto)
+        }
+    }
+    
+    // Función para inicializar particles.js
+    function initParticles() {
+        // Esperar a que exista el contenedor
+        if (!document.getElementById('particles-js')) {
+            console.warn('⚠️ Contenedor #particles-js no encontrado');
+            return;
+        }
+        
+        // Destruir instancia anterior si existe
+        if (particlesInstance && typeof particlesInstance.destroy === 'function') {
+            particlesInstance.destroy();
+        }
+        
+        // Actualizar el color en la configuración
+        particlesConfig.particles.color.value = getParticleColor();
+        
+        // Inicializar particles.js
+        try {
+            particlesInstance = particlesJS('particles-js', particlesConfig);
+            console.log('✅ Particles.js inicializado con color:', particlesConfig.particles.color.value);
+        } catch (error) {
+            console.error('❌ Error al inicializar particles.js:', error);
+        }
+    }
+    
+    // Función para actualizar el color de las partículas
+    function updateParticleColor() {
+        if (!particlesInstance) {
+            // Si no existe, intentar inicializar
+            initParticles();
+            return;
+        }
+        
+        const newColor = getParticleColor();
+        
+        // Intentar diferentes métodos para actualizar el color
+        try {
+            // Método 1: A través de la API de pJSDom
+            if (particlesInstance.particles && Array.isArray(particlesInstance.particles)) {
+                particlesInstance.particles.forEach(particle => {
+                    if (particle.color) {
+                        particle.color.value = newColor;
+                    }
+                });
+                particlesInstance.refresh();
+                console.log('🎨 Color de partículas actualizado a:', newColor);
+            } 
+            // Método 2: Reiniciar con nueva configuración
+            else {
+                particlesConfig.particles.color.value = newColor;
+                particlesInstance = particlesJS('particles-js', particlesConfig);
+                console.log('🔄 Particles.js reiniciado con color:', newColor);
+            }
+        } catch (error) {
+            console.error('❌ Error al actualizar color:', error);
+            // Fallback: reiniciar
+            particlesConfig.particles.color.value = newColor;
+            particlesInstance = particlesJS('particles-js', particlesConfig);
+        }
+    }
+    
+    // ============================================
+    // INTEGRACIÓN CON TU SISTEMA DE MODOS EXISTENTE
+    // ============================================
+    
+    // Guardar referencia a la función setMode original
+    const originalSetMode = window.setMode || function() {};
+    
+    // Crear nueva función setMode que mantiene la original y actualiza partículas
+    window.setMode = function(mode) {
+        // Llamar a la función original si existe
+        if (typeof originalSetMode === 'function') {
+            originalSetMode(mode);
+        } else {
+            // Fallback: cambiar clase manualmente
+            document.body.classList.remove('light', 'dark-day', 'dark-night');
+            document.body.classList.add(mode);
+        }
+        
+        // Actualizar color de partículas después de un pequeño retraso
+        setTimeout(updateParticleColor, 50);
+    };
+    
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initParticles);
+    } else {
+        // DOM ya está cargado
+        initParticles();
+    }
+    
+    // También inicializar cuando la ventana termine de cargar (por si acaso)
+    window.addEventListener('load', function() {
+        // Pequeño retraso para asegurar que todo esté listo
+        setTimeout(initParticles, 100);
+    });
+    
+    // Observar cambios en las clases del body (respaldo adicional)
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                // Actualizar color cuando cambie la clase
+                updateParticleColor();
+            }
+        });
+    });
+    
+    // Empezar a observar cuando el body exista
+    if (document.body) {
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    } else {
+        document.addEventListener('DOMContentLoaded', function() {
+            observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        });
+    }
+    
+    console.log('🚀 Sistema de particles.js cargado y listo');
+})();
