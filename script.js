@@ -568,7 +568,7 @@ const radioPlayer = {
     // Estado de la radio
     isPlaying: false,
     currentSongIndex: 0,
-    songFiles: ['song1.wav', 'song2.wav', 'song3.wav'],
+    songFiles: ['song1.mp3', 'song2.mp3', 'song3.mp3'],
 
     // Objetos de audio
     audioElement: null,
