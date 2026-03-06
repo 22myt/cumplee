@@ -556,13 +556,14 @@ function setupIndicatorHovers() {
 }
 
 // ============================================
-// PARTICLES.JS - VERSIÓN SIN REINICIOS (SOLO CAMBIA COLOR)
+// PARTICLES.JS - VERSIÓN QUE SOLO CAMBIA COLOR (CORREGIDA)
 // ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
     let particlesInitialized = false;
+    let currentParticleColor = "#A94C4C";
     
     // Configuración base de las partículas
     const particlesConfig = {
@@ -575,7 +576,7 @@ function setupIndicatorHovers() {
                 }
             },
             color: {
-                value: "#A94C4C" // Dark-day por defecto
+                value: currentParticleColor
             },
             shape: {
                 type: "edge",
@@ -660,25 +661,29 @@ function setupIndicatorHovers() {
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
             particlesInitialized = true;
-            console.log('✅ Particles.js iniciado con color:', particlesConfig.particles.color.value);
+            console.log('✅ Particles.js iniciado');
         } catch (error) {
             console.error('❌ Error al inicializar particles.js:', error);
         }
     }
     
-    // CAMBIAR SOLO EL COLOR (sin reiniciar)
+    // CAMBIAR SOLO EL COLOR (método correcto)
     window.changeParticlesColor = function(newColor) {
-        if (!particlesInstance || !particlesInstance.particles) {
+        if (!particlesInstance) {
             console.log('⏳ Partículas no listas aún');
             return;
         }
         
+        currentParticleColor = newColor;
+        
         try {
-            // Cambiar el color en la configuración
-            particlesConfig.particles.color.value = newColor;
+            // Método 1: Usar la API de particles.js si está disponible
+            if (particlesInstance.options) {
+                particlesInstance.options.particles.color.value = newColor;
+            }
             
-            // Acceder al array de partículas y cambiar su color
-            if (particlesInstance.particles.array && particlesInstance.particles.array.length > 0) {
+            // Método 2: Acceder directamente al array de partículas
+            if (particlesInstance.particles && particlesInstance.particles.array) {
                 particlesInstance.particles.array.forEach(p => {
                     if (p.color) {
                         p.color.value = newColor;
@@ -686,16 +691,37 @@ function setupIndicatorHovers() {
                 });
             }
             
-            // Forzar redibujado
-            if (particlesInstance.draw) {
+            // Forzar redibujado completo
+            if (particlesInstance.refresh) {
+                particlesInstance.refresh();
+            } else if (particlesInstance.draw) {
                 particlesInstance.draw();
             }
             
             console.log('🎨 Color de partículas cambiado a:', newColor);
         } catch (e) {
-            console.log('Error cambiando color de partículas:', e);
+            console.log('Error cambiando color:', e);
+            // Fallback: si falla, usar el método de reinicio pero solo una vez
+            fallbackColorChange(newColor);
         }
     };
+    
+    // Fallback por si acaso (solo se usa si el método anterior falla)
+    function fallbackColorChange(newColor) {
+        if (!document.getElementById('particles-js')) return;
+        
+        particlesConfig.particles.color.value = newColor;
+        
+        try {
+            if (particlesInstance && typeof particlesInstance.destroy === 'function') {
+                particlesInstance.destroy();
+            }
+            particlesInstance = particlesJS('particles-js', particlesConfig);
+            console.log('🔄 Fallback: partículas reiniciadas con color:', newColor);
+        } catch (error) {
+            console.error('Error en fallback:', error);
+        }
+    }
     
     // Inicializar partículas UNA SOLA VEZ
     if (document.readyState === 'loading') {
