@@ -770,94 +770,107 @@ setMode = function(mode) {
 /* ============================================ */
 // ============================================
 // ============================================
-// FOOTER INDICATOR - VERSIÓN SIMPLIFICADA
 // ============================================
-const footerIndicator = {
-    indicatorImg: null,
-    currentState: 'default', // default, cargando, alterar
-    
-    init: function() {
-        this.indicatorImg = document.getElementById('indicator-img');
-        if (!this.indicatorImg) {
-            console.warn('No se encontró el indicador');
-            return;
-        }
-        
-        console.log('🔘 Inicializando indicador simplificado...');
-        this.setupEventListeners();
-        this.setState('default');
-    },
-    
-    setupEventListeners: function() {
-        // 1. Botones de #buttons
-        document.querySelectorAll('#buttons button').forEach(btn => {
-            btn.addEventListener('mouseenter', () => this.setState('cargando'));
-            btn.addEventListener('mouseleave', () => this.checkState());
-        });
-        
-        // 2. LINK.gif
-        const linkGif = document.querySelector('.bot-link-gif-link');
-        if (linkGif) {
-            linkGif.addEventListener('mouseenter', () => this.setState('cargando'));
-            linkGif.addEventListener('mouseleave', () => this.checkState());
-        }
-        
-        // 3. Radio - al hacer click en play/pause
-        const radioPlay = document.getElementById('radio-play');
-        const radioPause = document.getElementById('radio-pause');
-        
-        if (radioPlay) {
-            radioPlay.addEventListener('click', () => {
-                setTimeout(() => this.checkState(), 50);
-            });
-        }
-        
-        if (radioPause) {
-            radioPause.addEventListener('click', () => {
-                setTimeout(() => this.checkState(), 50);
-            });
-        }
-        
-        // Observar cambios en la clase radio-playing
-        const observer = new MutationObserver(() => this.checkState());
-        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    },
-    
-    setState: function(state) {
-        if (this.currentState === state) return;
-        
-        this.currentState = state;
-        if (this.indicatorImg) {
-            this.indicatorImg.setAttribute('data-state', state);
-        }
-    },
-    
-    checkState: function() {
-        // Prioridad 1: Radio encendida
-        if (document.body.classList.contains('radio-playing')) {
-            this.setState('alterar');
-            return;
-        }
-        
-        // Prioridad 2: Si no hay radio, volver a default
-        this.setState('default');
-    },
-    
-    reset: function() {
-        this.checkState();
-    }
-};
-
-// ============================================
-// INICIALIZACIÓN
+// INDICADOR SIMPLE - SIN COMPLICACIONES
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => footerIndicator.init(), 300);
+    const indicator = document.getElementById('indicator-img');
+    if (!indicator) return;
+    
+    // Función para cambiar imagen según el modo actual
+    function getImagePath(imageName) {
+        if (document.body.classList.contains('light')) {
+            return `lightmode/${imageName}`;
+        } else if (document.body.classList.contains('dark-night')) {
+            return `mytmode/${imageName}`;
+        } else {
+            return `darkmode/${imageName}`;
+        }
+    }
+    
+    // Función para actualizar indicador
+    function updateIndicator(type) {
+        if (!indicator) return;
+        
+        let imageName = '3-a-la-vez.gif'; // Default
+        
+        if (type === 'cargando') {
+            imageName = 'cargando.gif';
+        } else if (type === 'alterar') {
+            imageName = 'alterar.gif';
+        }
+        
+        indicator.src = getImagePath(imageName);
+    }
+    
+    // 1. BOTONES - mouseenter/mouseleave
+    document.querySelectorAll('#buttons button').forEach(btn => {
+        btn.addEventListener('mouseenter', () => updateIndicator('cargando'));
+        btn.addEventListener('mouseleave', () => {
+            // Si la radio está encendida, mantener alterar, si no, default
+            if (document.body.classList.contains('radio-playing')) {
+                updateIndicator('alterar');
+            } else {
+                updateIndicator('default');
+            }
+        });
+    });
+    
+    // 2. LINK GIF - mouseenter/mouseleave
+    const linkGif = document.querySelector('.bot-link-gif-link');
+    if (linkGif) {
+        linkGif.addEventListener('mouseenter', () => updateIndicator('cargando'));
+        linkGif.addEventListener('mouseleave', () => {
+            if (document.body.classList.contains('radio-playing')) {
+                updateIndicator('alterar');
+            } else {
+                updateIndicator('default');
+            }
+        });
+    }
+    
+    // 3. RADIO - detección simple
+    function checkRadioState() {
+        if (document.body.classList.contains('radio-playing')) {
+            updateIndicator('alterar');
+        } else {
+            updateIndicator('default');
+        }
+    }
+    
+    // Detectar clicks en play/pause
+    const radioPlay = document.getElementById('radio-play');
+    const radioPause = document.getElementById('radio-pause');
+    
+    if (radioPlay) {
+        radioPlay.addEventListener('click', () => {
+            setTimeout(() => checkRadioState(), 50);
+        });
+    }
+    
+    if (radioPause) {
+        radioPause.addEventListener('click', () => {
+            setTimeout(() => checkRadioState(), 50);
+        });
+    }
+    
+    // Observar cambios en la clase del body
+    const observer = new MutationObserver(checkRadioState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    
+    // Estado inicial
+    checkRadioState();
+    
+    // Actualizar cuando cambia el modo
+    const originalSetMode = window.setMode;
+    window.setMode = function(mode) {
+        if (originalSetMode) originalSetMode(mode);
+        setTimeout(() => {
+            if (document.body.classList.contains('radio-playing')) {
+                updateIndicator('alterar');
+            } else {
+                updateIndicator('default');
+            }
+        }, 50);
+    };
 });
-
-// Modificar setMode para resetear
-const originalSetModeSimple = setMode;
-setMode = function(mode) {
-    originalSetModeSimple(mode);
-    setTimeout(() => footerIndicator.reset(), 150);
-};
