@@ -1256,7 +1256,7 @@ body.light .profile-bubble {
     content: url('lightmode/info/burbuja.png');
 }
 body.light .profile-text {
-    color: #27196f;
+    color: #eaeaea;
 }
 
 /* Message - Light */
