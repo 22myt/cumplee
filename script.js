@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const particlesConfig = {
         particles: {
             number: {
-                value: 96,
+                value: 63,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
@@ -927,7 +927,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             opacity: {
-                value: 0.8,
+                value: 0.5,
                 random: true,
                 anim: {
                     enable: false,
