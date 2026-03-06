@@ -898,13 +898,14 @@ body {
 
 .profile-spider {
     position: absolute;
-    width: 40px;  /* Ajusta según necesites */
+    width: 160px;
     height: auto;
-    top: -45px;    /* Ajusta según necesites */
-    left: -20px;   /* Ajusta según necesites */
-    z-index: 13;   /* Por encima del profile-icon (z-index: 11-12) */
-    pointer-events: none; /* Para que no interfiera con el hover del icono */
+    top: -90px;
+    left: -20px;
+    z-index: 13;
+    pointer-events: none;
 }
+
 
 
 .profile-bubble-text {
