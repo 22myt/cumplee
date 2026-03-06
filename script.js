@@ -894,20 +894,20 @@ document.addEventListener('DOMContentLoaded', function() {
 // PARTICLES.JS - FONDO ANIMADO (AÑADIR AL FINAL)
 // ============================================
 // Este código debe ir al final de tu script.js
-// Crea un fondo de partículas que cambia de color según el modo
 // ============================================
-
+// PARTICLES.JS - VERSIÓN MEJORADA (SIN REINICIOS)
+// ============================================
 (function() {
     'use strict';
     
-    // Variable para almacenar la instancia de particles.js
     let particlesInstance = null;
+    let animationFrame = null;
     
     // Configuración base de las partículas (adaptada de tu JSON)
     const particlesConfig = {
         particles: {
             number: {
-                value: 63,
+                value: 56,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
@@ -999,125 +999,114 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Función para inicializar particles.js
+    // Inicializar particles.js UNA SOLA VEZ
     function initParticles() {
-        // Esperar a que exista el contenedor
         if (!document.getElementById('particles-js')) {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
         }
         
-        // Destruir instancia anterior si existe
-        if (particlesInstance && typeof particlesInstance.destroy === 'function') {
-            particlesInstance.destroy();
-        }
-        
-        // Actualizar el color en la configuración
+        // Actualizar color inicial
         particlesConfig.particles.color.value = getParticleColor();
         
-        // Inicializar particles.js
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
-            console.log('✅ Particles.js inicializado con color:', particlesConfig.particles.color.value);
+            console.log('✅ Particles.js iniciado con color:', particlesConfig.particles.color.value);
         } catch (error) {
             console.error('❌ Error al inicializar particles.js:', error);
         }
     }
     
-    // Función para actualizar el color de las partículas
+    // ACTUALIZAR COLOR SIN REINICIAR (mantiene velocidad constante)
     function updateParticleColor() {
         if (!particlesInstance) {
-            // Si no existe, intentar inicializar
             initParticles();
             return;
         }
         
         const newColor = getParticleColor();
         
-        // Intentar diferentes métodos para actualizar el color
+        // MÉTODO SUAVE: Cambiar color directamente en el array de partículas
         try {
-            // Método 1: A través de la API de pJSDom
-            if (particlesInstance.particles && Array.isArray(particlesInstance.particles)) {
-                particlesInstance.particles.forEach(particle => {
-                    if (particle.color) {
-                        particle.color.value = newColor;
+            // Acceder al array de partículas y cambiar su color
+            if (particlesInstance.particles && particlesInstance.particles.array) {
+                const particles = particlesInstance.particles.array;
+                for (let i = 0; i < particles.length; i++) {
+                    if (particles[i].color) {
+                        particles[i].color.value = newColor;
                     }
-                });
-                particlesInstance.refresh();
-                console.log('🎨 Color de partículas actualizado a:', newColor);
-            } 
-            // Método 2: Reiniciar con nueva configuración
-            else {
+                }
+                console.log('🎨 Color actualizado a:', newColor);
+                // NO hacer refresh, solo actualizar el valor
+            } else {
+                // Fallback: solo actualizar la configuración sin reiniciar
                 particlesConfig.particles.color.value = newColor;
-                particlesInstance = particlesJS('particles-js', particlesConfig);
-                console.log('🔄 Particles.js reiniciado con color:', newColor);
             }
-        } catch (error) {
-            console.error('❌ Error al actualizar color:', error);
-            // Fallback: reiniciar
+        } catch (e) {
+            console.log('Error en actualización suave, usando método alternativo');
             particlesConfig.particles.color.value = newColor;
-            particlesInstance = particlesJS('particles-js', particlesConfig);
         }
     }
     
-    // ============================================
-    // INTEGRACIÓN CON TU SISTEMA DE MODOS EXISTENTE
-    // ============================================
-    
-    // Guardar referencia a la función setMode original
+    // Preservar setMode original
     const originalSetMode = window.setMode || function() {};
     
-    // Crear nueva función setMode que mantiene la original y actualiza partículas
+    // Nueva setMode que actualiza color suavemente
     window.setMode = function(mode) {
-        // Llamar a la función original si existe
+        // Llamar a la función original
         if (typeof originalSetMode === 'function') {
             originalSetMode(mode);
         } else {
-            // Fallback: cambiar clase manualmente
             document.body.classList.remove('light', 'dark-day', 'dark-night');
             document.body.classList.add(mode);
         }
         
-        // Actualizar color de partículas después de un pequeño retraso
-        setTimeout(updateParticleColor, 50);
+        // Actualizar color SIN reiniciar
+        setTimeout(updateParticleColor, 60);
     };
-    
-    // ============================================
-    // INICIALIZACIÓN
-    // ============================================
     
     // Inicializar cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initParticles);
     } else {
-        // DOM ya está cargado
         initParticles();
     }
     
     // También inicializar cuando la ventana termine de cargar (por si acaso)
     window.addEventListener('load', function() {
-        // Pequeño retraso para asegurar que todo esté listo
         setTimeout(initParticles, 100);
     });
     
-    // Observar cambios en las clases del body (respaldo adicional)
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.attributeName === 'class') {
-                // Actualizar color cuando cambie la clase
-                updateParticleColor();
-            }
-        });
-    });
-    
-    // Empezar a observar cuando el body exista
+    // Observer por si acaso (respaldo)
     if (document.body) {
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    // Cancelar animation frame anterior si existe
+                    if (animationFrame) cancelAnimationFrame(animationFrame);
+                    // Programar cambio suave
+                    animationFrame = requestAnimationFrame(updateParticleColor);
+                }
+            });
+        });
         observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     } else {
         document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.attributeName === 'class') {
+                        if (animationFrame) cancelAnimationFrame(animationFrame);
+                        animationFrame = requestAnimationFrame(updateParticleColor);
+                    }
+                });
+            });
             observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
         });
     }
     
-    console.log('🚀 Sistema de particles.js cargado y listo');
+    console.log('🚀 Particles.js v2 cargado con configuración personalizada:');
+    console.log('   • Partículas:', particlesConfig.particles.number.value);
+    console.log('   • Opacidad:', particlesConfig.particles.opacity.value);
+    console.log('   • Dirección:', particlesConfig.particles.move.direction);
+    console.log('   • Colores: Light #27196f | Dark-night #7b633a | Dark-day #A94C4C');
 })();
