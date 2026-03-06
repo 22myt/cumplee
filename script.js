@@ -395,7 +395,7 @@ window.addEventListener('load', function() {
 
 
 // ============================================
-// SISTEMA DE SONIDOS HOVER - CON COOLDOWN
+// SISTEMA DE SONIDOS HOVER - ANTI-SPAM INTELIGENTE
 // ============================================
 
 // Configuración de sonidos
@@ -408,75 +408,72 @@ const hoverSounds = {
 
 // Estado del sistema de sonidos
 const soundSystem = {
-    isPlaying: false,           // Indica si hay un sonido reproduciéndose
-    lastPlayTime: 0,            // Timestamp del último sonido reproducido
-    cooldownTime: 20          // segundos de espera entre sonidos
+    lastSoundKey: null,        // Último sonido reproducido
+    lastElementId: null,       // ID único del último elemento (para detectar cambios)
+    lastPlayTime: 0,            // Timestamp del último sonido
+    spamThreshold: 150          // 150ms para ignorar eventos duplicados en MISMO elemento
 };
 
-// Función para reproducir sonido con cooldown
-function playHoverSound(soundKey) {
+// Función para generar ID único de elemento (por si no tiene id)
+function getElementId(element) {
+    return element.id || 
+           element.className || 
+           element.tagName + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Función para reproducir sonido con anti-spam
+function playHoverSound(soundKey, element) {
     // Si no hay sonido, salir
     if (!soundKey) return;
     
     const now = Date.now();
+    const elementId = getElementId(element);
     
-    // Si ya hay un sonido reproduciéndose, ignorar
-    if (soundSystem.isPlaying) {
-        console.log('🔊 Sonido en reproducción, ignorando');
+    // DETECTAR SPAM EN EL MISMO ELEMENTO
+    // Si es el MISMO elemento y el MISMO sonido en menos de 150ms, IGNORAR
+    if (soundKey === soundSystem.lastSoundKey && 
+        elementId === soundSystem.lastElementId && 
+        now - soundSystem.lastPlayTime < soundSystem.spamThreshold) {
+        console.log('🚫 Spam detectado en mismo elemento, ignorando');
         return;
     }
     
-    // Verificar cooldown
-    if (now - soundSystem.lastPlayTime < soundSystem.cooldownTime) {
-        console.log('⏳ En cooldown, espera 2 segundos');
-        return;
-    }
+    // Si es elemento DIFERENTE, reproducir sin restricción (no hay lag)
+    // Si pasó suficiente tiempo, reproducir sin restricción
     
-    // Todo OK, reproducir
+    // Intentar reproducir
     const sound = hoverSounds[soundKey];
     if (!sound) return;
     
-    // Clonar el audio para evitar conflictos
+    // Clonar el audio
     const soundClone = sound.cloneNode();
     soundClone.volume = 0.3;
     
-    // Marcar que estamos reproduciendo
-    soundSystem.isPlaying = true;
+    // Guardar estado para anti-spam
+    soundSystem.lastSoundKey = soundKey;
+    soundSystem.lastElementId = elementId;
+    soundSystem.lastPlayTime = now;
     
-    // Función para cuando termina la reproducción
-    soundClone.onended = () => {
-        soundSystem.isPlaying = false;
-        soundSystem.lastPlayTime = Date.now();
-        console.log('✅ Sonido terminado, cooldown de 2 segundos iniciado');
-    };
-    
-    // Manejar errores
-    soundClone.onerror = () => {
-        console.log('Error reproduciendo sonido');
-        soundSystem.isPlaying = false;
-        soundSystem.lastPlayTime = Date.now();
-    };
-    
-    // Intentar reproducir
+    // Reproducir (permitimos superposición natural del navegador)
     soundClone.play().catch(e => {
         console.log('Error al reproducir sonido:', e);
-        soundSystem.isPlaying = false;
-        soundSystem.lastPlayTime = Date.now();
     });
+    
+    console.log(`🔊 Reproduciendo: ${soundKey} en elemento`, element);
 }
 
 // Función para asignar sonidos a elementos
 function assignHoverSounds() {
-    console.log('🎵 Asignando sonidos hover (con cooldown de 2 segundos)...');
+    console.log('🎵 Asignando sonidos hover (anti-spam inteligente)...');
 
     // 1. Sonido "bubble" para bot-link-gif
     document.querySelectorAll('.bot-link-gif-link').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('bubble'));
+        el.addEventListener('mouseenter', () => playHoverSound('bubble', el));
     });
 
     // 2. Sonido "alien" para profile-icon
     document.querySelectorAll('.profile-icon-container').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('alien'));
+        el.addEventListener('mouseenter', () => playHoverSound('alien', el));
     });
 
     // 3. Sonido "tiny" para múltiples elementos
@@ -491,21 +488,22 @@ function assignHoverSounds() {
     
     tinySelectors.forEach(selector => {
         document.querySelectorAll(selector).forEach(el => {
-            el.addEventListener('mouseenter', () => playHoverSound('tiny'));
+            el.addEventListener('mouseenter', () => playHoverSound('tiny', el));
         });
     });
 
     // 4. Sonido "click" para los botones
     document.querySelectorAll('#buttons button').forEach(el => {
-        el.addEventListener('mouseenter', () => playHoverSound('click'));
+        el.addEventListener('mouseenter', () => playHoverSound('click', el));
     });
 
     console.log('✅ Sonidos hover asignados correctamente');
 }
 
-// Función para resetear el sistema (útil al cambiar de modo)
+// Función para resetear el sistema
 function resetSoundSystem() {
-    soundSystem.isPlaying = false;
+    soundSystem.lastSoundKey = null;
+    soundSystem.lastElementId = null;
     soundSystem.lastPlayTime = 0;
 }
 
