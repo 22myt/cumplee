@@ -248,7 +248,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     /* Ajustar tamaño de tipografía */
-    font-size: 14px; /* Cambia este valor */
+    font-size: 6pt; /* Cambia este valor */
     line-height: 30px; /* Para centrar verticalmente */
 }
 
