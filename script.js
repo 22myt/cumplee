@@ -111,6 +111,9 @@ let marqueePosition = 0;
 // ============================================
 // CREAR TEXTO ANIMADO EN LATERAL (SIN REINICIOS)
 // ============================================
+// ============================================
+// CREAR TEXTO ANIMADO EN LATERAL
+// ============================================
 function createMarqueeText() {
     const lateral = document.getElementById('lateral');
     if (!lateral) {
@@ -136,25 +139,29 @@ function createMarqueeText() {
     const content = document.createElement('div');
     content.className = 'marquee-vertical-content';
     
-    // Generar 15 repeticiones del texto para asegurar continuidad
+    // Generar 10 repeticiones del texto con MÁS espacios
     let fullText = '';
-    for (let i = 0; i < 15; i++) {
-        fullText += marqueeText + '    '; // 4 espacios como separador
+    // Aumentar los espacios a 10 (antes eran 4)
+    const spaces = '          '; // 10 espacios
+    for (let i = 0; i < 10; i++) {
+        fullText += marqueeText + spaces;
     }
     content.textContent = fullText;
     
     container.appendChild(content);
     lateral.appendChild(container);
     
-    console.log('Marquee creado correctamente con 15 repeticiones');
+    console.log('Marquee creado correctamente con 10 repeticiones y espacios amplios');
     
     // Iniciar animación manual
     startMarqueeAnimation();
 }
 
 // ============================================
-// INICIAR ANIMACIÓN DEL MARQUEE
+// INICIAR ANIMACIÓN DEL MARQUEE (VERSIÓN SIMPLE)
 // ============================================
+// ============================================
+
 function startMarqueeAnimation() {
     // Detener animación anterior si existe
     if (marqueeAnimation) {
@@ -167,14 +174,30 @@ function startMarqueeAnimation() {
     const container = document.querySelector('.marquee-vertical-container');
     if (!container) return;
     
-    // Velocidad de movimiento (píxeles por frame)
-    const speed = 0.3;
+    // Velocidad MUCHO más lenta (píxeles por frame)
+    // 0.03 es 10 veces más lento que 0.3
+    const speed = 0.03; // Reducido drásticamente
     
-    function animate() {
-        marqueePosition -= speed;
+    // También podemos calcular basado en el ancho total para velocidad constante
+    // Alternativa: velocidad basada en tiempo real
+    let lastTime = 0;
+    const pixelsPerSecond = 30; // 30 píxeles por segundo (mucho más lento)
+    
+    function animate(currentTime) {
+        if (!lastTime) {
+            lastTime = currentTime;
+            marqueeAnimation = requestAnimationFrame(animate);
+            return;
+        }
+        
+        // Calcular el tiempo transcurrido en segundos
+        const deltaTime = (currentTime - lastTime) / 1000; // convertir a segundos
+        lastTime = currentTime;
+        
+        // Mover basado en el tiempo real
+        marqueePosition -= pixelsPerSecond * deltaTime;
         
         // Cuando hemos movido la mitad del contenido, resetear posición
-        // El reinicio es imperceptible porque hay muchas repeticiones
         if (marqueePosition <= -content.scrollWidth / 2) {
             marqueePosition = 0;
         }
@@ -186,7 +209,7 @@ function startMarqueeAnimation() {
     }
     
     // Iniciar animación
-    animate();
+    marqueeAnimation = requestAnimationFrame(animate);
 }
 
 // ============================================
