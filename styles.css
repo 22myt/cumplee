@@ -904,7 +904,9 @@ body {
     top: -90px;
     left: -20px;
     z-index: 13;
-    pointer-events: none;
+    pointer-events: none !important;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 
