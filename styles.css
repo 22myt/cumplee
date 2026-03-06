@@ -1157,13 +1157,14 @@ body {
     z-index: 47;
 }
 
+/* En tu CSS, después de los modos */
 .sun-icon-container {
     width: 15px;
     height: 15px;
     filter: blur(0.3px);
     display: inline-block;
     position: relative;
-    z-index: 48; /* Mismo nivel que madeby.png */
+    z-index: 48;
 }
 
 /* Asegurar que el SVG generado herede el color */
@@ -1173,6 +1174,15 @@ body {
     display: block;
 }
 
+/* Color por defecto (blanco para light y dark-day) */
+.sun-icon-container svg path {
+    fill: #ffffff !important;
+}
+
+/* Color para mytmode */
+body.dark-night .sun-icon-container svg path {
+    fill: #7c643a !important;
+}
 
 /* ============================================ */
 /* MODOS DE COLOR                                */
