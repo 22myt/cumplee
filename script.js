@@ -897,6 +897,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // PARTICLES.JS - VERSIÓN MEJORADA (SIN REINICIOS)
 // ============================================
+// ============================================
 // PARTICLES.JS - VERSIÓN ULTRA ESTABLE (0 REINICIOS)
 // ============================================
 (function() {
@@ -908,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const particlesConfig = {
         particles: {
             number: {
-                value: 63,
+                value: 61,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
