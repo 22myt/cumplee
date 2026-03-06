@@ -556,25 +556,25 @@ function setupIndicatorHovers() {
 }
 
 // ============================================
-// PARTICLES.JS (OPTIMIZADO)
+// PARTICLES.JS (VERSIÓN ORIGINAL RESTAURADA)
 // ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
-    let particlesInitialized = false;
     
+    // Configuración base de las partículas (VALORES ORIGINALES)
     const particlesConfig = {
         particles: {
             number: {
-                value: 41, // Reducido de 61 para mejor rendimiento
+                value: 58,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
                 }
             },
             color: {
-                value: "#A94C4C"
+                value: "#A94C4C" // Dark-day por defecto
             },
             shape: {
                 type: "edge",
@@ -587,18 +587,18 @@ function setupIndicatorHovers() {
                 }
             },
             opacity: {
-                value: 0.4, // Reducido ligeramente
+                value: 0.5,
                 random: true,
                 anim: {
                     enable: false
                 }
             },
             size: {
-                value: 2.5, // Reducido
+                value: 3,
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 2, // Reducido
+                    speed: 4,
                     size_min: 1,
                     sync: false
                 }
@@ -608,7 +608,7 @@ function setupIndicatorHovers() {
             },
             move: {
                 enable: true,
-                speed: 1.5, // Reducido
+                speed: 2,
                 direction: "none",
                 random: false,
                 straight: false,
@@ -626,23 +626,29 @@ function setupIndicatorHovers() {
                     enable: false
                 },
                 onclick: {
-                    enable: false // Desactivado para mejor rendimiento
+                    enable: true,
+                    mode: "push"
                 },
                 resize: true
+            },
+            modes: {
+                push: {
+                    particles_nb: 4
+                }
             }
         },
         retina_detect: true
     };
     
+    // Mapa de colores por modo
     const modeColors = {
         'light': '#27196f',
         'dark-night': '#7b633a',
         'dark-day': '#A94C4C'
     };
     
+    // Inicializar particles.js
     function initParticles() {
-        if (particlesInitialized) return;
-        
         if (!document.getElementById('particles-js')) {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
@@ -650,29 +656,34 @@ function setupIndicatorHovers() {
         
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
-            particlesInitialized = true;
-            console.log('✅ Particles.js iniciado');
+            console.log('✅ Particles.js iniciado con color:', particlesConfig.particles.color.value);
         } catch (error) {
             console.error('❌ Error al inicializar particles.js:', error);
         }
     }
     
+    // REINICIAR particles.js con nuevo color
     window.restartParticlesWithColor = function(newColor) {
-        if (!document.getElementById('particles-js') || !particlesInstance) return;
+        if (!document.getElementById('particles-js')) return;
         
+        // Actualizar el color en la configuración
         particlesConfig.particles.color.value = newColor;
         
-        try {
-            // En lugar de destruir y recrear, solo actualizamos el color si es posible
-            if (particlesInstance && particlesInstance.options) {
-                particlesInstance.options.particles.color.value = newColor;
-                // Forzar actualización
-                if (particlesInstance.refresh) {
-                    particlesInstance.refresh();
-                }
+        // Destruir instancia anterior si existe
+        if (particlesInstance && typeof particlesInstance.destroy === 'function') {
+            try {
+                particlesInstance.destroy();
+            } catch (e) {
+                console.log('Error al destruir instancia anterior');
             }
-        } catch (e) {
-            console.log('Error actualizando color de partículas');
+        }
+        
+        // Inicializar de nuevo con el nuevo color
+        try {
+            particlesInstance = particlesJS('particles-js', particlesConfig);
+            console.log('🔄 Partículas REINICIADAS con color:', newColor);
+        } catch (error) {
+            console.error('Error al reiniciar particles.js:', error);
         }
     };
     
