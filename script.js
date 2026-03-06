@@ -261,3 +261,112 @@ document.addEventListener('visibilitychange', function() {
 });
 
 console.log("✅ Perfil cargado. Modos disponibles: light, dark-day, dark-night");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ============================================
+// ANIMACIÓN LOTTIE PARA EL ICONO DEL SOL
+// ============================================
+let sunAnimation = null;
+
+// Función para actualizar color del sol
+function updateSunColor() {
+    const sunContainer = document.getElementById('sun-icon');
+    if (!sunContainer) return;
+    
+    // Buscar el SVG dentro del contenedor
+    const svg = sunContainer.querySelector('svg');
+    if (!svg) return;
+    
+    // Determinar color según el modo actual
+    let color = '#ffffff'; // Por defecto blanco
+    
+    if (body.classList.contains('dark-night')) {
+        color = '#7c643a'; // Mytmode: marrón claro
+    }
+    
+    // Aplicar color a todos los elementos del SVG
+    const elements = svg.querySelectorAll('path, circle, rect, polygon, line');
+    elements.forEach(el => {
+        if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+            el.setAttribute('fill', color);
+        }
+        if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+            el.setAttribute('stroke', color);
+        }
+    });
+}
+
+// Función para inicializar el sol
+function initSunIcon() {
+    const sunContainer = document.getElementById('sun-icon');
+    if (!sunContainer) {
+        console.warn('No se encontró el contenedor del sol');
+        return;
+    }
+
+    // Verificar si ya existe una animación
+    if (sunAnimation) {
+        sunAnimation.destroy();
+    }
+
+    // Cargar la animación Lottie
+    sunAnimation = lottie.loadAnimation({
+        container: sunContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'icons8-sun.json' // Cambia esta ruta si es necesario
+    });
+
+    // Cuando la animación esté lista, aplicar el color inicial
+    sunAnimation.addEventListener('DOMLoaded', function() {
+        updateSunColor();
+    });
+}
+
+// Sobrescribir la función setMode para incluir updateSunColor
+const originalSetMode = setMode;
+setMode = function(mode) {
+    // Remueve todas las clases de modo
+    body.classList.remove("light", "dark-day", "dark-night");
+    // Añade la nueva clase
+    body.classList.add(mode);
+    console.log("Modo activado:", mode);
+    
+    // Actualizar color del sol
+    setTimeout(() => {
+        updateSunColor();
+    }, 50);
+    
+    // Pequeño retraso para que las imágenes nuevas se carguen
+    setTimeout(checkContainerScaling, 150);
+};
+
+// Añadir inicialización al DOMContentLoaded existente
+const originalDOMContentLoaded = document.addEventListener('DOMContentLoaded', function() {
+    // Este código se ejecutará además del existente
+    setTimeout(initSunIcon, 100);
+}, false);
+
+// También inicializar cuando la página termine de cargar
+window.addEventListener('load', function() {
+    setTimeout(initSunIcon, 200);
+});
