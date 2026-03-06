@@ -1690,6 +1690,10 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 /* RADIO - BOTONES (CORREGIDO)                  */
 /* ============================================ */
 
+/* ============================================ */
+/* RADIO - SECCIÓN COMPLETA (SIMPLIFICADA)      */
+/* ============================================ */
+
 .radio-buttons-container {
     position: absolute;
     top: 0;
@@ -1720,7 +1724,6 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 
 .radio-btn-img {
     display: block;
-    transition: opacity 0.15s ease;
 }
 
 /* ============================================ */
@@ -1728,10 +1731,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 /* ============================================ */
 
 .radio-btn-prev {
-    bottom: 170px;      /* Posición vertical */
-    left: 75px;         /* Posición horizontal */
-    width: auto;
-    height: auto;
+    bottom: 170px;
+    left: 75px;
 }
 
 .radio-btn-prev .radio-img-prev {
@@ -1739,25 +1740,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     height: auto;
 }
 
-.radio-btn-prev {
-    position: relative;
-}
-
-.radio-img-prev-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-prev */
-    height: auto;
-    opacity: 0;
-}
-
 .radio-btn-prev:hover .radio-img-prev {
-    opacity: 0;
-}
-
-.radio-btn-prev:hover .radio-img-prev-hover {
-    opacity: 1;
+    content: url('darkmode/info/atras2.png');
 }
 
 /* ============================================ */
@@ -1765,10 +1749,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 /* ============================================ */
 
 .radio-btn-play {
-    bottom: 170px;      /* Misma posición vertical que los demás */
-    left: 108px;        /* Posición horizontal (entre atrás y pause) */
-    width: auto;
-    height: auto;
+    bottom: 170px;
+    left: 108px;
 }
 
 .radio-btn-play .radio-img-play {
@@ -1776,7 +1758,6 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     height: auto;
 }
 
-/* Hover del botón play (cambia la imagen) */
 .radio-btn-play:hover .radio-img-play {
     content: url('darkmode/info/play2.png');
 }
@@ -1786,15 +1767,9 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 /* ============================================ */
 
 .radio-btn-pause {
-    bottom: 170px;      /* Misma posición vertical */
-    left: 108px;        /* MISMA POSICIÓN QUE PLAY (se intercambian) */
-    width: auto;
-    height: auto;
+    bottom: 170px;
+    left: 108px;        /* MISMA POSICIÓN QUE PLAY */
     display: none;      /* Oculto por defecto */
-}
-
-.radio-btn-pause {
-    position: relative;
 }
 
 .radio-btn-pause .radio-img-pause {
@@ -1802,21 +1777,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     height: auto;
 }
 
-.radio-img-pause-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-pause */
-    height: auto;
-    opacity: 0;
-}
-
 .radio-btn-pause:hover .radio-img-pause {
-    opacity: 0;
-}
-
-.radio-btn-pause:hover .radio-img-pause-hover {
-    opacity: 1;
+    content: url('darkmode/info/pausa2.png');
 }
 
 /* ============================================ */
@@ -1824,14 +1786,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 /* ============================================ */
 
 .radio-btn-next {
-    bottom: 170px;      /* Misma posición vertical */
-    left: 141px;        /* Posición horizontal (a la derecha de pause) */
-    width: auto;
-    height: auto;
-}
-
-.radio-btn-next {
-    position: relative;
+    bottom: 170px;
+    left: 141px;
 }
 
 .radio-btn-next .radio-img-next {
@@ -1839,33 +1795,14 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
     height: auto;
 }
 
-.radio-img-next-hover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;        /* MISMO TAMAÑO QUE .radio-img-next */
-    height: auto;
-    opacity: 0;
-}
-
 .radio-btn-next:hover .radio-img-next {
-    opacity: 0;
-}
-
-.radio-btn-next:hover .radio-img-next-hover {
-    opacity: 1;
+    content: url('darkmode/info/siguiente2.png');
 }
 
 /* ============================================ */
 /* MODOS DE COLOR - DARK-DAY (POR DEFECTO)      */
 /* ============================================ */
 
-/* Hover del botón play en dark-day */
-.radio-btn-play:hover .radio-img-play {
-    content: url('darkmode/info/play2.png');
-}
-
-/* Cassette ON en dark-day */
 body.radio-playing #radio-cassette-img {
     content: url('darkmode/info/cassetteON.gif');
 }
@@ -1877,7 +1814,7 @@ body.radio-playing #radio-cassette-img {
 body.light .radio-img-prev {
     content: url('lightmode/info/atras.png');
 }
-body.light .radio-img-prev-hover {
+body.light .radio-btn-prev:hover .radio-img-prev {
     content: url('lightmode/info/atras2.png');
 }
 
@@ -1891,14 +1828,14 @@ body.light .radio-btn-play:hover .radio-img-play {
 body.light .radio-img-pause {
     content: url('lightmode/info/pausa.png');
 }
-body.light .radio-img-pause-hover {
+body.light .radio-btn-pause:hover .radio-img-pause {
     content: url('lightmode/info/pausa2.png');
 }
 
 body.light .radio-img-next {
     content: url('lightmode/info/siguiente.png');
 }
-body.light .radio-img-next-hover {
+body.light .radio-btn-next:hover .radio-img-next {
     content: url('lightmode/info/siguiente2.png');
 }
 
@@ -1913,7 +1850,7 @@ body.light.radio-playing #radio-cassette-img {
 body.dark-night .radio-img-prev {
     content: url('mytmode/info/atras.png');
 }
-body.dark-night .radio-img-prev-hover {
+body.dark-night .radio-btn-prev:hover .radio-img-prev {
     content: url('mytmode/info/atras2.png');
 }
 
@@ -1927,14 +1864,14 @@ body.dark-night .radio-btn-play:hover .radio-img-play {
 body.dark-night .radio-img-pause {
     content: url('mytmode/info/pausa.png');
 }
-body.dark-night .radio-img-pause-hover {
+body.dark-night .radio-btn-pause:hover .radio-img-pause {
     content: url('mytmode/info/pausa2.png');
 }
 
 body.dark-night .radio-img-next {
     content: url('mytmode/info/siguiente.png');
 }
-body.dark-night .radio-img-next-hover {
+body.dark-night .radio-btn-next:hover .radio-img-next {
     content: url('mytmode/info/siguiente2.png');
 }
 
