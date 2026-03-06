@@ -952,7 +952,7 @@ document.addEventListener('DOMContentLoaded', function() {
             move: {
                 enable: true,
                 speed: 2,
-                direction: "top-right",
+                direction: "none", //top-right//
                 random: false,
                 straight: false,
                 out_mode: "out",
