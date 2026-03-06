@@ -1914,15 +1914,14 @@ body.dark-night.radio-playing #radio-cassette-img {
 /* ============================================ */
 /* FOOTER INDICATOR - SUPERPOSICIÓN             */
 /* ============================================ */
-
 #footer-indicator {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 80px;        /* Ajusta este tamaño según necesites */
-    height: 80px;       /* Mismo tamaño para mantener proporción cuadrada */
-    z-index: 9999;      /* Por encima de todo */
-    pointer-events: none; /* No interfiere con clicks */
+    width: 80px;
+    height: 80px;
+    z-index: 9999;
+    pointer-events: none;
 }
 
 #footer-indicator img {
@@ -1930,41 +1929,4 @@ body.dark-night.radio-playing #radio-cassette-img {
     height: 100%;
     object-fit: contain;
     display: block;
-}
-
-/* ============================================ */
-/* VERSIONES LIGHT Y MYTMODE PARA EL INDICADOR  */
-/* ============================================ */
-
-/* Light mode */
-body.light #indicator-img[data-state="default"] {
-    content: url('lightmode/3-a-la-vez.gif');
-}
-body.light #indicator-img[data-state="cargando"] {
-    content: url('lightmode/cargando.gif');
-}
-body.light #indicator-img[data-state="alterar"] {
-    content: url('lightmode/alterar.gif');
-}
-
-/* Mytmode (dark-night) */
-body.dark-night #indicator-img[data-state="default"] {
-    content: url('mytmode/3-a-la-vez.gif');
-}
-body.dark-night #indicator-img[data-state="cargando"] {
-    content: url('mytmode/cargando.gif');
-}
-body.dark-night #indicator-img[data-state="alterar"] {
-    content: url('mytmode/alterar.gif');
-}
-
-/* Dark-day (por defecto) */
-body.dark-day #indicator-img[data-state="default"] {
-    content: url('darkmode/3-a-la-vez.gif');
-}
-body.dark-day #indicator-img[data-state="cargando"] {
-    content: url('darkmode/cargando.gif');
-}
-body.dark-day #indicator-img[data-state="alterar"] {
-    content: url('darkmode/alterar.gif');
 }
