@@ -897,26 +897,25 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // PARTICLES.JS - VERSIÓN MEJORADA (SIN REINICIOS)
 // ============================================
-// PARTICLES.JS - VERSIÓN DEFINITIVA (SIN REINICIOS)
+// PARTICLES.JS - VERSIÓN ULTRA ESTABLE (0 REINICIOS)
 // ============================================
 (function() {
     'use strict';
     
     let particlesInstance = null;
-    let lastMode = null; // Para recordar el último modo de color
     
     // Configuración base de las partículas (adaptada de tu JSON)
     const particlesConfig = {
         particles: {
             number: {
-                value: 61,
+                value: 63,
                 density: {
                     enable: true,
                     value_area: 789.1476416322727
                 }
             },
             color: {
-                value: "#ffffff" // Se actualizará dinámicamente
+                value: "#A94C4C" // Dark-day por defecto
             },
             shape: {
                 type: "edge",
@@ -988,25 +987,12 @@ document.addEventListener('DOMContentLoaded', function() {
         retina_detect: true
     };
     
-    // Función para obtener el color según el modo actual
-    function getParticleColor() {
-        const body = document.body;
-        
-        if (body.classList.contains('light')) {
-            return "#27196f"; // Light mode
-        } else if (body.classList.contains('dark-night')) {
-            return "#7b633a"; // Mytmode
-        } else {
-            return "#A94C4C"; // Dark-day (por defecto)
-        }
-    }
-    
-    // Función para obtener el MODO actual (ignorando radio-playing)
-    function getCurrentMode() {
-        if (document.body.classList.contains('light')) return 'light';
-        if (document.body.classList.contains('dark-night')) return 'dark-night';
-        return 'dark-day'; // Por defecto
-    }
+    // Mapa de colores por modo
+    const modeColors = {
+        'light': '#27196f',
+        'dark-night': '#7b633a',
+        'dark-day': '#A94C4C'
+    };
     
     // Inicializar particles.js UNA SOLA VEZ
     function initParticles() {
@@ -1014,10 +1000,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
         }
-        
-        // Actualizar color inicial
-        particlesConfig.particles.color.value = getParticleColor();
-        lastMode = getCurrentMode(); // Guardar modo inicial
         
         try {
             particlesInstance = particlesJS('particles-js', particlesConfig);
@@ -1027,26 +1009,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ACTUALIZAR COLOR SOLO SI CAMBIÓ EL MODO DE COLOR
-    function updateParticleColor() {
+    // ACTUALIZAR COLOR SIN REINICIAR - VERSIÓN ULTRA SEGURA
+    function updateParticleColor(newColor) {
         if (!particlesInstance) {
-            initParticles();
+            console.log('⏳ Particles.js no está listo aún');
             return;
         }
         
-        const currentMode = getCurrentMode();
-        
-        // SOLO actualizar si el MODO CAMBIÓ (ignorar radio-playing)
-        if (currentMode === lastMode) {
-            return; // No hacer nada si es el mismo modo
-        }
-        
-        const newColor = getParticleColor();
-        lastMode = currentMode; // Actualizar modo guardado
-        
-        // MÉTODO SUAVE: Cambiar color directamente en el array de partículas
+        // MÉTODO DIRECTO: Acceder al canvas y cambiar colores manualmente
         try {
-            // Acceder al array de partículas y cambiar su color
+            // Intentar método 1: API interna de particles.js
             if (particlesInstance.particles && particlesInstance.particles.array) {
                 const particles = particlesInstance.particles.array;
                 for (let i = 0; i < particles.length; i++) {
@@ -1054,24 +1026,34 @@ document.addEventListener('DOMContentLoaded', function() {
                         particles[i].color.value = newColor;
                     }
                 }
-                console.log('🎨 Color de partículas actualizado a:', newColor, '(modo:', currentMode + ')');
-                // NO hacer refresh, solo actualizar el valor
-            } else {
-                // Fallback: solo actualizar la configuración sin reiniciar
-                particlesConfig.particles.color.value = newColor;
+                console.log('🎨 Color actualizado a:', newColor);
+            } 
+            // Intentar método 2: Usar el objeto pJSDom global
+            else if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+                const pJS = window.pJSDom[0].pJS;
+                if (pJS.particles && pJS.particles.array) {
+                    const particles = pJS.particles.array;
+                    for (let i = 0; i < particles.length; i++) {
+                        if (particles[i].color) {
+                            particles[i].color.value = newColor;
+                        }
+                    }
+                    console.log('🎨 Color actualizado vía pJSDom:', newColor);
+                }
             }
         } catch (e) {
-            console.log('Error en actualización suave, usando método alternativo');
-            particlesConfig.particles.color.value = newColor;
+            console.log('Error al actualizar color (no crítico):', e);
         }
     }
     
     // Preservar setMode original
     const originalSetMode = window.setMode || function() {};
     
-    // Nueva setMode que actualiza color suavemente
+    // NUEVA setMode que solo cambia color cuando es necesario
     window.setMode = function(mode) {
-        // Llamar a la función original
+        console.log('🔄 Cambiando a modo:', mode);
+        
+        // Llamar a la función original (cambia imágenes, colores de texto, etc.)
         if (typeof originalSetMode === 'function') {
             originalSetMode(mode);
         } else {
@@ -1079,51 +1061,20 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.add(mode);
         }
         
-        // Actualizar color SIN reiniciar
-        setTimeout(updateParticleColor, 60);
+        // Actualizar color de partículas según el modo
+        const newColor = modeColors[mode] || '#A94C4C';
+        updateParticleColor(newColor);
     };
     
-    // Inicializar cuando el DOM esté listo
+    // Inicializar partículas UNA VEZ cuando el DOM esté listo
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initParticles);
     } else {
         initParticles();
     }
     
-    // También inicializar cuando la ventana termine de cargar (por si acaso)
-    window.addEventListener('load', function() {
-        setTimeout(initParticles, 100);
-    });
-    
-    // Observer MEJORADO - Solo reacciona a cambios en modos de color
-    if (document.body) {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === 'class') {
-                    // Verificar si ALGUNO de los modos de color cambió
-                    const bodyClasses = document.body.classList;
-                    const hasLight = bodyClasses.contains('light');
-                    const hasDarkDay = bodyClasses.contains('dark-day');
-                    const hasDarkNight = bodyClasses.contains('dark-night');
-                    
-                    // Solo actualizar si hay EXACTAMENTE UN modo de color activo
-                    // (ignorar clases como 'radio-playing')
-                    const modeCount = (hasLight ? 1 : 0) + (hasDarkDay ? 1 : 0) + (hasDarkNight ? 1 : 0);
-                    
-                    if (modeCount === 1) {
-                        // Usar requestAnimationFrame para cambio suave
-                        requestAnimationFrame(updateParticleColor);
-                    }
-                }
-            });
-        });
-        
-        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    }
-    
-    console.log('🚀 Particles.js v3 cargado (IGNORA radio-playing)');
-    console.log('   • Partículas:', particlesConfig.particles.number.value);
-    console.log('   • Opacidad:', particlesConfig.particles.opacity.value);
-    console.log('   • Dirección:', particlesConfig.particles.move.direction);
-    console.log('   • Colores: Light #27196f | Dark-night #7b633a | Dark-day #A94C4C');
+    console.log('🚀 Particles.js - MODO ULTRA ESTABLE ACTIVADO');
+    console.log('   • Las partículas NUNCA se reinician');
+    console.log('   • Solo cambian de color con los botones de modo');
+    console.log('   • La radio NO afecta a las partículas');
 })();
