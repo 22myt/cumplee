@@ -248,7 +248,8 @@ body {
     white-space: nowrap;
     overflow: hidden;
     /* Ajustar tamaño de tipografía */
-    font-size: 12px; /* Aumentado de 10px a 12px */
+    font-size: 14px; /* Cambia este valor */
+    line-height: 30px; /* Para centrar verticalmente */
 }
 
 .marquee-vertical-content {
@@ -280,12 +281,15 @@ body {
     white-space: nowrap;
 }
 
-/* Para evitar el reinicio, necesitamos que el contenido sea aún más largo */
-/* Esto lo manejaremos desde JavaScript */
-/* Dark-day (por defecto) */
+
 .marquee-vertical-content {
     color: #ffffff; /* Blanco para dark-day */
+    font-size: inherit; /* Hereda del contenedor */
 }
+
+/* Para evitar el reinicio, necesitamos que el contenido sea aún más largo */
+/* Esto lo manejaremos desde JavaScript */
+
 
 /* ============================================ */
 /* MAIN                                          */
