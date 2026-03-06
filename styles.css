@@ -1696,8 +1696,8 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 
 .radio-buttons-container {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 100px;
+    left: -20px;
     width: 100%;
     height: 100%;
     pointer-events: none;
@@ -1732,11 +1732,12 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 
 .radio-btn-prev {
     bottom: 170px;
-    left: 75px;
+    left: 80px;
 }
 
 .radio-btn-prev .radio-img-prev {
-    width: 30px;        /* TAMAÑO DEL BOTÓN ATRAS - AJUSTA AQUÍ */
+    width: 15px;
+    top: 21px;
     height: auto;
 }
 
@@ -1754,8 +1755,10 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 }
 
 .radio-btn-play .radio-img-play {
-    width: 30px;        /* TAMAÑO DEL BOTÓN PLAY - AJUSTA AQUÍ */
+    width: 15px;
+    left: -9px;
     height: auto;
+    top: 20px;
 }
 
 .radio-btn-play:hover .radio-img-play {
@@ -1773,8 +1776,10 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 }
 
 .radio-btn-pause .radio-img-pause {
-    width: 30px;        /* TAMAÑO DEL BOTÓN PAUSA - AJUSTA AQUÍ */
+    width: 15px;
+    left: -9px;
     height: auto;
+    top: 20px;
 }
 
 .radio-btn-pause:hover .radio-img-pause {
@@ -1787,11 +1792,12 @@ body.dark-night #dark-night-btn:hover #img-dark-night {
 
 .radio-btn-next {
     bottom: 170px;
-    left: 141px;
+    left: 118.5px;
 }
 
 .radio-btn-next .radio-img-next {
-    width: 30px;        /* TAMAÑO DEL BOTÓN SIGUIENTE - AJUSTA AQUÍ */
+    width: 15px;
+    top: 21px;
     height: auto;
 }
 
