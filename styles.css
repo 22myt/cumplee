@@ -1923,8 +1923,6 @@ body.dark-night.radio-playing #radio-cassette-img {
     height: 80px;       /* Mismo tamaño para mantener proporción cuadrada */
     z-index: 9999;      /* Por encima de todo */
     pointer-events: none; /* No interfiere con clicks */
-    opacity: 1;
-    transition: opacity 0.1s ease;
 }
 
 #footer-indicator img {
@@ -1938,53 +1936,35 @@ body.dark-night.radio-playing #radio-cassette-img {
 /* VERSIONES LIGHT Y MYTMODE PARA EL INDICADOR  */
 /* ============================================ */
 
-/* Light mode - todas las variantes */
-body.light #indicator-img[data-state="radio"] {
-    content: url('lightmode/alterar.gif');
-}
-body.light #indicator-img[data-state="hover"] {
-    content: url('lightmode/cargando.gif');
-}
-body.light #indicator-img[data-state="outside"] {
-    content: url('lightmode/parpadea-rojo.gif');
-}
-body.light #indicator-img[data-state="text"] {
-    content: url('lightmode/parpadea-verde.gif');
-}
+/* Light mode */
 body.light #indicator-img[data-state="default"] {
     content: url('lightmode/3-a-la-vez.gif');
 }
+body.light #indicator-img[data-state="cargando"] {
+    content: url('lightmode/cargando.gif');
+}
+body.light #indicator-img[data-state="alterar"] {
+    content: url('lightmode/alterar.gif');
+}
 
-/* Mytmode (dark-night) - todas las variantes */
-body.dark-night #indicator-img[data-state="radio"] {
-    content: url('mytmode/alterar.gif');
-}
-body.dark-night #indicator-img[data-state="hover"] {
-    content: url('mytmode/cargando.gif');
-}
-body.dark-night #indicator-img[data-state="outside"] {
-    content: url('mytmode/parpadea-rojo.gif');
-}
-body.dark-night #indicator-img[data-state="text"] {
-    content: url('mytmode/parpadea-verde.gif');
-}
+/* Mytmode (dark-night) */
 body.dark-night #indicator-img[data-state="default"] {
     content: url('mytmode/3-a-la-vez.gif');
 }
+body.dark-night #indicator-img[data-state="cargando"] {
+    content: url('mytmode/cargando.gif');
+}
+body.dark-night #indicator-img[data-state="alterar"] {
+    content: url('mytmode/alterar.gif');
+}
 
-/* Dark-day (por defecto) - ya está en el HTML inicial */
-body.dark-day #indicator-img[data-state="radio"] {
-    content: url('darkmode/alterar.gif');
-}
-body.dark-day #indicator-img[data-state="hover"] {
-    content: url('darkmode/cargando.gif');
-}
-body.dark-day #indicator-img[data-state="outside"] {
-    content: url('darkmode/parpadea-rojo.gif');
-}
-body.dark-day #indicator-img[data-state="text"] {
-    content: url('darkmode/parpadea-verde.gif');
-}
+/* Dark-day (por defecto) */
 body.dark-day #indicator-img[data-state="default"] {
     content: url('darkmode/3-a-la-vez.gif');
+}
+body.dark-day #indicator-img[data-state="cargando"] {
+    content: url('darkmode/cargando.gif');
+}
+body.dark-day #indicator-img[data-state="alterar"] {
+    content: url('darkmode/alterar.gif');
 }
