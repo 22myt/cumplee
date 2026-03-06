@@ -709,7 +709,7 @@ body {
 /* Asuka con sandía - la más a la izquierda y con z-index alto */
 .bot-asuka-sandia {
     height: 138.2px;
-    top: -138.5px;
+    top: -137px;
     width: auto;
     bottom: 0;
     left: 6.3px;
@@ -769,7 +769,7 @@ body {
 .bot-evan {
     height: 165px;
     width: auto;
-    bottom: 0;
+    bottom: -1px;
     right: 8px;
     z-index: 31;
 }
