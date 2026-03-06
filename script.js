@@ -558,89 +558,11 @@ function setupIndicatorHovers() {
 // ============================================
 // PARTICLES.JS - VERSIÓN QUE SOLO CAMBIA COLOR (CORREGIDA)
 // ============================================
+// ============================================
+// PARTICLES.JS - VERSIÓN QUE SOLO CAMBIA COLOR (SIN REINICIOS)
+// ============================================
 (function() {
     'use strict';
-    
-    let particlesInstance = null;
-    let particlesInitialized = false;
-    let currentParticleColor = "#A94C4C";
-    
-    // Configuración base de las partículas
-    const particlesConfig = {
-        particles: {
-            number: {
-                value: 61,
-                density: {
-                    enable: true,
-                    value_area: 789.1476416322727
-                }
-            },
-            color: {
-                value: currentParticleColor
-            },
-            shape: {
-                type: "edge",
-                stroke: {
-                    width: 0,
-                    color: "#b1b1b1"
-                },
-                polygon: {
-                    nb_sides: 3
-                }
-            },
-            opacity: {
-                value: 0.5,
-                random: true,
-                anim: {
-                    enable: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: true,
-                    speed: 4,
-                    size_min: 1,
-                    sync: false
-                }
-            },
-            line_linked: {
-                enable: false
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: "none",
-                random: false,
-                straight: false,
-                out_mode: "out",
-                bounce: false,
-                attract: {
-                    enable: false
-                }
-            }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: {
-                onhover: {
-                    enable: false
-                },
-                onclick: {
-                    enable: true,
-                    mode: "push"
-                },
-                resize: true
-            },
-            modes: {
-                push: {
-                    particles_nb: 4
-                }
-            }
-        },
-        retina_detect: true
-    };
     
     // Mapa de colores por modo
     const modeColors = {
@@ -649,81 +571,89 @@ function setupIndicatorHovers() {
         'dark-day': '#A94C4C'
     };
     
-    // Inicializar particles.js (SOLO UNA VEZ)
+    // Variable para guardar la instancia
+    let pJSDom = null;
+    
+    // Inicializar particles.js
     function initParticles() {
-        if (particlesInitialized) return;
-        
         if (!document.getElementById('particles-js')) {
             console.warn('⚠️ Contenedor #particles-js no encontrado');
             return;
         }
         
-        try {
-            particlesInstance = particlesJS('particles-js', particlesConfig);
-            particlesInitialized = true;
-            console.log('✅ Particles.js iniciado');
-        } catch (error) {
-            console.error('❌ Error al inicializar particles.js:', error);
-        }
+        // Configuración
+        const config = {
+            particles: {
+                number: { value: 61, density: { enable: true, value_area: 789.1476416322727 } },
+                color: { value: "#A94C4C" }, 
+                shape: { type: "edge", stroke: { width: 0, color: "#b1b1b1" }, polygon: { nb_sides: 3 } },
+                opacity: { value: 0.5, random: true, anim: { enable: false } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 4, size_min: 1, sync: false } },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false } }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: false }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        };
+        
+        // Inicializar y guardar en pJSDom (particlesJS guarda las instancias aquí)
+        particlesJS('particles-js', config);
+        
+        // Acceder a la instancia a través del array de particlesJS
+        setTimeout(() => {
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                pJSDom = window.pJSDom[0];
+                console.log('✅ Particles.js iniciado, instancia guardada');
+            }
+        }, 500);
     }
     
-    // CAMBIAR SOLO EL COLOR (método correcto)
+    // Función para cambiar color (SIN REINICIAR)
     window.changeParticlesColor = function(newColor) {
-        if (!particlesInstance) {
-            console.log('⏳ Partículas no listas aún');
+        // Intentar obtener la instancia si no la tenemos
+        if (!pJSDom && window.pJSDom && window.pJSDom.length > 0) {
+            pJSDom = window.pJSDom[0];
+        }
+        
+        if (!pJSDom) {
+            console.log('⏳ Partículas no listas, reintentando...');
+            setTimeout(() => window.changeParticlesColor(newColor), 200);
             return;
         }
         
-        currentParticleColor = newColor;
-        
         try {
-            // Método 1: Usar la API de particles.js si está disponible
-            if (particlesInstance.options) {
-                particlesInstance.options.particles.color.value = newColor;
-            }
-            
-            // Método 2: Acceder directamente al array de partículas
-            if (particlesInstance.particles && particlesInstance.particles.array) {
-                particlesInstance.particles.array.forEach(p => {
+            // MÉTODO DIRECTO: acceder a las partículas y cambiar su color
+            if (pJSDom.particles && pJSDom.particles.array) {
+                pJSDom.particles.array.forEach(p => {
                     if (p.color) {
                         p.color.value = newColor;
                     }
                 });
+                
+                // Actualizar también el valor por defecto
+                if (pJSDom.particles.options && pJSDom.particles.options.color) {
+                    pJSDom.particles.options.color.value = newColor;
+                }
+                
+                // Redibujar
+                if (pJSDom.draw) {
+                    pJSDom.draw();
+                }
+                
+                console.log('🎨 Color de partículas cambiado a:', newColor);
+            } else {
+                console.log('No se pudo acceder a las partículas');
             }
-            
-            // Forzar redibujado completo
-            if (particlesInstance.refresh) {
-                particlesInstance.refresh();
-            } else if (particlesInstance.draw) {
-                particlesInstance.draw();
-            }
-            
-            console.log('🎨 Color de partículas cambiado a:', newColor);
         } catch (e) {
             console.log('Error cambiando color:', e);
-            // Fallback: si falla, usar el método de reinicio pero solo una vez
-            fallbackColorChange(newColor);
         }
     };
     
-    // Fallback por si acaso (solo se usa si el método anterior falla)
-    function fallbackColorChange(newColor) {
-        if (!document.getElementById('particles-js')) return;
-        
-        particlesConfig.particles.color.value = newColor;
-        
-        try {
-            if (particlesInstance && typeof particlesInstance.destroy === 'function') {
-                particlesInstance.destroy();
-            }
-            particlesInstance = particlesJS('particles-js', particlesConfig);
-            console.log('🔄 Fallback: partículas reiniciadas con color:', newColor);
-        } catch (error) {
-            console.error('Error en fallback:', error);
-        }
-    }
-    
-    // Inicializar partículas UNA SOLA VEZ
+    // Inicializar
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initParticles);
     } else {
