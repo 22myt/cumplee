@@ -138,7 +138,7 @@ function createMarqueeText() {
     
     // Generar 10 repeticiones del texto con MÁS espacios
     let fullText = '';
-    const spaces = '          '; // 10 espacios
+    const spaces = '                    '; 
     for (let i = 0; i < 10; i++) {
         fullText += marqueeText + spaces;
     }
@@ -167,7 +167,7 @@ function startMarqueeAnimation() {
     
     // Velocidad basada en tiempo real
     let lastTime = 0;
-    const pixelsPerSecond = 15; // AJUSTA: 10 = más lento, 20 = más rápido
+    const pixelsPerSecond = 5; 
     
     function animate(currentTime) {
         if (!lastTime) {
