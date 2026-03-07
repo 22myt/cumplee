@@ -213,50 +213,96 @@ function getCurrentDualMode() {
 }
 
 // ============================================
-// ANIMACIÓN LOTTIE - ICONO DEL SOL
+// ANIMACIÓN LOTTIE - ICONO DEL SOL (CORREGIDO)
 // ============================================
 let sunAnimation = null;
 let sunInitialized = false;
+let sunColorUpdateQueued = false;
 
+// Función para actualizar el color del sol (MEJORADA)
 function updateSunColor() {
     const sunContainer = document.getElementById('sun-icon');
-    if (!sunContainer) return;
-    
-    const svg = sunContainer.querySelector('svg');
-    if (!svg) return;
-    
-    let color = '#ffffff';
-    if (body.classList.contains('dark-night')) {
-        color = '#7c643a';
-    } else if (body.classList.contains('light')) {
-        color = '#27196f';
+    if (!sunContainer) {
+        console.warn('⚠️ Contenedor del sol no encontrado');
+        return;
     }
     
-    const elements = svg.querySelectorAll('path, circle, rect, polygon, line');
-    elements.forEach(el => {
-        if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
-            el.setAttribute('fill', color);
+    // Determinar color según el modo actual
+    let color = '#ffffff'; // Default dark-day
+    
+    if (document.body.classList.contains('dark-night')) {
+        color = '#7c643a'; // Marrón para mytmode
+    } else if (document.body.classList.contains('light')) {
+        color = '#27196f'; // Azul oscuro para lightmode
+    }
+    // Si es dark-day, se queda blanco (#ffffff)
+    
+    console.log('☀️ Actualizando color del sol a:', color, 'Modo:', document.body.classList);
+    
+    // Si la animación Lottie ya está cargada, actualizar sus colores
+    if (sunAnimation && sunAnimation.renderer) {
+        try {
+            // Método 1: Buscar el SVG y actualizar colores directamente
+            const svg = sunContainer.querySelector('svg');
+            if (svg) {
+                const elements = svg.querySelectorAll('path, circle, rect, polygon, line, g');
+                elements.forEach(el => {
+                    // Actualizar fill (color de relleno)
+                    if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+                        el.setAttribute('fill', color);
+                    }
+                    // Actualizar stroke (color de borde)
+                    if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+                        el.setAttribute('stroke', color);
+                    }
+                });
+                console.log('✅ SVG actualizado manualmente');
+            }
+            
+            // Método 2: Usar el método de Lottie si está disponible
+            if (sunAnimation.renderer && sunAnimation.renderer.canvasContext) {
+                // No aplica para SVG, pero lo dejamos como respaldo
+            }
+        } catch (e) {
+            console.log('Error actualizando SVG manualmente:', e);
         }
-        if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
-            el.setAttribute('stroke', color);
-        }
-    });
+    } else {
+        // Si la animación no está lista, guardar el color para cuando lo esté
+        window.pendingSunColor = color;
+        console.log('⏳ Color pendiente para cuando el sol esté listo:', color);
+    }
 }
 
+// Función para inicializar el sol (MEJORADA)
 function initSunIcon() {
-    if (sunInitialized) return;
-    
     const sunContainer = document.getElementById('sun-icon');
     if (!sunContainer) {
-        console.warn('No se encontró el contenedor del sol');
+        console.warn('⚠️ No se encontró el contenedor del sol');
         return;
     }
 
+    // Si ya está inicializado y tenemos animación, no reiniciar
+    if (sunInitialized && sunAnimation) {
+        console.log('☀️ Sol ya inicializado');
+        updateSunColor(); // Solo actualizar color
+        return;
+    }
+
+    console.log('☀️ Inicializando animación del sol...');
+
+    // Limpiar contenedor por si acaso
+    sunContainer.innerHTML = '';
+    
+    // Si hay una animación anterior, destruirla
     if (sunAnimation) {
-        sunAnimation.destroy();
+        try {
+            sunAnimation.destroy();
+        } catch (e) {}
+        sunAnimation = null;
     }
 
     try {
+        // Cargar la animación Lottie
         sunAnimation = lottie.loadAnimation({
             container: sunContainer,
             renderer: 'svg',
@@ -265,14 +311,138 @@ function initSunIcon() {
             path: 'icons8-sun.json'
         });
 
+        // Cuando la animación esté completamente cargada
         sunAnimation.addEventListener('DOMLoaded', function() {
-            updateSunColor();
+            console.log('☀️ Animación del sol cargada');
             sunInitialized = true;
+            
+            // Aplicar color pendiente si existe
+            if (window.pendingSunColor) {
+                setTimeout(() => {
+                    updateSunColor();
+                    window.pendingSunColor = null;
+                }, 50);
+            } else {
+                updateSunColor();
+            }
         });
+
+        // También escuchar el evento 'data_ready' por si acaso
+        sunAnimation.addEventListener('data_ready', function() {
+            console.log('☀️ Datos del sol listos');
+        });
+
     } catch (e) {
-        console.log('Error cargando animación del sol:', e);
+        console.error('❌ Error cargando animación del sol:', e);
+        
+        // FALLBACK: Si Lottie falla, crear un SVG manual
+        createFallbackSunIcon(sunContainer);
     }
 }
+
+// Función de respaldo por si Lottie falla
+function createFallbackSunIcon(container) {
+    console.log('☀️ Creando sol de respaldo (SVG manual)');
+    
+    // Determinar color según modo actual
+    let color = '#ffffff';
+    if (document.body.classList.contains('dark-night')) {
+        color = '#7c643a';
+    } else if (document.body.classList.contains('light')) {
+        color = '#27196f';
+    }
+    
+    // Crear SVG simple pero animado con CSS
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    
+    // Añadir estilo de animación
+    const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    style.textContent = `
+        @keyframes sunRotate {
+            from { transform: rotate(0deg); transform-origin: 50px 50px; }
+            to { transform: rotate(360deg); transform-origin: 50px 50px; }
+        }
+        .sun-ray { animation: sunRotate 10s linear infinite; }
+    `;
+    svg.appendChild(style);
+    
+    // Círculo central
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', '50');
+    circle.setAttribute('cy', '50');
+    circle.setAttribute('r', '20');
+    circle.setAttribute('fill', color);
+    svg.appendChild(circle);
+    
+    // Rayos del sol (en un grupo que rota)
+    const raysGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    raysGroup.setAttribute('class', 'sun-ray');
+    
+    for (let i = 0; i < 8; i++) {
+        const angle = (i * 45) * Math.PI / 180;
+        const x1 = 50 + 30 * Math.cos(angle);
+        const y1 = 50 + 30 * Math.sin(angle);
+        const x2 = 50 + 45 * Math.cos(angle);
+        const y2 = 50 + 45 * Math.sin(angle);
+        
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', color);
+        line.setAttribute('stroke-width', '3');
+        line.setAttribute('stroke-linecap', 'round');
+        raysGroup.appendChild(line);
+    }
+    
+    svg.appendChild(raysGroup);
+    
+    // Limpiar y añadir el nuevo SVG
+    container.innerHTML = '';
+    container.appendChild(svg);
+    
+    sunInitialized = true;
+    console.log('✅ Sol de respaldo creado');
+}
+
+// Asegurar que el contenedor del sol sea visible
+function ensureSunVisibility() {
+    const sunContainer = document.getElementById('sun-icon');
+    if (!sunContainer) return;
+    
+    // Verificar que el contenedor padre tenga posición relativa
+    const parent = sunContainer.parentElement;
+    if (parent) {
+        // Asegurar que el contenedor del sol sea visible
+        sunContainer.style.display = 'inline-block';
+        sunContainer.style.width = '15px';
+        sunContainer.style.height = '9.5px';
+        sunContainer.style.position = 'relative';
+        sunContainer.style.top = '63.5px';
+        sunContainer.style.left = '-5px';
+        sunContainer.style.zIndex = '48';
+        
+        // Debug: bordes temporales para ver el contenedor (opcional, quitar después)
+        // sunContainer.style.border = '1px solid red';
+    }
+}
+
+// Modificar la función setMode para asegurar que el sol se actualice
+const originalSetMode = setMode;
+setMode = function(mode) {
+    // Llamar a la función original
+    originalSetMode(mode);
+    
+    // Forzar actualización del sol después del cambio de modo
+    setTimeout(() => {
+        updateSunColor();
+        ensureSunVisibility();
+    }, 100);
+};
 
 // ============================================
 // SISTEMA DE SONIDOS HOVER (OPTIMIZADO)
