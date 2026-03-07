@@ -226,12 +226,12 @@ function updateSunColor() {
     if (!svg) return;
     
     // Color según modo actual
-    let color = '#A94C4C'; // Rojo para dark-day
+    let color = '#ffffff'; // Rojo para dark-day
     
     if (document.body.classList.contains('dark-night')) {
         color = '#7c643a'; // Marrón para mytmode
     } else if (document.body.classList.contains('light')) {
-        color = '#27196f'; // Azul oscuro para lightmode
+        color = '#ffffff'; // Azul oscuro para lightmode
     }
     
     // Aplicar color a todos los elementos
