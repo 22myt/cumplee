@@ -128,7 +128,7 @@ function createMarqueeText() {
         return;
     }
     
-    const marqueeText = "© All illustrations are the intellectual property of Neon Genesis Evangelion, created by Hideaki Anno. | Coded & designed by Myt";
+    const marqueeText = "© All illustrations are the intellectual property of Neon Genesis Evangelion, created by Hideaki Anno. | Web Profile coded & designed by Myt, for Jade";
     
     const container = document.createElement('div');
     container.className = 'marquee-vertical-container';
